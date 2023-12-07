@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let sum =+ prompt('用户输入总秒数')
+        let h = 0
+        let m = 0
+        let s = 0
+        function getSum(sum=0){
+            h=parseInt(sum/60/60%24)
+            m=parseInt(sum/60%60)
+            s=parseInt(sum%60)
+            document.write(`${h}时${m}分${s}秒`)
+        }
+        getSum(sum)
+    </script>
+</body>
+
+</html>
