@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        
+        function myrandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        function randomColor(boolean) {
+            let colorStr = `#`;
+            if(boolean) {
+                let ary = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'];
+                // 生成十六进制颜色
+                for(let i = 1; i <= 6; i++) {
+                    colorStr += ary[myrandom(0, ary.length-1)];
+                }
+            }else {
+                // 生成rgb颜色
+                colorStr = `rgb(${myrandom(0,255)},${myrandom(0,255)},${myrandom(0,255)})`;
+            }
+            return colorStr;
+        }
+        console.log(randomColor(true));
+        console.log(randomColor(true));
+        console.log(randomColor(false));
+    </script>
+</body>
+</html>
