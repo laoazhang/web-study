@@ -1,0 +1,56 @@
+<!--
+ * @Author: laoazhang laoazhang@163.com
+ * @Date: 2023-12-07 17:32:08
+ * @LastEditors: laoazhang laoazhang@163.com
+ * @LastEditTime: 2023-12-07 18:22:01
+ * @FilePath: \web-study\Js基础\01\demo01.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 80;
+        }
+        table,tr,td,th{
+            border: 1px solid blue;
+            border-collapse: collapse;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        let name = prompt('请您输入商品名称：')
+        let price = prompt('请您输入商品价格：')
+        let num = prompt('请您输入商品数量：')
+        let address = prompt('请您输入收货地址：')
+        let total = price * num
+        document.write(`
+        <table>
+            <tr>
+                <th>商品名称</th>
+                <th>商品价格</th>
+                <th>商品数量</th>
+                <th>总价</th>
+                <th>收获地址</th>
+            </tr>
+            <tr>
+                <td>${name}</td>
+                <td>${price}</td>
+                <td>${num}</td>
+                <td>${total}</td>
+                <td>${address}</td>
+            </tr>
+        </table>
+        `);
+    </script>
+</body>
+
+</html>
