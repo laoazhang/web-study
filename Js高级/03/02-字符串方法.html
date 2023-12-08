@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // includes -- 判断字符串中是否包含某个字符，包括则返回true，不包含则返回false
+    // console.log('hello'.includes('h')) // true
+    // console.log('hello'.includes('ell')) // true
+    // console.log('hello'.includes('ho')) // false
+    // console.log('hello'.includes('h', 2)) // false 从2的位置往后数，看字符串中是否包含h
+
+    // startsWith -- 判断字符串的开头是什么。如果是返回true，不是返回false
+    // console.log('hello'.startsWith('h')) // true
+    // console.log('hello'.startsWith('he')) // true
+    // console.log('hello'.startsWith('hello')) // true
+    // console.log('hello'.startsWith('e')) // false
+    // console.log('hello'.startsWith('e', 1)) // true。从位置1开始算起，看这段字符串的开头是否是e
+
+
+    // endsWith -- 判断字符串的结尾是什么。如果是返回true，不是返回false
+    // console.log('hello'.endsWith('llo')) // true
+    // console.log('hello'.endsWith('ll', 4)) // true，4个长度，意思是先截取4个字符，然后看这4个字符的结尾是否是ll
+
+    // toUpperCase -- 将字符串转为大写
+    // console.log('hello你好'.toUpperCase()) // HELLO你好
+
+    // toLowerCase -- 将字符串转为小写
+    // console.log('This Is A JS'.toLowerCase()) // this is a js
+
+    // trim() -- 去除字符串两边的空白
+    // console.log('    hello   ')
+    // console.log('    hello   '.trim())
+
+    // search -- 在字符串中搜索字符。如果有这个字符，则返回第1个找到的位置；没有找到返回-1
+    // console.log('hello'.search('e')) // 1
+    // console.log('hello'.search('l')) // 2
+    // console.log('hello'.search('a')) // -1
+
+    // replace -- 执行字符串替换
+    // console.log('this is a js'.replace('s', 'a')) // thia is a js // 只找第1个s，然后替换
+    console.log('this is a js'.replace(/s/g, 'a')) // thia ia a ja // 只找第1个s，然后替换
+  </script>
+
+</body>
+
+</html>

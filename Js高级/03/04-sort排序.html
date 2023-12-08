@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // ----------------- 基本认知 ---------------
+    // let arr = [3, 5]
+    // let res = arr.sort((a, b) => {
+    //   // a = 5  b = 3
+    //   // return 正数, 则不交换两个元素的位置
+    //   // return 负数, 则交换两个元素的位置
+    //   // return 0,什么都不做
+    //   return -2
+    // })
+    // console.log(res) // [5, 3]
+
+    // ---------------- 数字的排序 ---------------------
+    // 目标：实现从小到大排序
+    // let arr = [3, 5, 4, 8, 0, 2]
+    // let res = arr.sort((a, b) => {
+    //   // 第1次比较，a = 5; b = 3，这次不希望交换位置，则返回正数  a - b
+    //   // 第2次比较，a = 4; b = 5，这次希望交换位置，则返回负数 a - b
+    //   return a - b
+    // })
+    // console.log(res)
+
+    // ---------------- 复杂数字的排序 -------------------
+    // let arr = [
+    //   { uname: 'zs', age: 20 },
+    //   { uname: 'lisi', age: 30 },
+    //   { uname: 'wangwu', age: 10 },
+    //   { uname: 'pink', age: 40 },
+    // ]
+    // // 目标：按照年龄，从小到大排序（升序）
+    // let res = arr.sort((a, b) => {
+    //   // 第1次比较，a = { uname: 'lisi', age: 30 }   b = { uname: 'zs', age: 20 }
+    //   // 第1次比较，不希望交换位置。需要返回正数，怎么得到正数 a.age - b.age
+    //   return a.age - b.age
+    // })
+    // console.log(res)
+
+
+    // -------------- 按照英文字符或中文排序 --------------
+    // 中文、英文也有大小之分，按照 Unicode 编码进行大小比较的
+    // 世界上所有的字符（拉丁文、英文、中文、日文等等，包括符合），都对应着一个独一无二的Unicode编码
+    // 完整的Unicode编码：http://www.tamasoft.co.jp/en/general-info/unicode.html
+    // 中文的Unicode编码范围是 4e00 ~ 9fa5
+    // 按照姓名，从小到大排序
+    // let arr = [
+    //   { uname: 'zs', age: 20 },
+    //   { uname: 'lisi', age: 30 },
+    //   { uname: 'wangwu', age: 10 },
+    //   { uname: 'pink', age: 40 },
+    // ]
+    // let res = arr.sort((a, b) => {
+    //   // 第1次，a = { uname: 'lisi', age: 30 }; b = { uname: 'zs', age: 20 }
+    //   // 
+    //   if (a.uname < b.uname) return -1  // lisi < zs ，这种情况下，我们需要交换位置，所以才返回 -1
+    //   if (a.uname > b.uname) return 1
+    //   if (a.uname === b.uname) return 0
+    // })
+    // console.log(res)
+
+    // --------------------------- 打乱数组 ------------------------
+    let arr = [3, 5, 2, 8, 9, 7]
+    let res = arr.sort((a, b) => {
+      return Math.random() - 0.5
+    })
+    console.log(res)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // Array / String / Date / Object..... 这些都是内置的构造函数
+    let arr = [2, 3, 5, 8]
+    // console.log(typeof arr) // object
+
+    // 数组为什么是对象呢？
+    // 现在 [2, 3, 5, 8] 这样写，其实是字面量写法而已
+    // 实际上，数组也是通过 new Array() 得来的
+    // [2, 3, 5, 8] ===== new Array(2, 3, 5, 8)
+    let arr1 = new Array(2, 3, 5, 8)
+
+    // console.log(arr)
+    // console.log(arr1)
+
+    // ------------------- 自己给 Array.prototype 添加一个方法 --------------
+    // 添加一个sum方法，作用是计算数组元素的和
+    Array.prototype.sum = function () {
+      // this 表示实例对象，本例中 this 表示 [2, 3, 5, 8]
+      return this.reduce((t, c) => t + c)
+    }
+
+    console.log(arr.sum()) // 18
+    console.log([3, 9, 0, 2].sum())
+    console.log([100, 200, 300].sum())
+  </script>
+</body>
+
+</html>

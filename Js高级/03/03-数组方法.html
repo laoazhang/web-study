@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul>
+    <li>这是第 1 个li</li>
+    <li>这是第 2 个li</li>
+    <li>这是第 3 个li</li>
+  </ul>
+  <script>
+    // reverse -- 翻转数组
+    // let res = [2, 3, 4, 5].reverse()
+    // console.log(res) // [5, 4, 3, 2]
+
+    // splice -- 删除指定的元素，并且可以添加新元素
+    // 语法： arr.splice(位置, 删除的数量, 新增的元素, 新增的元素, ........)
+    // 这个方法，直接修改原数组
+    // let arr = ['宋江', '吴用', '林冲']
+    // --- 删除一个元素 ---
+    // arr.splice(1, 1) // 从下标1的位置，删除1个元素
+    // console.log(arr)
+    // --- 修改一个元素 ---
+    // arr.splice(1, 1, '花荣')
+    // console.log(arr) // ['宋江', '花荣', '林冲']
+
+
+    // Array.from -- 将伪数组，转成真数组（伪数组不能调用数组方法；转成真数组就可以调用数组方法了）
+    // let lis = document.querySelectorAll('li') // 得到伪数组
+    // // console.log(lis)
+    // // lis.pop() // 报错，不能通过伪数组，调用数组方法
+    // let arr = Array.from(lis)
+    // arr.pop() // 移除数组中最后一个元素
+    // console.log(arr)
+
+    // Array.isArray() -- 判断变量是否是数组
+    console.log(Array.isArray([])) // true
+    console.log(Array.isArray(['a', 'b'])) // true
+    let lis = document.querySelectorAll('li') // 得到伪数组
+    console.log(Array.isArray(lis)) // false
+    console.log(Array.isArray({ uname: 'zs' })) // false
+  </script>
+</body>
+
+</html>

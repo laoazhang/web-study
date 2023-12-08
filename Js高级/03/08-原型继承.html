@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    // -------------------------- Animal ---------------------------
+    function Animal() {
+      // this.age = 1000
+    }
+    Animal.prototype.eat = function () {
+      console.log('会吃饭')
+    }
+    let a = new Animal()
+
+    // -------------------------- Pig ------------------------------
+    function Pig() {
+      // this.age = 20
+    }
+    Pig.prototype = a // 【关键】修改Pig的原型对象 为 a
+    // 【关键】只要修改了原型对象，必须重置 constructor才行（否则三角关系就乱了）
+    Pig.prototype.constructor = Pig
+    let p = new Pig()
+
+    // 因为修改了Pig的原型对象 === Animal的实例对象，所以实例对象 p 就继承了a的方法、属性等等
+    p.eat() // p对象，可以直接使用原型对象的原型对象上的方法，体现了继承
+    console.log(p.age)
+
+    // console.log(Pig.prototype.constructor)
+
+    // 检测 p 的原型链上，是否有这个构造函数
+    console.log(p instanceof Pig) // p的原型链上，有Pig这个构造函数，则返回true
+    console.log(p instanceof Animal) // p的原型链上，有Animal这个构造函数，则返回true
+    console.log(p instanceof Object) // p的原型链上，有Object这个构造函数，则返回true
+
+    console.log(p instanceof String) // p的原型链上，没有String这个构造函数，则返回false
+  </script>
+
+</body>
+
+</html>

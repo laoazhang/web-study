@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 声明构造函数
+    function Pig(name, age) {
+      this.name = name
+      this.age = age
+    }
+
+    // 向原型对象上加方法
+    Pig.prototype.say = function () { }
+    Pig.prototype.eat = function () { }
+
+    console.log(Pig.prototype.constructor) // Pig是构造函数；Pig.prototype找到原型对象；再点constructor再次找到构造函数
+
+    // 实例化
+    let obj = new Pig('佩奇', 3)
+
+    console.log(obj.__proto__) // 通过实例对象，找到原型对象（非标准的，不建议用）
+    console.log(Object.getPrototypeOf(obj)) // 通过该语法，找到原型对象（标准语法）
+
+    console.log(obj)
+  </script>
+</body>
+
+</html>

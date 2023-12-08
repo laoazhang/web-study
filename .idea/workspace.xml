@@ -5,21 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fd4a94a-0c56-45e4-ad05-9503c45a1f87" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/01-字面量对象.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/02-构造函数.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/03-构造函数其他说明.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/04-静态成员.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/05-包装类型.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/06-类似forEach的方法.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/07-数组方法应用.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/08-字符串方法.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/09-数字相关方法.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/10-Object的静态方法.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/11-商品的SKU处理.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/12-商品赠品处理.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/综合案例-价格筛选.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/02/综合案例素材.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/01-Object.assign.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/02-字符串方法.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/03-数组方法.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/04-sort排序.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/05-通过构造函数创建对象.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/06-内置构造函数扩展.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/07-三角关系.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/08-原型继承.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/pink冰墩墩.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/03/综合案例素材.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +41,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "E:/WebProject/web-study",
+    "last_opened_file_path": "E:/WebProject/web-study/Js高级/03",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -57,6 +52,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\WebProject\web-study\Js高级\03" />
       <recent name="E:\WebProject\web-study" />
     </key>
   </component>
@@ -69,7 +65,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701936495725</updated>
       <workItem from="1701936496724" duration="595000" />
-      <workItem from="1702006746435" duration="1048000" />
+      <workItem from="1702006746435" duration="5245000" />
     </task>
     <servers />
   </component>

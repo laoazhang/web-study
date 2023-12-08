@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Pig(name, age) {
+      // this 表示实例对象
+      this.name = name // obj.name = '佩奇'
+      this.age = age
+    }
+
+    // 任何一个函数(普通函数、构造函数、内置的Array、String)，都有原型对象
+    // 原型对象由系统分配，不用程序员手动加
+    // console.dir() 也是输出内容，而且输出后，可以展开，看到内部的结果
+    // console.dir(Pig) // Pig.prototype 就是Pig的原型对象
+    // 把构造函数中的 eat、say方法，加给原型对象
+    Pig.prototype.say = function () {
+      console.log('会说话')
+    }
+
+    Pig.prototype.eat = function () {
+      console.log('会吃饭')
+    }
+
+    let obj1 = new Pig('佩奇', 2)
+    let obj2 = new Pig('乔治', 3)
+    let obj3 = new Pig('老段', 4)
+    console.log(obj1)
+    console.log(obj2)
+    console.log(obj3)
+
+
+  </script>
+</body>
+
+</html>

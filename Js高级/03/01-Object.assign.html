@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 作用：用于合并对象
+    let obj1 = { name: 'zs', age: 20 }
+    let obj2 = { height: 180, weight: 80 }
+    // let obj3 = {}
+
+    // 作用：将 第2个参数、第3个参数，第.....个参数中的属性，合并到第1个参数中
+    // 语法一：
+    // Object.assign(obj3, obj1, obj2)
+    // console.log(obj3)
+
+    // 语法二：
+    // let obj = Object.assign({}, obj1, obj2)
+    // console.log(obj)
+
+
+    // 使用它，实现对象的拷贝
+    let obj = Object.assign({}, obj1)
+
+    // 拷贝之后，两个对象独立。（修改一个对象，另一个不受影响）
+    obj.name = 'lisi'
+
+    console.log(obj) // { name: 'lisi', age: 20 }
+    console.log(obj1) // { name: 'zs', age: 20 }
+
+
+// 赋值
+// let obj = obj1 ，如果是赋值的话，修改一个对象，另一个也受影响
+
+  </script>
+</body>
+
+</html>
