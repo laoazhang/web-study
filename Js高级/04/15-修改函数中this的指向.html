@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // --------------------- call ---------------------
+    // let obj = { age: 20 }
+
+    // function fn(x, y) {
+    //   console.log(this)
+    //   console.log(x + y)
+    // }
+    // // fn() // 正常调用函数，函数中的this表示 window
+    // // 语法：fn.call(新的this, 3, 4)
+    // fn.call(obj, 3, 4)
+    // 总结：
+    // 1. 函数.call() 表示调用函数，原函数fn得以调用了
+    // 2. 修改了原函数中的this，改成call方法的第1个参数了
+    // 3. 如果原函数有形参，可以通过call方法为原函数传递实参
+
+
+    // ----------------------- apply --------------------
+    // let obj = { age: 20 }
+
+    // function fn(x, y) {
+    //   console.log(this)
+    //   console.log(x + y)
+    // }
+
+    // // 语法：fn.apply(新的this, [3, 4])
+    // fn.apply(obj, [4, 8])
+    // 总结：
+    // 1. 函数.apply() 表示调用函数，原函数fn得以调用了
+    // 2. 修改了原函数中的this，改成 apply 方法的第1个参数了
+    // 3. 如果原函数有形参，可以通过 apply 方法为原函数传递实参，但是必须使用数组格式
+
+    // ----------------------- bind --------------------
+    let obj = { age: 20 }
+
+    function fn(x, y) {
+      console.log(this)
+      console.log(x + y)
+    }
+
+    // 语法：fn.bind(新的this, 5, 9)
+    // let a = fn.bind(obj, 5, 9)
+    // a()
+    fn.bind(obj, 5, 9)()
+// 总结：
+// 1. 函数.bind() 表示创建了一个新的函数，并且不会调用任何函数
+// 2. 修改了新函数中的this，改成 bind 方法的第1个参数了
+// 3. 如果原函数有形参，可以通过 bind 方法为新函数传递实参
+  </script>
+</body>
+
+</html>

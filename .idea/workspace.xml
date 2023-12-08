@@ -5,16 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fd4a94a-0c56-45e4-ad05-9503c45a1f87" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Js高级/03/01-Object.assign.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/03/02-字符串方法.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/03/03-数组方法.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/03/04-sort排序.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/03/05-通过构造函数创建对象.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/03/06-内置构造函数扩展.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/03/07-三角关系.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/03/08-原型继承.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/03/pink冰墩墩.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Js高级/03/综合案例素材.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/01-原型链或原型继承.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/02-赋值的问题.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/03-浅拷贝.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/04-递归函数.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/05-深拷贝.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/06-其他拷贝方案.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/07-其他拷贝方案.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/08-lodash中的拷贝.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/09-异常处理.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/10-try...catch.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/11-debugger.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/12-this指向总结.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/13-this指向练习.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/14-this指向练习.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/15-修改函数中this的指向.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/16-apply应用.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/lodash.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Js高级/04/综合案例.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,7 +49,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "E:/WebProject/web-study/Js高级/03",
+    "last_opened_file_path": "E:/WebProject/web-study/Js高级/04",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -52,6 +60,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\WebProject\web-study\Js高级\04" />
       <recent name="E:\WebProject\web-study\Js高级\03" />
       <recent name="E:\WebProject\web-study" />
     </key>
@@ -65,7 +74,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701936495725</updated>
       <workItem from="1701936496724" duration="595000" />
-      <workItem from="1702006746435" duration="5245000" />
+      <workItem from="1702006746435" duration="7910000" />
     </task>
     <servers />
   </component>

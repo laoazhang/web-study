@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var age = 10
+    let obj = {
+      age: 20,
+      say: () => {
+        // 函数作用域，外层就是全局作用域 （不要把对象的大括号当做一个作用域）
+        console.log(this.age) // 10
+      },
+      eat: function () {
+        // .... 这里的 this 表示 obj
+        let fn = () => {
+          console.log(this.age) // 箭头函数中没有this，所以这里的this指向eat方法中的this，即obj
+        }
+        fn()
+      },
+      wash: () => {
+        function abc() {
+          console.log(this.age)
+        }
+        abc()
+      }
+    }
+
+    // obj.say()
+    // obj.eat()
+    obj.wash()
+  </script>
+</body>
+
+</html>

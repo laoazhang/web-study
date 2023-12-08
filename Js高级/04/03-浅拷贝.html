@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let obj1 = {
+      name: 'zs',
+      age: 20,
+      height: 180,
+      info: {
+        sex: '男',
+        weight: 70
+      }
+    }
+
+    let obj2 = {} // 写了这一行，已经表示 obj2 和 obj1 是两个不同的对象了
+    // obj2.name = 'zs'
+    // obj2.age = 20
+    // 循环遍历 obj1，循环一次，取obj1里面的一个属性，然后给obj2加上
+    for (let key in obj1) {
+      // key 是 name、age、height
+      // obj1[key] 是 zs、20、180
+      // console.log(obj1[key]) // key是变量，必须用[]语法，而且绝对不能加引号
+      obj2[key] = obj1[key]
+    }
+
+    // 尝试修改其中一个对象
+    obj1.age = 10000
+    // 尝试修改对象的一个引用类型的属性
+    obj1.info.sex = '女'
+
+    console.log(obj1)
+    console.log(obj2)
+  </script>
+</body>
+
+</html>

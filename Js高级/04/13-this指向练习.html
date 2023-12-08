@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 用var声明的变量，自动加到window对象中，也就是说，可以 window.age 这样用
+    // 换句话说， age就是widnow对象的一个属性。
+    // alert('aaaa')
+    var age = 10
+
+    // 用let声明的变量，不会当做window对象的属性，也就是不能通过 window.age2 来使用
+    // let age2 = 20
+
+    // console.log(window.age) // 10
+    // console.log(window.age2) // undefined
+
+    let obj = {
+      age: 20,
+      say: function () {
+        setTimeout(function () {
+          console.log(this.age) // 定时器中的this表示widnow。 这里的this.age 就是 window.age的意思
+        }, 100)
+      }
+    }
+
+    obj.say()
+  </script>
+</body>
+
+</html>

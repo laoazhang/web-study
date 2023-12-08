@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // ------------------- Father -----------------------
+    function Father() {
+      this.eyes = '蓝'
+      this.head = '秃'
+    }
+
+    // ------------------- Son -------------------------
+    function Son() {
+      this.height = 180
+    }
+    // 让Son继承Father
+    Son.prototype = new Father()
+    // 只要修改了原型对象，则必须重置constructor
+    Son.prototype.constructor = Son // 这行写法固定
+    let s = new Son()
+    console.log(s)
+
+    // -------------------- Daughter -------------------
+    function Daughter() {
+      this.legs = '长'
+    }
+    Daughter.prototype = new Father()
+  </script>
+</body>
+
+</html>

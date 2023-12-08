@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./lodash.min.js"></script>
+  <script>
+    // _.abc()
+    try {
+      console.log(111) // 代码从上到下执行，这一行正常执行
+      _.abc()   // 这里，调用了一个不存在的方法，发生异常，抛出异常；try里面后续的代码就不再执行了
+      console.log(222) // 这行不执行
+    } catch (e) {
+      console.log(e.message) // 只输出错误描述信息
+    }
+
+    console.log(333) // 这行不受影响，正常执行
+  </script>
+</body>
+
+</html>

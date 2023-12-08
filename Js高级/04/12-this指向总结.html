@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>hello</p>
+  <script>
+    // 1. 全局中的this
+    console.log(this) // window
+
+    // 2. 普通函数中的this
+    function fn() {
+      console.log(this) // window
+    }
+    fn()  // window.fn()，window调用了fn函数，所以fn中的this表示window
+
+    // 3. 定时器中的this
+    // setTimeout(function () {
+    //   console.log(this) // window
+    // }, 100)
+
+    // 4. 事件处理函数中的this
+    document.body.addEventListener('click', function () {
+      console.log(this) // 事件源，此例中，表示body这个DOM对象
+    })
+
+    // 5. 构造函数中，以及对象方法中，包括原型对象的方法中，this都表示实例对象
+    function Dog() {
+      this.age = 20
+      this.say = function () {
+        console.log(this)
+      }
+    }
+
+    Dog.prototype.eat = function () {
+      console.log(this)
+    }
+
+    let d = new Dog()
+    d.say()
+    d.eat()
+
+    // 6. 构造函数的静态方法中，this表示构造函数
+    function Pig() {
+
+    }
+    // 给构造函数，直接添加的方法，叫做静态方法
+    Pig.eat = function () {
+      console.log(this)
+    }
+    // 调用的时候，只能使用构造函数调用
+    Pig.eat()
+  </script>
+</body>
+
+</html>

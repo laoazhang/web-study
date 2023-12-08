@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function sum(x, y) {
+      if (x === undefined || y === undefined) {
+        // 如果符合这个条件，说明调用函数的时候，没有传递参数
+        // return console.log('参数不对') // 左右结构，右侧的代码先运算
+        // throw '参数不对'
+        // 实际使用，经常用throw 和 new Error() 配合
+        // throw new Error('错误描述信息')
+        throw new Error('参数不对')
+      }
+      return x + y
+    }
+
+
+    // console.log(sum(3, 5))
+    console.log(sum())
+  </script>
+</body>
+
+</html>

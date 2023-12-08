@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let obj1 = {
+      name: 'zs',
+      age: 20,
+      info: ['男', 180, 70],
+      dog: {
+        name: '旺财',
+        color: 'black',
+        child: {
+          name: '小旺财',
+          color: '花'
+        }
+      }
+    }
+
+
+    // 前提：
+    // 1. 准备好 需要拷贝的对象、或者数组
+    // 2. 准备好 一个空对象、或者空数组
+
+    // 拷贝的时候：
+    // 1. 先判断拷贝的值是数组吗
+    // 2. 再判断拷贝的值是对象吗
+    // 3. 不是数组，也不是对象，肯定是一个普通值，则直接拷贝
+
+    let obj2 = {}
+
+    // 相信自己，写一个函数，可以实现浅拷贝 （当我需要浅拷贝的时候，就调用这个函数）
+    function fn(obj1, obj2) {
+      for (let key in obj1) {
+        // 循环的时候，先判断，参见上面的 1、 2
+        if (Array.isArray(obj1[key])) {
+          obj2[key] = []
+          // 现在，又需要把 obj1.info 里面的值，拷贝给 obj2.info 这个空数组
+          // 这又是一个浅拷贝，当我需要浅拷贝的时候，就调用 fn 即可
+          fn(obj1[key], obj2[key])
+        } else if (obj1[key] instanceof Object) {
+          obj2[key] = {}
+          fn(obj1[key], obj2[key])
+        } else {
+          // 如果进入else，说明对象的值是普通的值，则直接拷贝
+          obj2[key] = obj1[key]
+        }
+      }
+    }
+
+    fn(obj1, obj2)
+
+    // 尝试修改一个值
+    obj1.dog.color = '绿色'
+
+    console.log(obj1)
+    console.log(obj2)
+  </script>
+</body>
+
+</html>
