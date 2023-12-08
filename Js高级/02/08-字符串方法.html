@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let str = 'pink,琪琪,老段'
+
+    // ['pink', '琪琪', '老段']
+    // split ----------------- 根据指定的字符，将字符串分割为数组 ---------------------
+    let arr = str.split(',')
+    console.log(arr)
+
+    // substring -------------- 字符串截取 ---------------------------------------
+    let res = str.substring(2) // 表示从下标2的位置开始截取，一直截取的结尾
+    console.log(res) // nk,琪琪,老段
+
+    let res2 = str.substring(2, 6) // 表示从下标2的位置开始截取，截取到下标6的位置(不包括6的位置)
+    console.log(res2) // nk,琪
+  </script>
+</body>
+
+</html>

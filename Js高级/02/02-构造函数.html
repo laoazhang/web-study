@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 构造函数，本质肯定也是函数（构造函数要求首字母大写）
+    function Pig(name, age, gender) {
+      // 把对象的属性，放到构造函数内部，写一份即可
+      // 把对象的所有属性，都加给 this
+      this.name = name
+      this.age = age
+      this.gender = gender
+    }
+
+    // 通过构造函数，创建对象语法 【创建对象，也叫做 实例化对象】
+    // let 实例对象 = new 构造函数(参数, 参数, ....)
+    let Peppa = new Pig('佩奇', 6, '女')
+    let George = new Pig('乔治', 3, '男')
+    console.log(Peppa)
+    console.log(George)
+  </script>
+</body>
+
+</html>

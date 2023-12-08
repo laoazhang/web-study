@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [
+      { id: 1, uname: 'pink', salary: 20000 },  // 20000 + 20000 * 0.3 = 26000
+      { id: 2, uname: '琪琪', salary: 10000 },   // 10000 + 10000 * 0.3 = 13000
+      { id: 3, uname: '老段', salary: 10000 }   // 10000 + 10000 * 0.3 = 13000
+    ]
+
+    // 上述是员工目前的薪资。
+    // 公司上市，每个员工涨薪 30%
+    // 涨薪后，每个员工的薪资是多少？
+    let res = arr.map(item => {
+      // return '结果' // { id: 1, uname: 'pink', salary: 26000 }
+      return {
+        id: item.id,
+        uname: item.uname,
+        salary: item.salary * 1.3
+      }
+      // console.log(item)
+      // item.salary *= 1.3 // item.salary = item.salary * 1.3
+      // return item
+    })
+
+    console.log(res) // [ { id: 1, uname: 'pink', salary: 26000 }, ..., ...]
+
+    // 涨薪后，公司每月要多发多少工资？（20000 * 0.3   +   10000 * 0.3   +  10000 * 0.3）
+    let res2 = arr.reduce((total, curr) => {
+      // 有初始值，起始的时候，total = 0;  curr = {id: 1, uname: 'pink', salary: 20000}
+      return total + curr.salary * 0.3
+    }, 0)
+
+    console.log(res2)
+  </script>
+</body>
+
+</html>

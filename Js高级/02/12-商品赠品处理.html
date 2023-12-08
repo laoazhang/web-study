@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let gift = '50g茶叶,清洗球'
+    // 将字符串转成数组
+    // let arr = gift.split(',')
+    // // console.log(arr) // ['50g茶叶', '清洗球']
+
+    // let res = arr.map(item => {
+    //   return `<span class="tag">【赠品】${item}</span>`
+    // })
+
+    // // console.log(res) // ['<span class="tag">【赠品】50g茶叶</span>', '<span class="tag">【赠品】清洗球</span>']
+
+    // console.log(res.join(''))
+
+    console.log(gift.split(',').map(item => `<span class="tag">【赠品】${item}</span>`).join(''))
+  </script>
+</body>
+
+</html>

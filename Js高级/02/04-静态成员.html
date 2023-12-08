@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Pig() {
+      // this是表示什么？实例对象
+      this.name = '佩奇'   // 相当于 Peppa.name = '佩奇'
+      this.age = 20       // 相当于 Peppa.age = 20
+    }
+
+    // 把构造函数也当做对象用，也是可以的，还是可以通过 【对象.属性】语法来添加属性或访问属性
+    // 给构造函数直接添加的属性，叫做静态属性
+    Pig.color = 'pink'   // 添加一个静态属性
+    Pig.say = function () {
+      // 给Pig构造函数添加一个静态方法
+      console.log('大家好，我是佩奇')
+    }
+    console.log(Pig.color) // pink
+    Pig.say()
+
+
+
+
+    // 你用过哪些内置的静态方法？？？？
+    // 调用静态方法，使用 【构造函数.方法()】
+    // Math.max()
+    // Math.min()
+    // Math.random()
+
+
+  </script>
+</body>
+
+</html>

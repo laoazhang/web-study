@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 
+    let obj = {
+      uname: 'zs',
+      'user-name': 'lisi',
+      age: 20,
+      bb: {
+        dname: '汪仔'
+      },
+      cc: ['琪琪', 'pink'],
+      dd: null,
+      ee: true,
+      ff: function () { },
+      gg: function () { },
+    }
+
+    // obj.属性
+    console.log(obj.uname)
+    // obj['属性']
+    console.log(obj['user-name'])
+    // obj[变量]
+    let a = 'age'
+    console.log(obj[a]) // 相当于是 obj['age']
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Pig() {
+      this.name = '乔治'
+      this.age = 3
+      this.gender = '男'
+      // return 'hello world' // 无效
+      return { bookname: '遮天', author: '辰东' } // 构造函数中，返回一个对象，则实例化之后就会得到这个对象
+    }
+
+    let obj = new Pig()
+    console.log(obj) // {bookname: '遮天', author: '辰东'}
+  </script>
+</body>
+
+</html>
