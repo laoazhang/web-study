@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13.图书管理删除方法</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
+
+<!-- 列表获取 -->
+    <script>
+        //目标：根据输入框输入的值，做筛选
+        // 复习知识点1: 表单内按钮，会默认产生提交行为，默认会提交到当前页面（导致网页刷新），走不完点击事件了
+        // 解决：e.preventDefault()
+
+        //1.筛选按钮-点击事件
+        document.querySelector('#select').addEventListener('click', e => {
+            e.preventDefault()
+            //2.获取输入框的内容
+            let bookname = document.querySelector('#sel_bookname').value
+            let author = document.querySelector('#sel_author').value
+            let publisher = document.querySelector('#sel_publisher').value
+
+            //4.判断输入框有值，形成参数对象
+            let queryObj = {}
+            if (bookname) {
+                queryObj.bookname = bookname
+            }
+            if (author) {
+                queryObj.author = author
+            }
+            if (publisher) {
+                queryObj.publisher = publisher
+            }
+
+            //3.把参数携带传递给后台，返回筛选结果
+            axios({
+                url: 'http://ajax-api.itheima.net/api/books',
+                method: 'GET',
+                params: queryObj
+            }).then(result => {
+                setList(result)
+            })
+
+            //复习：封装函数
+            //场景：遇到重复的一段代码，包装在一个函数内
+            //形参：函数自己确定不了的值，需要形参接收
+            //返回值：此函数运行完毕，要不要结果返回到调用处
+            function setList(res) {
+                let allStr = ``
+                res.data.data.forEach(obj => {
+                    let str = `
+                <tr>
+                    <th scope="row">${obj.id}</th>
+                    <td>${obj.bookname}</td>
+                    <td>${obj.author}</td>
+                    <td>${obj.publisher}</td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-sm btn-del">删除</button>    
+                    </td>
+                </tr>
+                `
+                    str += str
+                })
+                document.querySelector('tbody').innerHTML = allStr
+            }
+            //问题1:随便搜都能成功
+            //原因：请求和响应都是ok的，只不过就是有没有筛选到结果
+            //问题2:搜有的书名，它也没有返回啊
+            //原因2:发送参数，服务器端都会使用，但是有的值是空的，它会一起匹配
+            //解决2:前端要做判断，输入框有值的再懈怠到params上
+        })
+    </script>
+
+<!-- 新增 -->
+    <script>
+        //目标：新增图书
+        //1.添加按钮：点击事件
+        document.querySelector('#addBtn').addEventListener('click', e => {
+            e.preventDefault()
+
+            //2.获取输入框的值
+            let bookname = document.querySelector('#bookname').value
+            let author = doucment.quereySelector('#author').value
+            let publisher = doucment.quereySelector('#publisher').value
+            //3.把值传给服务器
+            axios({
+                url: 'http://ajax-base-api-t.itheima.net/api/addbook',
+                method: 'POST',
+                //params: 参数值对应(query查询参数)
+                //data: 请求体参数(body请求体application/json)
+                data: {
+                    bookname: bookname,
+                    author: author,
+                    publisher: publisher
+                }
+            }).then(result => {
+                console.log(result)
+                //4.添加成功,返回的响应结果，没有所有数据
+                //所以需要我们重新调用一次获取列表的结构，从服务器拿到刚刚新增的和以前的所有数据重新铺设
+                axios({
+                    url: 'http://ajax-api.itheima.net/api/books',
+                    method: 'GET',
+                    params: queryObj
+                }).then(result => {
+                    setList(result)
+                })
+            })
+
+        })
+    </script>
+</body>
+
+</html>

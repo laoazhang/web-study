@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01-06.Ajax的基础使用</title>
+</head>
+
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
+    <script>
+        axios({
+            url: 'http://ajax-base-api-t.itheima.net/api/getbooks',
+            method: 'GET',
+            params: {
+                bookname: '西游记'
+            }
+        }).then(result => {
+            console.log(result)
+        })
+    </script>
+
+</body>
+
+</html>

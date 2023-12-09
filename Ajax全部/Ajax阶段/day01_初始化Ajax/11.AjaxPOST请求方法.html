@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11.AjaxPOST请求方法</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
+    <script>
+        axios({
+            url: 'http://ajax-base-api-t.itheima.net/api/addbook',
+            method: 'POST',
+            //params: 参数值对应(query查询参数)
+            //data: 请求体参数(body请求体application/json)
+            data: {
+                "bookname": "黑马程序员12",
+                "author": "小马",
+                "publisher": "北京出版社"
+            }
+        }).then(result => {
+            console.log(result)
+        })
+    </script>
+</body>
+
+</html>

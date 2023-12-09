@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09.概念_url编码</title>
+</head>
+<body>
+    <script>
+        //需求1: 中文 -> url编码
+        // 语法：encodeURII(中文)
+        let str ='西游记'
+        let result = encodeURI(str)
+        console.log(result)
+
+        //需求2:url编码 -> 中文
+        let zhStr = decodeURI(result)
+        console.log(zhStr);
+    </script>
+</body>
+</html>
