@@ -12,6 +12,14 @@
 
     <!-- 列表获取 -->
     <script>
+        // 问题：我们axios请求的接口，一般是在一个服务器上，前缀基础地址统一的
+        // 为了避免频繁修改，我们要提取到公共处进行统一管理
+        // 解决：axios它本身支持全局默认配置，可以设置一个前缀基础地址
+        // 语法：`axios.defaults.baseURL = 基地址`
+        // 效果：以后在使用这个axios方法时，请求的具体地址（baseURL+url）
+        axios.defaults.baseURL = 'http://ajax-api.itheima.net'
+
+
         //目标：根据输入框输入的值，做筛选
         // 复习知识点1: 表单内按钮，会默认产生提交行为，默认会提交到当前页面（导致网页刷新），走不完点击事件了
         // 解决：e.preventDefault()
@@ -38,7 +46,7 @@
 
             //3.把参数携带传递给后台，返回筛选结果
             axios({
-                url: 'http://ajax-api.itheima.net/api/books',
+                url: '/api/books',
                 method: 'GET',
                 params: queryObj
             }).then(result => {
@@ -88,7 +96,7 @@
             let publisher = doucment.quereySelector('#publisher').value
             //3.把值传给服务器
             axios({
-                url: 'http://ajax-base-api-t.itheima.net/api/addbook',
+                url: '/api/addbook',
                 method: 'POST',
                 //params: 参数值对应(query查询参数)
                 //data: 请求体参数(body请求体application/json)
@@ -102,7 +110,7 @@
                 //4.添加成功,返回的响应结果，没有所有数据
                 //所以需要我们重新调用一次获取列表的结构，从服务器拿到刚刚新增的和以前的所有数据重新铺设
                 axios({
-                    url: 'http://ajax-api.itheima.net/api/books',
+                    url: '/api/books',
                     method: 'GET',
                     params: queryObj
                 }).then(result => {
@@ -111,6 +119,49 @@
             })
 
         })
+    </script>
+
+    <!-- 删除 -->
+    <script>
+        // 目标：实现删除功能
+        // 坑点：上来此代码运行，获取不到axios请求数据（耗时后），后创建的标签，导致你获取不到表格里删除按钮
+        // 解决：动态创建的标签，如何绑定事件，用事件委托
+        // 事件委托：动态创建的标签身上的事件，委托给已经存在的父级/父级标签来绑定，然后通过事件对象.target真正出发事件的标签
+        // 事件委托原理：事件有冒泡特性
+        // 1.获取删除按钮->绑定点击事件（因为删除事件是多个，所以要全部查出来用querySelectorAll）
+        //删除按钮父级父级tbody->绑定点击事件
+        document.querySelectorAll('tbody').addEventListener('click', e => {
+            // 2.拿到删除按钮标签本身
+            let delBtn = e.target
+            // 3.只想让删除按钮走逻辑代码，所以要做判断
+            if (delBtn.tagName === 'BUTTON') {
+                //可以dataset提前绑定/通过标签关系找到tr的第一个子标签获取内容
+                let theId = delBtn.parentNode.parentNode.children[0].innerHTML
+                //4.因为数据都在服务器上，所以要调用接口
+                axios({
+                    url: '/api/delbook',
+                    method: 'DELETE',
+                    params: {
+                        id: theId
+                    }
+                }).then((result) => {
+                    if (result.data.status === 500) {
+                        //删除失败
+                        alert('删除失败')
+                    } else {
+                        // 5.删除以后，我们再重新去后台获取并铺设前端列表
+                        axios({
+                            url: '/api/books',
+                            method: 'GET',
+                            params: queryObj
+                        }).then(result => {
+                            setList(result)
+                        })
+                    }
+                })
+            }
+        })
+
     </script>
 </body>
 

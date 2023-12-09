@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06.案例_头像上传</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style></style>
+</head>
+
+<body>
+    <div class="thumb-box">
+        <!-- 头像 -->
+        <img class="img-thumbnail thumb">
+        <div class="mt-2">
+            <input type="file" id="iptFile" accept="image/*" style="display: none;">
+            <button class="btn btn-primary" id="btnChoose">选择 & 上传图片</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
+
+    <script>
+        // 目标： 点击button，既要实现选择文件窗口出现，并且选择文件后，直接上传
+        // 问题：为何让input[type = file]的标签隐藏起来(css方式隐藏)
+        // 原因：input[type=file]标签样式不太好改，但是还得需要它的默认行为，让文件选择窗口出现
+        // 实现：点击好看的按钮， 事件方法中，通过js的方法获取到input[type=file]标签，用JS的方式模拟一次点击让文件选择窗口出现
+
+        // 1.点击button，让文件窗口出现
+        document.querySelector('#btnChoose').addEventListener('click', e => {
+            // 2.用JS代码模拟一次input[type=file]点击
+            // 知识点：标签对象.事件方法名() 就可以模拟一次事件触发
+            document.querySelector('#iptFile').click()
+        })
+
+        // 3.检测用户选择的文件改变事件(用户选了图片，点击打开)
+        document.querySelector('#iptFile').addEventListener('change', e => {
+            // 4.拿到文件对象
+            let fileList = e.target.files
+
+            if (fileList.length > 0) {
+                // 5. 把文件发送请求给后端
+                let fd = new FormData()
+                fd.append('avatar', fileList[0])
+
+                axios({
+                    url: 'http://ajax-api.itheima.net/api/file',
+                    method: 'POST',
+                    data: fd
+                }).then(res => {
+                    console.log(res);
+                    // 6.回显头像图片
+                    document.querySelector('.thumb').src = res.data.data.url
+
+                })
+            }else{
+                alert('请选择文件')
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

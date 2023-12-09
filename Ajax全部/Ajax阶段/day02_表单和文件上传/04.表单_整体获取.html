@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04.表单_整体获取</title>
+</head>
+
+<body>
+    <!-- 目标：用form标签，自我提交，提交数据（了解）
+         action: 本表单自我提交到哪里 url地址
+         method: 请求到方式
+    -->
+    <form action="http://ajax-api.itheima.net/api/data" method="POST">
+        <div>
+            <!-- 用户名 -->
+            <span>用户名：</span>
+            <input type="text" name="username">
+        </div>
+        <div>
+            <!-- 密码： -->
+            <span>登录密码：</span>
+            <input type="password" name="password">
+        </div>
+        <div>
+            <!-- 提交按钮 -->
+            <button>提交</button>
+        </div>
+    </form>
+    <!-- 总结：
+        1. 注意：form表单提交（自身特性） 和Ajax没有关系
+        2. form表单提交，会让浏览器跳转到action指定的地址并提交数据（体验非常不好-现在基本不用）
+        3. Ajax+axios的提交（常用），不会刷新当前页面并进行一次请求提交（体验好）
+     -->
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
+    <script src="./lib/form-serialize.js"></script>
+    <script>
+        // 目标：用form-serialize.js插件，直接获取整个表单里参数名和值
+        // 1.引入form-serialize.js插件(库) 
+        // 2.语法：
+        // serialize(form表单对象)，原地返回值："name参数名=值&name参数名=值"
+        // serialize(form表单对象，{hash: true},原地返回值；{name参数名：值})
+
+        document.querySelector('button').addEventListener('click', e => {
+            e.preventDefault()
+            // 以前是自己一个一个获取,现在是整体获取
+            let formEl = document.querySelector('form')
+            // (1):整体表单的结果，是个key=value格式的字符串
+            // let str = serialize(formEl) //'username=123&password=321'
+            // (2):整体表单的结果，想要对象
+            let obj = serialize(formEl, { hash: true }) // { username: 123, password: 321}
+
+            // 4.提交给后台
+            axios({
+                url: 'http://ajax-api.itheima.net/api/data',
+                method: 'POST',
+                data: obj
+            }).then(res => {
+                console.log(res);
+            })
+            // params尽量直接用对象，参数名和值会自动拼接在url?后面(query)
+            // data的值可以是对象也可以是字符串，还可以是FormData表单容器
+        })
+    </script>
+</body>
+
+</html>

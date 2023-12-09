@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07.概念_请求体的三种类型</title>
+</head>
+
+<body>
+    <form action="http://ajax-api.itheima.net/api/data" method="POST">
+        <div>
+            <!-- 用户名 -->
+            <span>用户名：</span>
+            <input type="text" name="username">
+        </div>
+        <div>
+            <!-- 密码： -->
+            <span>登录密码：</span>
+            <input type="password" name="password">
+        </div>
+        <div>
+            <!-- 提交按钮 -->
+            <button>提交</button>
+        </div>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
+    <script src="./lib/form-serialize.js"></script>
+    <script>
+        document.querySelector('button').addEventListener('click', e => {
+            e.preventDefault()
+            let formEl = document.querySelector('form')
+
+            // let obj = serialize(formEl, { hash: true }) // { username: 123, password: 321}
+            // let str = serialize(formEl)
+
+            // 新知识点: 可以直接form标签传入进去(它会自动准备参数名+值)，后续依然可以用append添加其他参数
+            let fd = new FormData(formEl)
+
+            axios({
+                url: 'http://ajax-api.itheima.net/api/data',
+                method: 'POST',
+                data: str
+            }).then(res => {
+                console.log(res);
+            })
+            // 目标： 请求体，有三种内容类型
+            // (1)：JSON字符串(用的多)（知识点: axios的data选项传递对象，运行时会被axios内部转换JSON字符串）
+            // 请求头：Content-Type：'application/json' (axios内根据data的值自动携带的)
+            // 请求体：'{"username":"123","password":"321"}'
+
+
+            // (2): 字符串(key=value&key=value)
+            // 请求头：Content-Type: 'application/x-www-form-urlencoded' (axios内根据data的值自动携带的)
+            // 请求体：'username=123&password=321'
+
+
+            // (3): FormData表单容器
+            // 请求头：Content-Type: 'multipart/form-data';
+            // boundary=------WebKitFormBoundarya6R41ThQRpc9BcYy (axios内根据data的值自动携带的,分隔符浏览器自动生成的)
+
+        })
+    </script>
+</body>
+
+</html>

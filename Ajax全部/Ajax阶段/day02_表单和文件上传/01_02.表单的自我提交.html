@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_02.表单的自我提交</title>
+</head>
+<body>
+    <!-- 目标：用form标签，自我提交，提交数据（了解）
+         action: 本表单自我提交到哪里 url地址
+         method: 请求到方式
+    -->
+    <form action="http://ajax-api.itheima.net/api/data" method="POST">
+        <div>
+            <!-- 用户名 -->
+            <span>用户名：</span>
+            <input type="text" name="username">
+        </div>
+        <div>
+            <!-- 密码： -->
+            <span>登录密码：</span>
+            <input type="password" name="password">
+        </div>
+        <div>
+            <!-- 提交按钮 -->
+            <button>提交</button>
+        </div>
+    </form>
+    <!-- 总结：
+        1. 注意：form表单提交（自身特性） 和Ajax没有关系
+        2. form表单提交，会让浏览器跳转到action指定的地址并提交数据（体验非常不好-现在基本不用）
+        3. Ajax+axios的提交（常用），不会刷新当前页面并进行一次请求提交（体验好）
+     -->
+</body>
+</html>
