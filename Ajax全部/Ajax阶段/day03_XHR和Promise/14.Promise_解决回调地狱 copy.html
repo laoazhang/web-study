@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14.Promise_解决回调地狱</title>
+</head>
+
+<body>
+    <script>
+        function myAjax(url) {
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest()
+                xhr.open('GET', url)
+                xhr.send()
+                xhr.addEventListener('load', () => {
+                    resolve(JSON.parse(xhr.response))
+                })
+            })
+        }
+        // 经验：如果一个函数内，想要使用另外一个函数内的变量，定义一个全局变量
+        // 注意：一定要先赋值，再使用
+        // 1.拿到，获取省份列表的Promise对象
+        let pname = ''
+        let p = myAjax('http://ajax-api.itheima.net/api/province')
+        p.then(res=>{
+            pname = res.data[5] //'辽宁省'
+            // 2.拿到获取城市列表的Promise对象
+            return myAjax(`http://ajax-api.itheima.net/api/city?pname=${pname}`)
+        }).then(res=>{
+            let cname = res.data[9]//'辽宁市'
+            // 3.拿到获取地区列表的Promise对象
+            return myAjax(`http://ajax-api.itheima.net/api/area?pname=${pname}&cname=${cname}`)
+        }).then(res=>{
+            console.log(res);
+        })
+
+    </script>
+</body>
+
+</html>

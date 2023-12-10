@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16.案例_分类导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 980px;
+            margin: 0 auto;
+        }
+
+        .top {
+            display: flex;
+            width: 100%;
+            height: 80px;
+            align-items: center;
+            justify-content: space-around;
+            position: relative;
+        }
+
+        .top>li {
+            text-align: center;
+        }
+
+        .top>li>a {
+            border-bottom: 1px solid transparent;
+        }
+
+        .top>li:hover>a {
+            border-color: #27ba9b;
+            color: #27ba9b;
+        }
+
+        .top>li:hover>.sub {
+            opacity: 1;
+            transform: scale(1, 1);
+        }
+
+        .sub {
+            position: absolute;
+            left: 0;
+            top: 80px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            height: 100px;
+            opacity: 0;
+            transform: scale(1, 0);
+            transform-origin: top center;
+            transition: all 0.3s .1s;
+        }
+
+        .sub li {
+            width: 120px;
+            text-align: center;
+        }
+
+        .sub li a {
+            display: block;
+            font-size: 14px;
+            padding-top: 8px;
+        }
+
+        .sub li a span {
+            display: block;
+        }
+
+        .sub li a img {
+            width: 60px;
+            height: 60px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="top">
+            <!-- <li>
+                <a href="javascript:;">首页</a>
+                <ul class="sub">
+                    <li>
+                        <a href="javascript:;">
+                            <span>砂锅厨具</span>
+                            <img src="https://yanxuan-item.nosdn.127.net/5c70f793797fdee0022470d9a48e43a7.png?type=webp&imageView&quality=95&thumbnail=800x800"
+                                alt="">
+                        </a>
+                    </li>
+                </ul>
+            </li> -->
+        </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
+    <script>
+        // <!-- 大容器 -->
+        //     <div class="container">
+        //         <!-- 导航内容容器 -->
+        //         <ul class="top">
+        //             <!-- 每个导航项目 -->
+        //             <li>
+        //                 <a href="javascript:;">首页</a>
+        //                 <!-- 二级导航容器 -->
+        //                 <ul class="sub">
+        //                     <!-- 每个二级导航项 -->
+        //                     <li>
+        //                         <a href="javascript:;">
+        //                             <span>砂锅厨具</span>
+        //                             <img src="https://yanxuan-item.nosdn.127.net/5c70f793797fdee0022470d9a48e43a7.png?type=webp&imageView&quality=95&thumbnail=800x800"
+        //                                 alt="">
+        //                         </a>
+        //                     </li>
+        //                 </ul>
+        //             </li>
+        //         </ul>
+        //     </div>
+
+    </script>
+
+    <script>
+        axios.defaults.baseURL = 'http://ajax-api.itheima.net'
+        // 1.先准备标签和样式
+        // 2. 铺设数据
+        // 2.0 先获取一级分类数据列表
+        axios({
+            url: '/api/category/top',
+            // method:'GET' //axios请求方式默认为'GET',所以可以省略
+        }).then(({ data: res }) => {
+            // axios()在原地返回Promise对象(此Promise对象内包含一个原生Ajax请求)
+            // axios它自己封装了一个结果对象，并把后端返回到数据挂在到data属性下
+            // 所以：我想让res的值直接是后端返回的数据
+            console.log(res); // data:[{一级分类对象},{一级分类对象}]
+            // 2.1 把数据铺设到页面上，把数据遍历，生成多个小的Promise对象
+            let resultArr = res.data.map(obj => {
+                // 3. 遍历每一个一级分类对象，再请求下属的二级分类对象
+                let p = axios({
+                    url: '/api/category/sub',
+                    params: {
+                        id: obj.id
+                    }
+                })
+                // 4.坑：直接把一级和二级的数据，在这里标签承载铺设(铺设)
+                // 问题：js的map循环很快，axios请求需要响应时间，顺序不一致
+                // 解决：
+                // (1)：每次循环产生一个小Promise对象(内部请求二级分类数据)
+                // (2): 每个成功后一起返回一个最终结果
+                // (3): 要保证他们的请求和响应顺序对应
+                // Promise.all()
+                return p
+            })
+            // 5 合并成一个大的Promise对象
+            Promise.all(resultArr).then(res => {
+                    // res:[二级分类列表axios结果对象]
+                    // 6. 有了最终的数据，循环产生一级和二级标签结构并铺设到页面上
+                    res.forEach(result => {
+                        let obj = result.data.data // 分类数据对象
+                        document.querySelector('.top').innerHTML += `
+                    <li>
+                        <a href="javascript:;">${obj.name}</a>
+                        <ul class="sub">
+                            ${obj.children.map(item => {
+                            return `
+                                <li>
+                                <a href="javascript:;">
+                                    <span>${item.name}</span>
+                                    <img src="${item.picture}"
+                                        alt="">
+                                </a>
+                            </li>`
+                        }).join('')}
+                        </ul>
+                    </li> `
+                    })
+                })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09.概念_回调地狱</title>
+</head>
+
+<body>
+    <script>
+        function myAjax(url, fn) {
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET', url)
+            xhr.send()
+            xhr.addEventListener('load', () => {
+                fn(JSON.parse(xhr.response))
+            })
+        }
+
+        // 目标：通过省市区查询，来讲解回调地狱的代码样子
+        // 需求：根据省份列表，随便拿一个，在城市名字列表，随便拿一个，查地区名字列表
+
+        //1. 请求省份列表
+        myAjax('http://ajax-api.itheima.net/api/province', (res) => {
+            let pname = res.data[5]//'辽宁省'
+            // 2. 请求城市列表
+            myAjax(`http://ajax-api.itheima.net/api/city?pname=${pname}`, res => {
+                let cname = res.data[9] //'辽宁市'
+                // 3.请求地区列表
+                myAjax(`http://ajax-api.itheima.net/api/area?pname=${pname}&cname=${cname}`,res=>{
+                    console.log(res);
+                })
+            })
+        })
+
+        
+
+        //回调地狱：回调函数中还嵌套着回调函数，这样嵌套下去形成了回调地狱 
+        // 不方便阅读和修改
+    </script>
+</body>
+
+</html>

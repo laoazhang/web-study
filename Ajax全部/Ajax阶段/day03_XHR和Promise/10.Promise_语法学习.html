@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10.Promise_语法学习</title>
+</head>
+<body>
+    
+    <script>
+        // 目标：掌握Promise的语法
+        // 概念： ES6新出的一个构造函数，目的为了解决回调地狱问题
+        /*
+            语法：
+            let 变量 = new Promise((resolve,reject)=>{
+                // resolve和reject是Promise提供的2个函数
+                // 写一些代码(同步/异步)都可以，你想返回出去结果
+                // resolve('成功的结果')
+                // reject('失败的结果')
+            })
+
+            // Promise对象内2个固定方法名(then,catch)
+            变量.then(res =>{
+                // 接收次Promise对象内，返回出来的成功结果
+            }).catch(err =>{
+                // 接收次Promise对象内，返回出来的失败结果
+            })
+
+            运行：
+            1. new promise后原地留下一个Promise对象(承诺),承诺将来会一个成功/失败的结果给你返回使用
+            2. 它会立刻执行new Promise()小括号里所有代码
+            
+        */
+
+        let p = new Promise((resolve,reject)=>{
+            // resolve('成功的结果')
+            reject(new Error('失败的结果'))
+        })
+        p.then(res=>{
+            console.log(res);
+        }).catch(err=>{
+            console.error(err);
+        })
+
+
+    </script>
+</body>
+</html>

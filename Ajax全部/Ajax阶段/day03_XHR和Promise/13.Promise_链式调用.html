@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13.Promise_链式调用</title>
+</head>
+<body>
+    <script>
+        let p = new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                resolve('成功1')
+            },2000)
+        })
+        let p2 = new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                resolve('成功2')
+            },2000)
+        })
+        p.then(res=>{
+            console.log(res);
+            return p2 // 如果return一个Promise对象，它的结果，会被下个return接收
+        }).then(res=>{
+            console.log(res);
+        })
+
+        // 问题：为什么2个一起打印
+        // 原因：2个new Promise 一起执行（并立刻执行函数体代码做倒计时），在return p2的时候，p2的状态已经是成功的了，所以第二个打印会一起打印出来
+    </script>
+    
+</body>
+</html>

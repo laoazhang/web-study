@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08.案例_Ajax原生封装简易版</title>
+</head>
+
+<body>
+    <script>
+        // 目标：封装原生Ajax
+        // 要求：默认只支持GET方式请求，url地址可以换，并且要把请求的结果返回出去
+        // 思考参数：多次调用myAjax实现不同业务，哪些值会变就要留在形参上
+        // 思考return：需要把结果返回到调用处吗？需要就得return
+        // 口诀：return后面的值到"本次所在"函数调用的地方
+        // 当你return不出去，解决方案：回调函数(在异步任务内，可以通过它把结果带出来)
+        function myAjax(url,fn) {
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET', url)
+            xhr.send()
+            xhr.addEventListener('load', () => {
+                fn(JSON.parse(xhr.response))
+            })
+        }
+
+        //1. 请求省份列表
+        myAjax('http://ajax-api.itheima.net/api/province', (res) => {
+                console.log(res);
+            })
+
+        myAjax('http://ajax-api.itheima.net/api/city?pname=辽宁省',(res)=>{
+            console.log(res);
+        })
+
+        // 问题：打印的顺序不一定
+        // 原因：
+        // 前端：myAjax方法调用里面是Ajax(异步代码)不会阻塞主线程继续往下走，它会让浏览器发起请求
+        // 后端：响应查询结果并返回(需要时间-查询数据库的时间)
+        // 代码执行过程非常快，1毫米都用不上，相当于同时发起了2个请求
+        // 结果：谁先响应回来了不一定
+        // 总结：响应速度不同
+    </script>
+</body>
+
+</html>

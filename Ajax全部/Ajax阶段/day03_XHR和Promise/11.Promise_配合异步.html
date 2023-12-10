@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11.Promise_配合异步</title>
+</head>
+<body>
+    
+    <script>
+        // 目标：Promise内写一个异步代码
+        // 需求：定时2秒后，返回一个随机的名字
+        // 概念：Promise是ES6新出的构造函数，用于解决回调函数，一般配合异步任务使用，承诺你将来有结果给你
+
+        let p = new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                let arr = ['老李','pink粉','老赵','老王','老张']
+                let num = Math.floor(Math.random()* arr.length)
+                resolve(arr[num])
+            },2000)
+        })
+        p.then(res=>{
+            console.log(res);
+        }).catch(err=>{
+            console.error(err);
+        })
+
+
+    </script>
+</body>
+</html>
