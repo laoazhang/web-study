@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08.案例_个人信息修改</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style>
+        .form-select {
+            width: 103px;
+            display: inline-block;
+        }
+
+        .col-form-label {
+            text-align: right;
+        }
+
+        .figure-img {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+
+        #upload {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="p-5">个人设置</h1>
+        <form class="col-6">
+            <div class="row mb-3">
+                <label class="col-form-label col-3">昵称：</label>
+                <div class="col-9">
+                    <input class="form-control col-9" type="text" name="nickname" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-form-label col-3">籍贯：</label>
+                <div class="col-9">
+                    <select class="form-select col-4" name="province">
+                        <option value="">--省--</option>
+                    </select>
+                    <select class="form-select col-4" name="city">
+                        <option value="">--市--</option>
+                    </select>
+                    <select class="form-select col-4" name="area">
+                        <option value="">--区--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-form-label col-3">头像：</label>
+                <div class="col-9">
+                    <input class="form-control col-9" type="hidden" name="avatar" />
+                    <figure class="figure">
+                        <input type="file" id="upload" />
+                        <img src="#" class="figure-img img-fluid rounded" alt="..." />
+                        <figcaption class="figure-caption">修改头像</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-3"></label>
+                <div class="col-9">
+                    <button class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/bootstrap@5.1.3/dist/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
+    <script src="./lib/form-serialize.js"></script>
+
+    <!-- 渲染默认信息 -->
+    <script>
+        let nickNameInput = document.querySelector('input[name=nickname]') //昵称输入框
+        let provinceSelect = document.querySelector('select[name=province]')//省份选择器
+        let citySelect = document.querySelector('select[name=city]')//城市选择器
+        let areaSelect = document.querySelector('select[name=area]')//区域选择器
+        let headImg = document.querySelector('.figure-img')//头像img
+            //自调用函数
+            ; (async function () {
+                axios.defaults.baseURL = 'http://ajax-api.itheima.net'
+                // 1. 明确目标+标签和样式
+                // 2.0 获取默认信息，并铺设到标签里(数据回显/回填)
+                const { data: res } = await axios({
+                    url: '/api/settings'
+                })
+                let { data: obj } = res
+                // let { area: area, avatar: avatar, city: city, nickname: nickname, province: province } = obj
+                let { area, avatar, city, nickname, province } = obj
+                //2.1 把数据渲染到表单域各个标签中
+                nickNameInput.value = nickname
+                headImg.src = avatar
+                //3.问题：select下拉菜单回显失败
+                //原因：每个select夹着的iption标签没有，所以没有选项iption的value属性值和你设置的匹配，所以就没有默认下拉菜单
+                //解决：把option选项先铺设
+                //3.0先铺设省份的optino列表
+                const { data: { data: provinceList } } = await axios({
+                    url: '/api/province'
+                })
+                provinceSelect.innerHTML += provinceList.map(provinceName => {
+                    return `<option value="${provinceName}">${provinceName}</option>`
+                }).join('')
+
+                //3.1 铺设城市的选项列表
+                const { data: { data: cityList } } = await axios({
+                    url: `/api/city?pname=${province}`
+                })
+                citySelect.innerHTML += cityList.map(cityName => {
+                    return `<option value="${cityName}">${cityName}</option>`
+                }).join('')
+
+                //3.2 铺设区域的选项列表
+                const { data: { data: areaList } } = await axios({
+                    url: `/api/area?pname=${province}&cname=${city}`
+                })
+                areaSelect.innerHTML += areaList.map(areaName => {
+                    return `<option value="${areaName}">${areaName}</option>`
+                }).join('')
+
+                //3.3 这次设置select标签value值，标签回默认和option的value值匹配，匹配成功，默认显示对应option作为默认显示的选项
+                console.log(provinceList);
+                provinceSelect.value = province
+                citySelect.value = city
+                areaSelect.value = area
+            })();
+    </script>
+
+    <!-- 省市区联动 -->
+    <script>
+        //4.目标：完成省市区联动
+        //4.0给省select绑定change事件
+        provinceSelect.addEventListener('change', async () => {
+            // 4.1 获取选择的省份option对应value，请求下属城市列表
+            //provinceSelect.value 是用户点击option选项的value值
+            const { data: { data: cityList } } = await axios({
+                url: `/api/city?pname=${provinceSelect.value}`
+            })
+            // 4.2 把城市select里option全换掉
+            citySelect.innerHTML = cityList.map(cityName => {
+                return `<option value="${cityName}">${cityName}</option>`
+            }).join('')
+
+            // 4.6 让区域默认显示，第一个城市下属的(效果更好)
+            const { data: { data: areaList } } = await axios({
+                url: `/api/area?pname=${provinceSelect.value}&cname=${cityList[0]}`
+            })
+            areaSelect.innerHTML = areaList.map(areaName => {
+                return `<option value="${areaName}">${areaName}</option>`
+            }).join('')
+
+        })
+
+        // 4.3 给市select绑定change事件
+        citySelect.addEventListener('change', async () => {
+            // 4.4 获取选择的市option对应value，请求下属区域列表
+            const { data: { data: areaList } } = await axios({
+                url: `/api/area?pname=${provinceSelect.value}&cname=${citySelect.value}`
+            })
+            // 4.5 把区域列表覆盖进页面里 
+            areaSelect.innerHTML = areaList.map(areaName => {
+                return `<option value="${areaName}">${areaName}</option>`
+            }).join('')
+        })
+    </script>
+
+    <!-- 修改头像 -->
+    <script>
+        let uploadInput = document.querySelector('#upload') //input标签对象类型file
+        // 5.目标：选择头像文件上传，并回显到img上
+        // 5.0 给img绑定点击事件
+        headImg.addEventListener('click', () => {
+            // 5.1再让input[type=file]标签触发一次点击事件，让文件选择器出现
+            uploadInput.click()
+        })
+        // 5.2 当选择文件，会触发
+        uploadInput.addEventListener('change', async e => {
+            // 5.3选择的图片
+            let fileList = e.target.files
+            let fd = new FormData()
+            fd.append('avatar', fileList[0])
+            // 5.4上传图片
+            const result = await axios({
+                url: '/api/file',
+                method: 'POST',
+                data: fd
+            })
+            // 5.5 把上传成功的图片，"暂时"显示到img标签上
+            headImg.src = result.data.data.url
+
+        })
+    </script>
+
+    <!-- 保存更新用户个人信息 -->
+    <script>
+        // 6. 目标：点击保存，更新数据
+        // 6.0 保存按钮->点击事件
+        document.querySelector('.btn-primary').addEventListener('click', async (e) => {
+            e.preventDefault()
+            // 6.1 获取form标签整体数据(除了图片)
+            let formObj = serialize(document.querySelector('form'), { hash: true })
+            console.log(formObj);
+
+            // 6.2 要往formObj对象里，再添加avatar属性和图片地址
+            formObj.avatar = headImg.src
+
+            // 6.3 调用更新接口，把准备好的5对参数和值发给后台保存
+            const res = await axios({
+                url: '/api/settings',
+                method: 'PUT',
+                data: formObj
+            })
+            // 6.4 可以把返回的提示信息，给用户来个alert提示
+            console.log(res);
+        })
+    </script>
+</body>
+
+</html>

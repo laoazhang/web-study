@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03.案例_解决回调地狱</title>
+</head>
+<body>
+    <script>
+        // 目标：用ES8的async+await来解决回调地狱问题
+        function myAjax(url) {
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest()
+                xhr.open('GET', url)
+                xhr.send()
+                xhr.addEventListener('load', () => {
+                    resolve(JSON.parse(xhr.response))
+                })
+            })
+        }
+
+        const getLIstFn = async ()=>{
+            const res = await myAjax('http://ajax-api.itheima.net/api/province')
+            const pname = res.data[5] // 辽宁省
+            const res2 = await myAjax(`http://ajax-api.itheima.net/api/city?pname=${pname}`)
+            const cname = res2.data[9] // 辽阳市
+            const res3 = myAjax(`http://ajax-api.itheima.net/api/area?pname=${pname}&cname=${cname}`)
+            console.log(res3);
+        }
+        // 请求时一个个发送的
+        getLIstFn()
+    </script>
+    
+</body>
+</html>

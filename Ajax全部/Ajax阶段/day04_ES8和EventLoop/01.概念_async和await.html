@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01.概念_saync和await</title>
+</head>
+
+<body>
+    <script>
+        let p = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('成功的值')
+            }, 2000)
+        })
+
+        // 目标：掌握async和await语法使用
+        // 作用：取代then函数，提取成功结果
+
+        // 普通函数
+        async function myFn() {
+            const result = await p
+            console.log(result)
+        }
+        myFn()
+
+        //箭头函数
+        const youFn = async ()=>{
+            const result = await p
+            console.log(result);
+        }
+        youFn()
+    </script>
+
+</body>
+
+</html>
