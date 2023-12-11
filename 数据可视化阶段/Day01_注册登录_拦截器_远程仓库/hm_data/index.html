@@ -118,7 +118,7 @@
                         src="https://yanxuan-item.nosdn.127.net/8b27deb1670c53e67c42ca3e1ed6fd12.jpg" />
                     </span>
                     <div class="ml-2 d-none d-lg-block">
-                      <span class="mb-0 text-sm font-weight-bold">Admin</span>
+                      <span class="mb-0 text-sm font-weight-bold" id="navName">Admin</span>
                     </div>
                   </div>
                 </a>
@@ -275,14 +275,25 @@
     if (token===null) {
       location.href='./login.html'
     }
-    // 设置用户名
-    let userNameSpan = document.querySelector('.navbar-nav .font-weight-bold')
-    userNameSpan.innerHTML = localStorage.getItem('username')
+    // 3.从本地取出用户名，并设置用户名
+    document.querySelector('#navName').innerHTML=localStorage.getItem('uname')
 
-    // 退出登录功能
+    // 4.退出登录功能
     document.querySelector('#logout').addEventListener('click',e=>{
+      //所谓的退出(复用经验)
+      //(1):清除本地缓存
+      //(2):回到了登录页(不一定，结合需求去写)
       localStorage.clear()
       location.href='./login.html'
+    })
+    // 5.尝试请求统计数据
+    //DOMContentLoaded等待真是DOM挂载完毕在触发此事件(一般应用于js代码在标签上面)
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await axios({
+        url: '/dashboard',
+      })
+
+      console.log(res);
     })
   </script>
 </body>

@@ -120,7 +120,6 @@
 <script src="./lib/axios.js"></script>
 <script src="./js/common.js"></script>
 <script>
-    axios.defaults.baseURL = 'http://ajax-api.itheima.net'
     // 创建bootstrap弹窗
     let toastBox = document.querySelector('#myToast')
     const toast = new bootstrap.Toast(toastBox, {
@@ -166,7 +165,7 @@
         } else {
             // 5.通过校验，准备发请求
             try{
-                const {data:res} = await axios({
+                const res = await axios({
                     url: '/register',
                     method: 'POST',
                     data: formObj
