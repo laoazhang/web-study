@@ -2,173 +2,118 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>登录</title>
-    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css"/>
-    <link rel="stylesheet" href="./bootstrap/bootstrap-icons.css"/>
-    <link rel="stylesheet" href="./css/common.css"/>
-    <style>
-        .form-control:focus {
-            border-color: #e0e6ed;
-            box-shadow: none;
-        }
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>登录</title>
+  <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="./bootstrap/bootstrap-icons.css" />
+  <link rel="stylesheet" href="./css/common.css" />
+  <style>
+    .form-control:focus {
+      border-color: #e0e6ed;
+      box-shadow: none;
+    }
 
-        .form-control,
-        .form-group,
-        .input-group {
-            transition: none !important;
-        }
+    .form-control,
+    .form-group,
+    .input-group {
+      transition: none !important;
+    }
 
-        .text-blue {
-            color: #499FEE;
-        }
+    .text-blue {
+      color: #499FEE;
+    }
 
-        .text-blue:hover {
-            color: #499FEE;
-        }
-    </style>
+    .text-blue:hover {
+      color: #499FEE;
+    }
+  </style>
 </head>
 
 <body class="application application-offset">
-<div class="container-fluid container-application">
+  <div class="container-fluid container-application">
     <div class="main-content position-relative">
-        <!-- Page content -->
-        <div class="page-content">
-            <div class="min-vh-100 py-5 d-flex align-items-center">
-                <div class="w-100">
-                    <div class="row justify-content-center">
-                        <div class="col-sm-8 col-lg-4">
-                            <div class="card shadow zindex-100 mb-0">
-                                <div class="card-body px-md-5 py-5">
-                                    <div class="mb-5">
-                                        <h6 class="h3">传智教育-登录</h6>
-                                    </div>
-                                    <span class="clearfix"></span>
-                                    <form role="form" autocomplete="off">
-                                        <div class="form-group">
-                                            <label class="form-control-label">账号</label>
-                                            <div class="input-group input-group-merge">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                                </div>
-                                                <input name="username" type="text" class="form-control" id="input-email"
-                                                       placeholder="请输入账号"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div>
-                                                    <label class="form-control-label">密码</label>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <a href="javascript:;"
-                                                       class="small text-muted text-underline--dashed border-primary">忘记密码</a>
-                                                </div>
-                                            </div>
-                                            <div class="input-group input-group-merge">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="bi bi-key"></i></span>
-                                                </div>
-                                                <input name="password" type="password" class="form-control"
-                                                       id="input-password"
-                                                       placeholder="请输入密码"/>
-                                                <div class="input-group-append">
+      <!-- Page content -->
+      <div class="page-content">
+        <div class="min-vh-100 py-5 d-flex align-items-center">
+          <div class="w-100">
+            <div class="row justify-content-center">
+              <div class="col-sm-8 col-lg-4">
+                <div class="card shadow zindex-100 mb-0">
+                  <div class="card-body px-md-5 py-5">
+                    <div class="mb-5">
+                      <h6 class="h3">传智教育-登录</h6>
+                    </div>
+                    <span class="clearfix"></span>
+                    <form role="form" autocomplete="off">
+                      <div class="form-group">
+                        <label class="form-control-label">账号</label>
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                          </div>
+                          <input name="username" type="text" class="form-control" id="input-email"
+                            placeholder="请输入账号" />
+                        </div>
+                      </div>
+                      <div class="form-group mb-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div>
+                            <label class="form-control-label">密码</label>
+                          </div>
+                          <div class="mb-2">
+                            <a href="javascript:;"
+                              class="small text-muted text-underline--dashed border-primary">忘记密码</a>
+                          </div>
+                        </div>
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                          </div>
+                          <input name="password" type="password" class="form-control" id="input-password"
+                            placeholder="请输入密码" />
+                          <div class="input-group-append">
                             <span class="input-group-text">
                               <a href="javascript:;" data-toggle="password-text" data-target="#input-password">
                                 <i class="bi bi-eye-fill text-blue"></i>
                               </a>
                             </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-4">
-                                            <button id="btn-login" type="button"
-                                                    class="btn btn-sm btn-info btn-icon btn-blue rounded-pill">
-                                                <span class="btn-inner--text">登录</span>
-                                                <span class="btn-inner--icon"><i class="bi bi-arrow-right"></i></span>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer px-md-5">
-                                    <small>没有注册？</small> <a href="./register.html"
-                                                                class="small font-weight-bold text-blue">创建账号</a>
-                                </div>
-                            </div>
+                          </div>
                         </div>
-                    </div>
+                      </div>
+                      <div class="mt-4">
+                        <button id="btn-login" type="button" class="btn btn-sm btn-info btn-icon btn-blue rounded-pill">
+                          <span class="btn-inner--text">登录</span>
+                          <span class="btn-inner--icon"><i class="bi bi-arrow-right"></i></span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="card-footer px-md-5">
+                    <small>没有注册？</small> <a href="./register.html" class="small font-weight-bold text-blue">创建账号</a>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<!-- toast -->
-<div class="position-fixed top-0 start-50 pt-4" style="z-index: 999; transform: translateX(-50%)">
+  </div>
+  <!-- toast -->
+  <div class="position-fixed top-0 start-50 pt-4" style="z-index: 999; transform: translateX(-50%)">
     <div id="myToast" class="toast bg-rgba">
-        <div class="toast-body">提示消息</div>
+      <div class="toast-body">提示消息</div>
     </div>
-</div>
-<script src="./bootstrap/bootstrap.min.js"></script>
-<script src="./lib/form-serialize.js"></script>
-<script src="./lib/axios.js"></script>
-<script src="./js/common.js"></script>
-<script>
-    axios.defaults.baseURL = 'http://ajax-api.itheima.net'
-    // 创建bootstrap弹窗
-    let toastBox = document.querySelector('#myToast')
-    const toast = new bootstrap.Toast(toastBox, {
-        animate: true,
-        autohide: true,
-        delay: 3000 // 持续时间
-    })
-    let toastBody = document.querySelector('.toast-body')
+  </div>
+  <script src="./bootstrap/bootstrap.min.js"></script>
+  <script src="./lib/form-serialize.js"></script>
+  <script src="./lib/axios.js"></script>
+  <script src="./js/common.js"></script>
+  <script>
 
-    // 1. 登录按钮->点击事件
-    document.querySelector('#btn-login').addEventListener('click', async () => {
-        // 2. 收集表单域name值(参数名)和表单域的用户输入的值
-        let formObj = serialize(document.querySelector('form'), {hash: true})
-        // 3. 解构赋值
-        let {username = '', password = ''} = formObj
-        // 4. 值校验判断
-        if (username.length < 2 || username.length > 30) {
-            //给出错误提示
-            toastBody.innerHTML = '用户名在2-30个字符之间'
-            toast.show()
-        } else if (password.length < 6 || username.length > 30) {
-            toastBody.innerHTML = '密码在6-30个字符之间'
-            toast.show()
-        } else {
-            // 5.发请求
-            try {
-                const {data: res} = await axios({
-                    url: '/login',
-                    method: 'POST',
-                    data: formObj
-                })
-                // 成功后给用户提示
-                toastBody.innerHTML = res.message
-                toast.show();
-                // 把token字符串(登录成功后台生成并返回的一个标记用户身份的字符串)存入本地
-                localStorage.setItem('token', res.data.token)
-                localStorage.setItem('uname', res.data.username)
-                // 让页面跳转到首页
-                location.href = './index.html'
-            } catch (err) {
-                // 6. 登录失败, 具体查看失败结果(http状态码)
-                let {response: {status, data: {message}}} = err
-                if (status === 400) {
-                    // 用户名或密码错误
-                    toastBody.innerHTML = message
-                    toast.show();
-                }
-            }
-
-        }
-    })
-
-</script>
+  </script>
 </body>
 
 </html>
