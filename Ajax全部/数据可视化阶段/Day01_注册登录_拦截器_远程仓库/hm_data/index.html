@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>首页</title>
+  <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="./bootstrap/bootstrap-icons.css" />
+  <link rel="stylesheet" href="./css/common.css" />
+  <style>
+    .card-stats .bi {
+      width: 50px;
+      height: 50px;
+      display: block;
+      background-color: #e4e4e4;
+      color: #fff;
+      border-radius: 50%;
+      line-height: 50px;
+      text-align: center;
+      font-size: 24px;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body class="application application-offset">
+  <div class="container-fluid container-application">
+    <div class="sidenav show" id="sidenav-main">
+      <!-- Sidenav header -->
+      <div class="sidenav-header d-flex align-items-center">
+        <a class="navbar-brand" href="./index.html">
+          <span class="logo">·ITCAST·</span>
+        </a>
+      </div>
+      <!-- User mini profile -->
+      <div class="sidenav-user d-flex flex-column align-items-center justify-content-between text-center">
+        <!-- Avatar -->
+        <div>
+          <a href="#" class="avatar rounded-circle avatar-xl">
+            <img alt="Image placeholder" src="https://yanxuan-item.nosdn.127.net/8b27deb1670c53e67c42ca3e1ed6fd12.jpg"
+              class="" />
+          </a>
+          <div class="mt-5">
+            <h5 class="mb-0 text-white">黑马前端</h5>
+            <span class="d-block text-sm text-white opacity-8 mb-3">数据可视化</span>
+            <a href="javascript:;" class="btn btn-sm btn-white btn-icon rounded-pill shadow hover-translate-y-n3">
+              <span class="btn-inner--text">学前端来黑马</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Application nav -->
+      <div class="nav-application clearfix">
+        <a href="./index.html" class="btn btn-square text-sm active">
+          <span class="btn-inner--icon d-block"><i class="bi bi-house bi-2x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">首页</span>
+        </a>
+        <a href="./student.html" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="bi bi-people bi-2x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">学生</span>
+        </a>
+        <a href="javascript:;" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="bi bi-columns bi-2x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">排版</span>
+        </a>
+        <a href="javascript:;" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="bi bi-files bi-2x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">资料</span>
+        </a>
+        <a href="javascript:;" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="bi bi-receipt bi-2x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">就业</span>
+        </a>
+        <a href="javascript:;" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="bi bi-gear bi-2x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">设置</span>
+        </a>
+      </div>
+      <!-- Misc area -->
+      <div class="card bg-gradient-warning">
+        <div class="card-body">
+          <h5 class="text-white">哈喽, 朋友!</h5>
+          <p class="text-white mb-4">为什么不现在开始学习前端，创造一些令人惊叹的东西呢？</p>
+          <a href="http://itcast.cn" class="btn btn-sm btn-block btn-white rounded-pill" target="_blank">Get started</a>
+        </div>
+      </div>
+    </div>
+    <div class="main-content position-relative">
+      <nav class="navbar navbar-main navbar-expand-lg navbar-dark navbar-border" id="navbar-main">
+        <div class="container-fluid">
+          <!-- Navbar nav -->
+          <div class="collapse navbar-collapse navbar-collapse-fade" id="navbar-main-collapse">
+            <ul class="navbar-nav align-items-lg-center">
+              <!-- Home  -->
+              <li class="nav-item">
+                <a class="nav-link pl-lg-0" href="./index.html"> 首页 </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link pl-lg-0" href="./index.html"> 传智教育 </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link pl-lg-0" href="./index.html"> 黑马程序员 </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link pl-lg-0" href="./index.html"> 文档 </a>
+              </li>
+            </ul>
+            <!-- Right menu -->
+            <ul class="navbar-nav ml-lg-auto align-items-center d-none d-lg-flex">
+              <li class="nav-item dropdown dropdown-animate">
+                <a class="nav-link pr-lg-0" href=".dropdown-menu" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <div class="media media-pill align-items-center">
+                    <span class="avatar rounded-circle">
+                      <img alt="Image placeholder"
+                        src="https://yanxuan-item.nosdn.127.net/8b27deb1670c53e67c42ca3e1ed6fd12.jpg" />
+                    </span>
+                    <div class="ml-2 d-none d-lg-block">
+                      <span class="mb-0 text-sm font-weight-bold" id="navName">Admin</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link pl-lg-0" id="logout" href="javascript:;"> 退出 </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="page-content">
+        <!-- Page Title -->
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 mb-3 mb-md-0">
+              <h5 class="h3 font-weight-400 mb-0 text-white">Dashboard</h5>
+              <span class="text-sm text-white opacity-8">上海前端 xx 期</span>
+            </div>
+          </div>
+        </div>
+        <!-- charts -->
+        <div class="row">
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">就业薪资</h6>
+                    <span name="salary" class="h3 font-weight-bold mb-0 ">15500</span>
+                  </div>
+                  <div class="col-auto">
+                    <i class="bi bi-coin"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">班级人数</h6>
+                    <span name="student_count" class="h3 font-weight-bold mb-0 ">80</span>
+                  </div>
+                  <div class="col-auto">
+                    <i class="bi bi-people"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">平均年龄</h6>
+                    <span name="age" class="h3 font-weight-bold mb-0 ">24.40</span>
+                  </div>
+                  <div class="col-auto">
+                    <i class="bi bi-calendar2-week"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">小组个数</h6>
+                    <span name="group_count" class="h3 font-weight-bold mb-0 ">8</span>
+                  </div>
+                  <div class="col-auto">
+                    <i class="bi bi-collection"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-xl-8">
+            <div class="card" id="line" style="height: 400px;"></div>
+          </div>
+          <div class="col col-xl-4">
+            <div class="card" id="salary" style="height: 400px;"></div>
+          </div>
+          <div class="col col-xl-12">
+            <div class="card" style="height: 400px;">
+              <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">班级每组薪资</h6>
+                  <div id="btns">
+                    <button type="button" class="btn btn-xs btn-blue">1</button>
+                    <button type="button" class="btn btn-xs ">2</button>
+                    <button type="button" class="btn btn-xs ">3</button>
+                    <button type="button" class="btn btn-xs ">4</button>
+                    <button type="button" class="btn btn-xs ">5</button>
+                    <button type="button" class="btn btn-xs ">6</button>
+                    <button type="button" class="btn btn-xs ">7</button>
+                    <button type="button" class="btn btn-xs ">8</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0" id="lines"></div>
+            </div>
+          </div>
+          <div class="col col-xl-4">
+            <div class="card" id="gender" style="height: 500px;"></div>
+          </div>
+          <div class="col col-xl-8">
+            <div class="card" id="map" style="height: 500px;"></div>
+          </div>
+        </div>
+        <!-- footer -->
+        <div class="footer pt-5 pb-4 footer-light" id="footer-main">
+          <div class="row text-center text-sm-left align-items-sm-center">
+            <div class="col-sm-6">
+              <p class="text-sm mb-0">© 2022 <a href="https://itcast.cn" class="h6 text-sm" target="_blank">前端学科</a>.
+                All rights reserved.</p>
+            </div>
+            <div class="col-sm-6 mb-md-0">
+              <ul class="nav justify-content-center justify-content-md-end">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Support</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Terms</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pr-0" href="#">Privacy</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./bootstrap/bootstrap.min.js"></script>
+  <script src="./lib/axios.js"></script>
+  <script src="./lib/echarts.min.js"></script>
+  <script src="./js/common.js"></script>
+  <script src="./lib/china.js"></script>
+  <script>
+    // 注册和登陆(无token也能看)
+    // 1. 先从本地取出token
+    let token = localStorage.getItem('token')
+    if (token === null) {
+      location.href = './login.html'
+    }
+    // 3.从本地取出用户名，并设置用户名
+    document.querySelector('#navName').innerHTML = localStorage.getItem('uname')
+
+    // 4.退出登录功能
+    document.querySelector('#logout').addEventListener('click', e => {
+      //所谓的退出(复用经验)
+      //(1):清除本地缓存
+      //(2):回到了登录页(不一定，结合需求去写)
+      localStorage.clear()
+      location.href = './login.html'
+    })
+    // 5.尝试请求统计数据
+    //DOMContentLoaded等待真是DOM挂载完毕在触发此事件(一般应用于js代码在标签上面)
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await axios({
+        url: '/dashboard',
+      })
+      console.log(res);
+
+      // 一. 概览数据铺设
+      // 1. 确认标签和数据的映射关系
+      // res.data.overview里是概览数据
+      // 发现数据对象属性和标签name属性值一致, 于是我有了一个大胆的想法
+      // 用数据对象属性名去获取标签
+      // 2. 循环数据并设置给标签内容
+      let { overview, year, salaryData, groupData, provinceData } = res.data
+      for (let key in overview) {
+        document.querySelector(`[name=${key}]`).innerHTML = overview[key]
+      }
+
+      // 2. 设置x轴和y轴的数据
+      // 一. 铺设薪资走势(折线图)
+      // 写任何需求4步套路之前
+      // 在它的基础上, 找组件套路
+      // 明确目标
+      // 1. 找组件 (类似)
+      // 2. 读组件 (标签/配置项js)
+      // 3. 删组件 (删除没有用的多余的)
+      // 4. 增组件 (额外的配置项查找)
+      // (1): 如果知道哪个配置项, 可以直接用
+      // (2): 如果不知道, 我们要找相关类似的例子(看差别) / 直接百度(1. 关键字, 2. 看版本(一般相近的有些是可以向下兼容的) 3. 看文章发布时间)
+      // 5. 改组件 (把数据/名字改改)
+      const initSalaryTrendFn = (year) => {
+        let myEchart = echarts.init(document.querySelector('#line'))
+        let xData = year.map(obj => obj.month) // ['1月', '2月', ....]
+        let yData = year.map(obj => obj.salary) // [16200, 20600, ....]
+        myEchart.setOption({
+          title: {
+            text: '2021全学科薪资走势',
+            textStyle: {
+              // 标题文字样式
+              fontSize: 16 // 字体大小
+            },
+            left: 10,
+            top: 15
+          },
+          grid: { // 绘图网格区域
+            top: '20%'
+          },
+          xAxis: {
+            type: 'category', // 默认用series.data的值作为x轴离散数据, 如果自己有data用自己的
+            data: xData, // x轴数据
+            axisLine: { // 轴线样式
+              lineStyle: {
+                color: '#ccc',
+                type: 'dashed'
+              }
+            },
+            axisLabel: { // 轴线上标签文字
+              color: '#999'
+            }
+          },
+          yAxis: {
+            type: 'value', // 数值轴(默认), 用series.data的值作为y轴值
+            splitLine: { // 分隔线
+              lineStyle: {
+                type: 'dashed'
+              }
+            }
+          },
+          series: [
+            // 系列数据(中间绘制内容)
+            {
+              data: yData, // 数据
+              type: 'line', // 类似, 折线图
+              symbolSize: 10,
+              smooth: true, // 是否平滑曲线显示。
+              lineStyle: { // 折线图-线段(不包含圆点)的样式
+                width: 6, // 线宽度
+                color: { // 线颜色: rgb或者16进制, 如果渐变色用对象形式
+                  type: 'linear',
+                  x: 0, // 左
+                  y: 0, // 上
+                  x2: 1, // 右
+                  y2: 0, // 下
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: '#499FEE' // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: '#5D75F0' // 100% 处的颜色
+                    }
+                  ],
+                  global: false // 缺省为 false(代表x,y,x2,y2占据容器百分比0-1)
+                }
+              },
+              areaStyle: { // 设置折线往下包裹区域的面积颜色
+                color: { // 线颜色: rgb或者16进制, 如果渐变色用对象形式
+                  type: 'linear',
+                  x: 0, // 左
+                  y: 0, // 上
+                  x2: 0, // 右
+                  y2: 1, // 下
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: '#499FEE' // 0% 处的颜色
+                    },
+                    {
+                      offset: 0.8,
+                      color: 'rgba(255, 255, 255, 0.2)' // 100% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(255, 255, 255, 0)' // 100% 处的颜色
+                    }
+                  ],
+                  global: false // 缺省为 false(代表x,y,x2,y2占据容器百分比0-1)
+                }
+              }
+            }
+          ]
+        })
+      }
+      // 二. 薪资分布饼状图
+      const initSalarySpreadFn = (salaryData) => {
+        let myEchart = echarts.init(document.querySelector('#salary'))
+        myEchart.setOption({
+          tooltip: { // 提示框组件
+            trigger: 'item' // 放到某项触发提示框
+          },
+          legend: { // 图例组件(表示每种颜色的概念)
+            bottom: '6%',
+            left: 'center' // 图例组件居中显示
+          },
+          title: {
+            text: '班级薪资分布',
+            top: 15,
+            left: 10,
+            textStyle: {
+              fontSize: 16
+            }
+          },
+          color: ['#FDA224', '#5097FF', '#3ABCFA', '#34D39A'],
+          series: [ // 系列数据(重要)
+            {
+              name: '薪资分布', // 系列名称，用于tooltip的显示
+              type: 'pie', // 图形类型'pie'固定代表饼状图
+              radius: ['50%', '64%'], // 饼图的半径(内圈, 外圈) 表示外半径为可视区尺寸（容器高宽中较小一项）的 20%
+              center: ['50%', '45%'],
+
+              itemStyle: { // 图形样式
+                borderRadius: 10, // 表示内圆角半径和外圆角半径
+                borderColor: '#fff', // 图形的描边颜色
+                borderWidth: 2 // 描边线宽(为0无描边)
+              },
+              label: { // 饼图图形上的文本标签(默认上来显示的, 鼠标移入是另外配置)
+                show: false, // 隐藏
+                position: 'center' // 让他们出现在中心
+              },
+
+              labelLine: { // 标签的视觉引导线配置(就是解释每块图形的文本标签连线)
+                show: false
+              },
+              // data: [ // 系列数据
+              //   { value: 1048, name: 'Search Engine' },
+              //   { value: 735, name: 'Direct' },
+              //   { value: 580, name: 'Email' },
+              //   { value: 484, name: 'Union Ads' },
+              // ]
+              data: salaryData.map(obj => {
+                return {
+                  name: obj.label,
+                  value: obj.g_count + obj.b_count
+                }
+              })
+            }
+          ]
+        })
+      }
+
+
+      // 三. 每组薪资柱状图
+      const initGroupSalaryFn = (groupData) => {
+        // groupData是个对象, key是组号(1-8数字字符串)
+        // 隐藏知识点: JS对象里key如果是数字, 默认内部会转成字符串使用
+        if (groupData['1']) {
+          let myEchart = echarts.init(document.querySelector('#lines'))
+          let firstGroupNameArr = groupData['1'] // 不能.1 因为js词法分析时, 会认为1是常量不是表达式
+          // x轴上人名: 把第一组数组里对象, 转成只有名字的数组
+          let firstNameArr = firstGroupNameArr.map(obj => obj.name) // ['文涛', ....]
+          // 第一套绿色的柱状图数据
+          let hopeSalaryArr = firstGroupNameArr.map(obj => obj.hope_salary) // [14200, ....]
+          // 第二套蓝色的柱状图数据
+          let salaryArr = firstGroupNameArr.map(obj => obj.salary) // [13500, ....]
+
+
+          let optionObj = {
+            grid: {
+              left: 70,
+              top: 30,
+              right: 30,
+              bottom: 50,
+            },
+            tooltip: {
+              trigger: 'item',
+            },
+            xAxis: {
+              type: 'category',
+              // 每个刻度对应每个人名
+              // data: ['人名1', '人名2', '人名3'],
+              data: firstNameArr,
+              axisLine: {
+                lineStyle: {
+                  color: '#ccc',
+                  type: 'dashed'
+                }
+              },
+              axisLabel: {
+                color: '#999'
+              }
+            },
+            yAxis: {
+              type: 'value',
+              splitLine: {
+                lineStyle: {
+                  type: 'dashed'
+                }
+              }
+            },
+            series: [
+              {
+                // data: [10, 20, 30, 40, 12, 13],
+                data: hopeSalaryArr,
+                type: 'bar',
+                name: '期望薪资'
+              },
+              {
+                // data: [10, 20, 30, 40, 12, 13],
+                data: salaryArr,
+                type: 'bar',
+                name: '就业薪资'
+              }
+            ],
+            color: [
+              {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#34D39A', // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(52,211,154,0.2)', // 100% 处的颜色
+                  },
+                ],
+              },
+              {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#499FEE', // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(73,159,238,0.2)', // 100% 处的颜色
+                  },
+                ],
+              },
+            ],
+          }
+          myEchart.setOption(optionObj)
+
+          // 原生JS实现高亮:
+          // (1): 事件委托
+          document.querySelector('#btns').addEventListener('click', e => {
+            if (e.target.tagName === 'BUTTON') {
+              // (2): 获取现在有高亮类名的那一个, 把高亮类名移除
+              document.querySelector('.btn-blue').classList.remove('btn-blue')
+              // (3): 再给点击的这个添加上
+              e.target.classList.add('btn-blue')
+
+              // 点击按钮拿到标签数字字符串, 去groupData中换取对应数组
+              let indexStr = e.target.innerHTML
+              let groupArr = groupData[indexStr] // 换到组号对应学生信息数组
+
+              // initGroupSalaryFn(groupArr)
+              // 问题: 递归调用就出现了卡死问题
+              // 知识: 函数每次执行都是独立的(在内存中), addEventListener多次存在
+              // 原因: (1): 每次都在内存中重复创建Echarts对象, (2): 每次都给委托的按钮重复绑定点击事件(导致后来点击一次, 事件方法会走很多遍. 然后又递归绑定了很多次)
+              // 造成内存泄露(堆满), 最后导致页面卡死
+              // 解决: 不要递归, 直接给这个echarts实例重新设置选项即可
+
+              // 网页刚打开
+              //   initGroupSalaryFn函数执行一次, 1个Echarts实例在内存里, btns身上绑定1个事件监听(1个事件处理函数)
+              // 点击页码2, 因为btns身上只有1个事件监听者, 所以函数走1次, 进入后递归走initGroupSalaryFn
+              //   initGroupSalaryFn函数执行一次, 2个Echarts实例在内存里, btns身上绑定2个事件监听(2个事件处理函数)
+              // 点击页码3, 因为btns身上有2个事件监听者, 所以事件处理函数走2次, 进入后递归走2次initGroupSalaryFn
+              //   initGroupSalaryFn函数执行一次, 3个Echarts实例在内存里, btns身上绑定4个事件监听(4个事件处理函数)
+
+
+              // // 不要让echarts.init重复创建一个容器
+              // // 我们只需要让这个实例重新设置下选项
+              let firstNameArr = groupArr.map(obj => obj.name) // ['文涛', ....]
+              // 第一套绿色的柱状图数据
+              let hopeSalaryArr = groupArr.map(obj => obj.hope_salary) // [14200, ....]
+              // 第二套蓝色的柱状图数据
+              let salaryArr = groupArr.map(obj => obj.salary) // [13500, ....]
+
+              // // 把option对象里属性值换掉
+              optionObj.xAxis.data = firstNameArr
+              optionObj.series[0].data = hopeSalaryArr
+              optionObj.series[1].data = salaryArr
+              myEchart.setOption(optionObj) // 带着新数据, 把这个唯一的图表会重新绘制一遍
+            }
+          })
+        }
+      }
+
+
+      // 四. 男女薪资分布2个饼状图
+      const initGenderSalaryFn = (salaryData) => {
+        const myEchart = echarts.init(document.querySelector('#gender'))
+        myEchart.setOption({
+          title: [
+            {
+              text: '男女薪资分布',
+              left: 10,
+              top: 10,
+              textStyle: {
+                fontSize: 16,
+              },
+            },
+            {
+              text: '男生',
+              left: '50%',
+              top: '45%',
+              textAlign: 'center',
+              textStyle: {
+                fontSize: 12,
+              },
+            },
+            {
+              text: '女生',
+              left: '50%',
+              top: '85%',
+              textAlign: 'center',
+              textStyle: {
+                fontSize: 12,
+              },
+            },
+          ],
+          tooltip: {
+            trigger: 'item'
+          },
+          color: ['#FDA224', '#5097FF', '#3ABCFA', '#34D39A'],
+          series: [
+            {
+              type: 'pie',
+              radius: 50,
+              radius: ['20%', '30%'],
+              center: ['50%', '30%'],
+              datasetIndex: 1,
+              // data: [ { name: '男生', value: 1000 } ]
+              // 必须加小括号, 否则会认为大括号是函数体而不是对象的大括号
+              data: salaryData.map(obj => ({ name: obj.label, value: obj.b_count }))
+            },
+            {
+              type: 'pie',
+              radius: 50,
+              radius: ['20%', '30%'],
+              center: ['50%', '70%'],
+              datasetIndex: 2,
+              data: salaryData.map(obj => ({ name: obj.label, value: obj.g_count }))
+            }
+          ]
+        })
+      }
+
+      // 五. 实例化地图
+      const initMapChartFn = (data) => {
+        // 如果要描绘地图, 不光需要echarts.js文件本身(还需要china.js地图数据js)
+        const myEchart = echarts.init(document.querySelector('#map'))
+
+        // 地图上相关的数据
+        let dataList = [
+          { name: '南海诸岛', value: 0 },
+          { name: '北京', value: 0 },
+          { name: '天津', value: 0 },
+          { name: '上海', value: 0 },
+          { name: '重庆', value: 0 },
+          { name: '河北', value: 0 },
+          { name: '河南', value: 0 },
+          { name: '云南', value: 0 },
+          { name: '辽宁', value: 0 },
+          { name: '黑龙江', value: 0 },
+          { name: '湖南', value: 0 },
+          { name: '安徽', value: 0 },
+          { name: '山东', value: 0 },
+          { name: '新疆', value: 0 },
+          { name: '江苏', value: 0 },
+          { name: '浙江', value: 0 },
+          { name: '江西', value: 0 },
+          { name: '湖北', value: 0 },
+          { name: '广西', value: 0 },
+          { name: '甘肃', value: 0 },
+          { name: '山西', value: 0 },
+          { name: '内蒙古', value: 0 },
+          { name: '陕西', value: 0 },
+          { name: '吉林', value: 0 },
+          { name: '福建', value: 0 },
+          { name: '贵州', value: 0 },
+          { name: '广东', value: 0 },
+          { name: '青海', value: 0 },
+          { name: '西藏', value: 0 },
+          { name: '四川', value: 0 },
+          { name: '宁夏', value: 0 },
+          { name: '海南', value: 0 },
+          { name: '台湾', value: 0 },
+          { name: '香港', value: 0 },
+          { name: '澳门', value: 0 },
+        ]
+
+        // 往地图使用的省份中, 注入我们的数据
+
+        // 尝试1: 发现name和value属性名一致, 直接使用, 发现不行
+        // dataList = provinceData
+        // 原因: 地图的数据dataList原本用的对象里只有名字, 不要省/自治区...
+        // 解决: 把"省", "自治区", "回族"都得替换成""
+        let newArr = provinceData.map(obj => {
+          return {
+            name: obj.name.replace(/省|自治区|回族|维吾尔|壮族|特别行政区/g, ''),
+            value: obj.value
+          }
+        })
+        console.log(newArr); // [ { name: '辽宁', value: 5 }, ... ]
+
+        // 尝试2: 
+        // dataList = newArr // 发现有的省份还是NaN
+        // 原因: 后台返回的数据省份对象, 比地图里省份数量少几个, 所以地图没找到newArr同名对象所以无值显示NaN
+        // 解决: 循环dataList(多省份)数组, 去newArr里找到同名的, 把value值取值赋予过来
+        dataList.forEach(obj => {
+          // find()查找符合条件的对象返回在原地
+          // target的值就是newArr里符合条件的对象{name: xxx, value: xxx}
+          let target = newArr.find(item => item.name === obj.name)
+          // 如果没有找到则不动, 如果找到了
+          if (target) {
+            obj.value = target.value
+          }
+        })
+
+        let option = {
+          title: {
+            text: '籍贯分布',
+            top: 10,
+            left: 10,
+            textStyle: {
+              fontSize: 16,
+            },
+          },
+          tooltip: { // 提示框
+            trigger: 'item', // 数据项触发
+            formatter: '{b}: {c} 位学员', // 提示框浮层内容格式器
+            // {b}: 数据名字
+            // {c}: 数据值
+            borderColor: 'transparent',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            textStyle: {
+              color: '#fff',
+            },
+          },
+          visualMap: { // 图形颜色控制
+            min: 0,
+            max: 6,
+            left: 'left',
+            bottom: '20',
+            text: ['6', '0'],
+            inRange: {
+              color: ['#ffffff', '#0075F0'],
+            },
+            show: true,
+            left: 40,
+          },
+          geo: { // 地理坐标系组件(绘制地图)
+            map: 'china', // 地图数据
+            roam: false,
+            zoom: 1.0,
+            label: {
+              normal: {
+                show: true,
+                fontSize: '10',
+                color: 'rgba(0,0,0,0.7)',
+              },
+            },
+            itemStyle: { // 地图区域的多边形 图形样式
+              normal: {
+                borderColor: 'rgba(0, 0, 0, 0.2)',
+                color: '#e0ffff',
+              },
+              emphasis: { // 高亮(鼠标移入)
+                areaColor: '#34D39A',
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowBlur: 20,
+                borderWidth: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)',
+              },
+            },
+          },
+          series: [
+            {
+              name: '籍贯分布',
+              type: 'map',
+              geoIndex: 0,
+              data: dataList,
+            },
+          ],
+        }
+        myEchart.setOption(option)
+      }
+
+      // 薪资走势折线图
+      initSalaryTrendFn(year)
+      // 薪资分布饼状图
+      initSalarySpreadFn(salaryData)
+      // 班级每组薪资柱状图
+      initGroupSalaryFn(groupData)
+      // 男女薪资分布2个饼状图
+      initGenderSalaryFn(salaryData)
+      // 籍贯分布地图
+      initMapChartFn(provinceData)
+    })
+
+
+  </script>
+</body>
+
+</html>

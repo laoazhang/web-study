@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01-02.ECharts_基础学习</title>
+</head>
+
+<body>
+    <div id="main" style="width: 600px; height: 400px"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+<script>
+    let myEchart = echarts.init(document.querySelector('#main'))
+
+    let option = {
+        title: { // 标题组件
+            text: 'ECharts 入门示例' // 主标题
+        },
+        tooltip: {}, // 提示框组件
+        legend: { // 图例组件
+            data: ['销量','趋势'] // 图例数组数据(必须和series的name一致)
+        },
+        xAxis: { // 直角坐标系的x轴
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"] // x轴数据
+        },
+        yAxis: {}, // 直角坐标系的y轴
+        series: [{ // 系列列表, 一个对象一套数据
+            name: '销量',
+            type: 'bar', // 图表类型 - 柱状图
+            data: [5, 20, 36, 10, 10, 20] // 纵轴数据
+        },{ // 系列列表, 一个对象一套数据
+            name: '趋势',
+            type: 'bar', // 图表类型 - 柱状图
+            data: [5, 20, 36, 10, 10, 20] // 纵轴数据
+        }]
+    }
+
+    myEchart.setOption(option)
+</script>
+
+</html>
