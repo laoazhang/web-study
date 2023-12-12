@@ -56,7 +56,7 @@ axios.interceptors.response.use(function (response) {
     // response: 就是axios封装结果对象
     // 我把后台返回的真正数据剥离出来, 直接返回逻辑页面
     // 逻辑页面就可以少.一层data了
-    console.log(response);
+    // console.log(response);
 
     // 它会返回到本次axios请求的地方(作为Promise对象成功的结果)
     return response.data;

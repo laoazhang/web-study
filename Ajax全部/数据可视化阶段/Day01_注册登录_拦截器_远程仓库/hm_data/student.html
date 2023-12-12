@@ -131,7 +131,9 @@
       <div class="card bg-gradient-warning">
         <div class="card-body">
           <h5 class="text-white">哈喽, 朋友!</h5>
-          <p class="text-white mb-4">为什么不现在开始学习前端，创造一些令人惊叹的东西呢？</p>
+          <p class="text-white mb-4">
+            为什么不现在开始学习前端，创造一些令人惊叹的东西呢？
+          </p>
           <a href="http://itcast.cn" class="btn btn-sm btn-block btn-white rounded-pill" target="_blank">Get started</a>
         </div>
       </div>
@@ -150,7 +152,9 @@
                 <a class="nav-link pl-lg-0" href="./index.html"> 传智教育 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link pl-lg-0" href="./index.html"> 黑马程序员 </a>
+                <a class="nav-link pl-lg-0" href="./index.html">
+                  黑马程序员
+                </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link pl-lg-0" href="./index.html"> 文档 </a>
@@ -167,13 +171,15 @@
                         src="https://yanxuan-item.nosdn.127.net/8b27deb1670c53e67c42ca3e1ed6fd12.jpg" />
                     </span>
                     <div class="ml-2 d-none d-lg-block">
-                      <span class="mb-0 text-sm font-weight-bold">Admin</span>
+                      <span class="mb-0 text-sm font-weight-bold" id="navName">Admin</span>
                     </div>
                   </div>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link pl-lg-0" id="logout" href="javascript:;"> 退出 </a>
+                <a class="nav-link pl-lg-0" id="logout" href="javascript:;">
+                  退出
+                </a>
               </li>
             </ul>
           </div>
@@ -234,8 +240,10 @@
         <div class="footer pt-5 pb-4 footer-light" id="footer-main">
           <div class="row text-center text-sm-left align-items-sm-center">
             <div class="col-sm-6">
-              <p class="text-sm mb-0">© 2022 <a href="https://itcast.cn" class="h6 text-sm" target="_blank">前端学科</a>.
-                All rights reserved.</p>
+              <p class="text-sm mb-0">
+                © 2022
+                <a href="https://itcast.cn" class="h6 text-sm" target="_blank">前端学科</a>. All rights reserved.
+              </p>
             </div>
             <div class="col-sm-6 mb-md-0">
               <ul class="nav justify-content-center justify-content-md-end">
@@ -329,7 +337,9 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            取消
+          </button>
           <button type="button" class="btn btn-blue" id="submit">确认</button>
         </div>
       </div>
@@ -340,7 +350,222 @@
   <script src="./lib/form-serialize.js"></script>
   <script src="./js/common.js"></script>
   <script>
+    // 判断是否有token, 如果无则强制回到登录页面
+    if (localStorage.getItem("token") === null) {
+      location.href = "./login.html";
+    }
+    // 设置用户名
+    let username = localStorage.getItem("uname")
+    document.querySelector("#navName").innerHTML = username;
+    // 退出登录功能
+    document.querySelector("#logout").addEventListener("click", (e) => {
+      localStorage.clear();
+      location.href = "./login.html";
+    });
 
+    // 一. 铺设学生数据
+    // 1. 请求数据
+    async function getStudentListFn() {
+      const res = await axios({
+        url: "/students",
+      });
+      // console.log(res)
+      setStudentListFn(res.data)
+    }
+    getStudentListFn()
+
+    // 2. 学生表格数据铺设
+    function setStudentListFn(studentList) {
+      let studentTrStr = studentList.map((obj) => {
+        return `
+          <tr>
+            <td>${obj.name}</td>
+            <td>${obj.age}</td>
+            <td>${obj.gender === 0 ? "男" : "女"}</td>
+            <td>${obj.group}组</td>
+            <td>${obj.hope_salary}</td>
+            <td>${obj.province}${obj.city}${obj.area}</td>
+            <td>
+                <a href="javascript:;" class="text-success mr-3"><i class="bi bi-pen" data-id="${obj.id}"></i></a>
+                <a href="javascript:;" class="text-danger"><i class="bi bi-trash" data-id="${obj.id}"></i></a>
+              </td>
+            </tr>
+          `;
+      }).join('')
+      document.querySelector('.list').innerHTML = studentTrStr
+    }
+
+    // 3. 删除学生功能
+    // 删除按钮父级绑定点击事件
+    document.querySelector('.list').addEventListener('click', async e => {
+      // 必须是删除按钮, 才能走以下逻辑
+      if (e.target.classList.contains('bi-trash')) {
+        // 区分删除哪个
+        // 经验: 可以给标签内容/自定义属性绑定关联的id数据, 方便点击获取区分
+        // 绑定用data-属性名="对应值"
+        // 获取用dataset.属性名 把值取到原地
+        let id = e.target.dataset.id
+        // console.log(id);
+        // 调用接口实现删除功能
+        const res = await axios({
+          url: `/students/${id}`,
+          method: 'DELETE'
+        })
+        //重新铺设
+        getStudentListFn()
+      }
+
+      // 编辑功能
+      if (e.target.classList.contains('bi-pen')) {
+        let id = e.target.dataset.id
+        console.log(id);
+
+        //拿到要编辑的学生的详细数据
+        const { data: student } = await axios({
+          url: `/students/${id}`
+        })
+
+        // 方式1: 可以一个个标签获取, 一个个值往对应上去赋予
+        // document.querySelector('form [name=name]').value = student.name
+        // document.querySelector(`form [id=cb0${student.gender + 1}]`).checked = true
+        // document.querySelector('form [name=province]').value = student.province
+
+        // 方式2: 
+        // 前提: 标签name属性和数据对象属性名一致才能循环
+        const fields = document.querySelectorAll('form [name]')// 获取表单form标签范围内所有带name属性的标签集合
+         // Array.from() 把伪数组转成真数组
+        Array.from(fields).forEach(async (item) => {// item是每个表单域标签
+          if (item.name === 'gender') {
+            // 标签里value值转成数字(0或者1), 再用标签里name属性值"gender"去学生详细信息对象student里取出对应性别数字(0或者1)
+            if (+item.value === student[item.name]) item.checked = true
+          } else {
+            // 直接把标签里的name属性值, 作为数据对象key换出值以后, 赋予到表单域value
+            item.value = student[item.name]
+          }
+        })
+
+        //  因为城市和地区的option数据没有, 所以没办法做默认回显
+        // 请求省下的城市数据
+        const { data: city } = await axios({
+          url: '/api/city',
+          params: { pname: provinceSelect.value }
+        })
+        let cityStr = city.map((item) => `<option value="${item}">${item}</option>`).join('')
+        citySelect.innerHTML = `<option value="">--市--</option>${cityStr}`
+        citySelect.value = student.city
+
+        
+        const { data: area } = await axios({
+          url: '/api/area',
+          params: { pname: provinceSelect.value, cname: citySelect.value }
+        })
+        let areaStr = area.map((item) => `<option value="${item}">${item}</option>`).join('')
+        areaSelect.innerHTML = `<option value="">--区--</option>${areaStr}`
+        areaSelect.value = student.area
+        // console.log(student.area);
+        // console.log(areaSelect.value);
+
+        //改下标题
+        document.querySelector('#modal').querySelector('.modal-title').innerHTML = '修改学员'
+        //记录ID修改使用
+        editId = student.id
+        // console.log(editId);
+        myModal.show()
+      }
+    })
+
+    // 4. 添加学生功能
+
+    var myModal = new bootstrap.Modal(document.getElementById('modal'), {
+      keyboard: false // 按下esc是否关闭
+    })
+    document.querySelector('.bi-plus').addEventListener('click', e => {
+      myModal.show()
+    })
+
+    // 初始化模态框 & 城市选择
+    let provinceSelect = document.querySelector('[name=province]')
+    let citySelect = document.querySelector('[name=city]')
+    let areaSelect = document.querySelector('[name=area]')
+    async function initPCAFn() {
+      // 拿到省份列表字符串数组
+      const { data: pList } = await axios({
+        url: '/api/province'
+      })
+      // console.log(pList);
+      // 铺设省份option
+      let pOptionStr = pList.map(pName => `<option value="${pName}">${pName}</option>`).join('')
+      provinceSelect.innerHTML = `<option value="">--省份--</option>` + pOptionStr
+      //检测省份select改变change的事件
+      provinceSelect.addEventListener('change', async () => {
+        //获取选择的select里value值->省份名字 provinceSelect.value
+        if (provinceSelect.value) {
+          //获取对应城市列表
+          const { data: cityList } = await axios({
+            url: '/api/city',
+            params: {
+              pname: provinceSelect.value
+            }
+          })
+          // 铺设城市列表option
+          let cOptionStr = cityList.map(cityName => `<option value="${cityName}">${cityName}</option>`).join('')
+          citySelect.innerHTML = `<option value="">--城市--</option>` + cOptionStr
+        } else {
+          // 没有选择省份, 把城市和地区select里option清空
+          citySelect.innerHTML = `<option value="">--城市--</option>`
+          areaSelect.innerHTML = `<option value="">--地区--</option>`
+        }
+      })
+      // 检测城市select改变change的时间
+      citySelect.addEventListener('change', async () => {
+        if (citySelect.value) {
+          const { data: areaList } = await axios({
+            url: '/api/area',
+            params: {
+              pname: provinceSelect.value,
+              cname: citySelect.value
+            }
+          })
+          let aOptionStr = areaList.map(areaName => `<option value="${areaName}">${areaName}</option>`).join('')
+          areaSelect.innerHTML = `<option value="">--地区--</option>` + aOptionStr
+        } else {// 没选城市
+          areaSelect.innerHTML = `<option value="">--地区--</option>`
+        }
+      })
+    }
+    initPCAFn()
+
+    // 表单确认提交事件
+    document.querySelector('#submit').addEventListener('click', async e => {
+      e.preventDefault()
+      let formObj = serialize(document.querySelector('form'), { hash: true })
+      formObj.age = +formObj.age
+      formObj.hope_salary = +formObj.hope_salary
+      formObj.salary = +formObj.salary
+      formObj.gender = +formObj.gender
+      formObj.group = +formObj.group
+      // +'1' 转成 数字类型1
+      // 调用新增学生接口传给后台
+      if (editId) {
+        await axios({
+          url: `/students/${editId}`,
+          method: 'PUT',
+          data: formObj
+        })
+      } else {
+        try {
+          await axios({
+            url: '/students',
+            method: 'POST',
+            data: formObj
+          })
+        } catch (err) {
+          console.dir(err)
+        }
+      }
+      myModal.hide()
+      getStudentListFn()
+    })
   </script>
 </body>
 
