@@ -1,5 +1,5 @@
 {
-  "name": "01_use_npm",
+  "name": "my_utils",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -8,11 +8,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "axios": "^1.6.2",
-    "moment": "^2.29.4"
-  },
-  "type": "module",
-  "devDependencies": {},
-  "description": ""
+  "description": "",
+  "type": "module"
 }
