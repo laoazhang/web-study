@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        // html中的script分为引入脚本和模块
+        // 默认引入的是脚本js文件(文件里不能出现export等)
+        // 如果需要导入的是模块js文件(需要type="module"声明下即可, 但是可能需要最新浏览器支持)
+        import obj from './01_export.js'
+        console.log(obj);
+        const result = obj.getSum(10, 20)
+        console.log(result);
+    </script>
+</body>
+</html>

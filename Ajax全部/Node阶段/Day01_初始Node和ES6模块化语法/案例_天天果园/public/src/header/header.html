@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/swiper.css" />
+		<script src="js/swiper.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="css/animate.min.css" />
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				font-family: "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+			}
+			
+			input {
+				outline: none;
+			}
+			
+			.swiper-slide {
+				height: 400px;
+				width: 100%;
+			}
+			
+			.swiper-slide img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.nav_backG {
+				/*width: 100%;*/
+				background-color: rgb(235, 235, 235);
+				height: 30px;
+			}
+			
+			.nav {
+				width: 90%;
+				max-width: 1280px;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			
+			.nav_left {
+				float: left;
+				cursor: pointer;
+				font-size: 12px;
+				line-height: 31px;
+				width: 86px;
+				height: 31px;
+				text-align: center;
+			}
+			
+			.nav_left:hover {
+				background-color: white;
+			}
+			
+			.nav_right {
+				float: right;
+			}
+			
+			.nav_r li {
+				list-style: none;
+				float: left;
+				color: #999;
+				margin-right: 8px;
+			}
+			
+			.nav_r li>a {
+				text-decoration: none;
+				color: #999;
+				font-size: 14px;
+			}
+			
+			.nav_r li>a:hover {
+				color: orange;
+			}
+			
+			.nav_r li:nth-child(4n+5)>a:hover {
+				color: #999;
+			}
+			
+			.nav_r li>b {
+				font-size: 14px;
+			}
+			
+			.header {
+				width: 90%;
+				max-width: 1280px;
+				margin: 0 auto;
+				height: 80px;
+				overflow: hidden;
+				padding: 20px;
+			}
+			
+			.header_left {
+				height: 100%;
+				float: left;
+			}
+			
+			.header_left img {
+				width: 285px;
+				height: 78px;
+			}
+			
+			.header_center {
+				float: left;
+				position: relative;
+			}
+			
+			.header_center ul {
+				padding-left: 40px;
+			}
+			
+			.header_center li {
+				list-style: none;
+				float: left;
+			}
+			
+			.header_center li>a:hover {
+				background-color: rgb(241, 241, 241);
+			}
+			
+			.header_center li>a {
+				text-decoration: none;
+				color: #64a131;
+				text-align: center;
+				padding: 0 25px;
+				margin: 20px 0px;
+				line-height: 20px;
+				display: block;
+				border-right: 1px solid rgb(241, 241, 241);
+			}
+			
+			.header_center li:last-child>a {
+				border-right: 0px;
+			}
+			
+			.header_center li a>span {
+				display: block;
+			}
+			
+			#header_center_downLine {
+				position: absolute;
+				bottom: 0;
+				left: 45px;
+				width: 93px;
+				height: 2px;
+				background-color: #64a131;
+			}
+			
+			.header_right {
+				margin-top: 15px;
+				overflow: hidden;
+				float: right;
+			}
+			
+			.header_right_left {
+				float: left;
+			}
+			
+			.header_right_left input {
+				border: 0;
+				width: 190px;
+			}
+			
+			.header_right_left>div {
+				border-top: 1px solid gray;
+				padding-top: 3px;
+				font-size: 14px;
+			}
+			
+			.header_right_left>div>a {
+				text-decoration: none;
+				color: #999;
+			}
+			
+			.header_right>img {
+				margin-left: 20px;
+				margin-top: 5px;
+				float: right;
+			}
+			
+			.header_right_menu {
+				display: none;
+			}
+			/*城市列表样式*/
+			
+			#nav_left_menu {
+				width: 275px;
+				height: 360px;
+				position: absolute;
+				left: 0;
+				top: 30px;
+				background-color: white;
+				box-shadow: 4px 8px 16px #CDCDCD;
+				display: none;
+				overflow-y: auto;
+				z-index: 2;
+			}
+			
+			#nav_left_menu::-webkit-scrollbar {
+				display: none;
+			}
+			
+			#nav_left_menu ul {
+				margin: 10px;
+			}
+			
+			#nav_left_menu li {
+				list-style: none;
+				border-bottom: 1px solid lightgray;
+				padding: 5px;
+			}
+			
+			#nav_left_menu li:hover {
+				color: #64A131;
+				background-color: rgb(241, 241, 241);
+			}
+			
+			.city_list {
+				display: none;
+				margin-top: 5px;
+				background-color: white !important;
+				margin-left: -5px;
+				width: 105%;
+			}
+			
+			.cityLi {
+				/*城市列表里*/
+				border-bottom: 0px !important;
+				border-top: 1px dashed lightgray;
+				color: black !important;
+			}
+			
+			.cityLi:hover {
+				color: #64A131 !important;
+				background-color: white !important;
+			}
+			
+			.hot_city,
+			.select_city {
+				font-size: 14px;
+				color: #999;
+				border-bottom: 0 !important;
+			}
+			
+			.hot_city:hover,
+			.select_city:hover {
+				color: #999 !important;
+				background-color: white !important;
+			}
+			
+			.hot_city_list {
+				border-bottom: 0 !important;
+				cursor: pointer;
+				background-color: rgb(241, 241, 241);
+				margin: 10px 0;
+				font-size: 14px;
+			}
+			
+			.hot_city_list>a {
+				text-decoration: none;
+			}
+			
+			.hot_city_list>a:hover {
+				color: #64A131;
+				text-decoration: underline;
+			}
+			
+			.city_line_right {
+				float: right;
+			}
+			/*公告样式*/
+			
+			#notice {
+				box-shadow: 4px 8px 16px #CDCDCD;
+				width: 220px;
+				background-color: white;
+				font-size: 13px;
+				position: absolute;
+				display: none;
+				top: 24px;
+				z-index: 2;
+			}
+			
+			#notice ul li {
+				padding: 10px 8px;
+				list-style: none;
+				border-bottom: 1px dashed lightgray;
+			}
+			
+			#notice ul li>em {
+				background-color: red;
+				color: white;
+			}
+			
+			#notice li>a {
+				color: #555;
+				float: left;
+				max-width: 172px;
+				overflow: hidden;
+				white-space: nowrap;
+				/*不要换行*/
+				text-decoration: none;
+				text-overflow: ellipsis;
+			}
+			
+			#notice div:last-child {
+				margin: 15px 0 10px 0;
+				text-align: center;
+			}
+			
+			#notice div>a {
+				color: #64A131;
+				text-decoration: none;
+			}
+			
+			#notice div>a:hover {
+				text-decoration: underline;
+			}
+			/*手机果园样式*/
+			
+			#fruitGround {
+				width: 270px;
+				height: 290px;
+				position: absolute;
+				top: 24px;
+				box-shadow: 4px 8px 16px #CDCDCD;
+				padding: 10px 15px;
+				font-size: 14px;
+				display: none;
+				background-color: white;
+				z-index: 2;
+			}
+			
+			.fruitGround_title {
+				margin: 15px 0px 0px 0;
+				text-align: center;
+			}
+			
+			.fruitGround_title>span {
+				color: #64A131;
+			}
+			
+			.qrCode {
+				width: 100px;
+				height: 100px;
+			}
+			
+			#fruitGround ul li {
+				list-style: none;
+				overflow: hidden;
+				padding: 10px 0;
+			}
+			
+			#fruitGround ul li:first-child>div {
+				line-height: 50px;
+				float: right;
+				text-align: center;
+			}
+			
+			#fruitGround ul li p:first-child {
+				color: #64A131;
+			}
+			
+			#fruitGround ul li:last-child {
+				overflow: hidden;
+				border-top: 1px dashed lightgray;
+			}
+			
+			#fruitGround ul li:last-child>img {
+				float: left;
+			}
+			
+			#fruitGround ul li:last-child>div {
+				float: left;
+				margin: 20px 0px 0 20px;
+				display: inline-block;
+			}
+			/*搜索下拉菜单样式*/
+			
+			.searchList {
+				width: 178px;
+				height: 120px;
+				padding: 5px 0;
+				border: 1px solid black;
+				overflow-y: auto;
+				position: absolute;
+				left: 0;
+				top: 0;
+				display: none;
+				background-color: white;
+				z-index: 2;
+			}
+			
+			.searchList::-webkit-scrollbar {
+				display: none;
+			}
+			
+			.searchList li {
+				list-style: none;
+				font-size: 14px;
+				color: #999999;
+			}
+			
+			.searchList li:hover {
+				background-color: rgb(241, 241, 241);
+			}
+			/*导航栏下拉菜单*/
+			
+			.nav_list {
+				width: 164px;
+				height: 200px;
+				display: none;
+				position: absolute;
+				right: 0;
+				top: 0;
+				z-index: 2;
+			}
+			
+			.nav_list ul li {
+				list-style: none;
+				overflow: hidden;
+				padding: 10px;
+				background-color: rgba(251, 251, 251, 0.5);
+			}
+			
+			.nav_list ul li>span:first-child {
+				float: left;
+			}
+			
+			.nav_list ul li>span:last-child {
+				float: right;
+			}
+			
+			@media only screen and (max-width: 1250px) {
+				.header_center {
+					display: none;
+				}
+				.header_right_menu {
+					display: block;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<div class="wrap">
+			<!--顶部导航-->
+			<div class="nav_backG">
+				<div class="nav">
+					<div class="nav_left">
+						<img src="../../img/货车.jpg" alt="" />
+						<span>北京</span>
+						<img src="../../img/下拉三角.jpg" alt="" />
+					</div>
+					<div class="nav_right">
+						<ul class="nav_r">
+							<li>
+								<a href="###">[&nbsp;登录&nbsp;]&nbsp;</a>
+							</li>
+							<li>,</li>
+							<li>
+								<a href="###">&nbsp;[&nbsp;注册有惊喜&nbsp;]&nbsp;</a>
+							</li>
+							<li>|</li>
+							<li id="noticeObj">
+								<a href="###">&nbsp果园公告&nbsp</a>
+							</li>
+							<li>|</li>
+							<li>
+								<a href="###">&nbsp卷卡兑换&nbsp</a>
+							</li>
+							<li>|</li>
+							<li id="phone">
+								<img src="../../img/手机.jpg" alt="" />
+								<a href="###">&nbsp手机果园&nbsp</a>
+							</li>
+							<li>|</li>
+							<li>
+								<img src="../../img/客服.jpg" alt="" />
+								<b>&nbsp400-720-0770</b>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--顶部导航结束-->
+			<!--头部区域-->
+			<div class="header">
+				<div class="header_left">
+					<img src="../../img/logo.svg" alt="" />
+				</div>
+				<div class="header_center">
+					<ul>
+						<li>
+							<a href="###">首页 <br />
+								<span>Home</span>
+							</a>
+						</li>
+						<li>
+							<a href="###">鲜果 <br />
+								<span>Fruit&nbsp</span>
+							</a>
+						</li>
+						<li>
+							<a href="###">生鲜 <br />
+								<span>Fresh</span>
+							</a>
+						</li>
+						<li>
+							<a href="###">礼品 <br />
+								<span>Gift&nbsp</span>
+							</a>
+						</li>
+						<li>
+							<a href="###">会员中心 <br />
+								<span>VIP Club&nbsp</span>
+							</a>
+						</li>
+					</ul>
+					<div id="header_center_downLine"></div>
+				</div>
+				<div class="header_right">
+					<div class="header_right_left">
+						<input id="search" type="text" value="樱桃" />
+						<img src="../../img/放大镜.jpg" alt="" />
+						<div>
+							热门:
+							<a href="###">金奇异果</a>
+							<a href="###">脐橙</a>
+							<a href="###">柚子</a>
+							<a href="###">苹果</a>
+						</div>
+					</div>
+					<img id="menu" class="header_right_menu" src="../../img/caidan.png" alt="" />
+					<img src="../../img/gouwuche.png" alt="" />
+
+				</div>
+			</div>
+			<!--头部区域结束-->
+			<!--轮播图-->
+			<div class="swiper-container">
+				<div class="swiper-wrapper"></div>
+				<div class="swiper-pagination"></div>
+				<!--这里需要自己去修改swiper.css中的一些样式, 提示:浏览器检查, 看看都引入哪些css名字了对应去找-->
+			</div>
+			<!--轮播图结束-->
+		</div>
+
+		<!--选择城市列表-->
+		<div id="nav_left_menu">
+			<ul id="cUL">
+				<li class="hot_city">热门城市:</li>
+				<li class="hot_city_list">
+					<a href="###">上海</a>
+					<a href="###">北京</a>
+					<a href="###">广州</a>
+					<a href="###">苏州</a>
+					<a href="###">南京</a>
+					<a href="###">深圳</a>
+				</li>
+				<li class="select_city">选择城市:</li>
+			</ul>
+		</div>
+		<!--选择城市列表结束-->
+
+		<!--果园公告-->
+		<div id="notice">
+			<ul>
+				<li>
+					<a href="###">北京仓、广东仓充值活动调整公告</a>
+					<em>new</em>
+				</li>
+				<li>
+					<a href="###">天天农场活动结束通知</a>
+					<em>new</em>
+				</li>
+				<li>
+					<a href="###">全仓充值活动调整公告</a>
+					<em>new</em>
+				</li>
+			</ul>
+			<div>
+				<a href="###" target="_blank">查看更多 ></a>
+			</div>
+		</div>
+		<!--果园公告结束-->
+
+		<!--手机果园-->
+		<div id="fruitGround">
+			<div class="fruitGround_title">
+				<span>下载果园app, </span> 即享果园特价商品
+			</div>
+			<ul>
+				<li>
+					<img class="qrCode" src="../../img/app.jpg" alt="" />
+					<div>
+						<a href="###">
+							<img src="../../img/iOS.jpg" alt="" />
+						</a><br />
+						<a href="###">
+							<img src="../../img/Android.jpg" alt="" />
+						</a>
+					</div>
+				</li>
+				<li>
+					<img class="qrCode" src="../../img/wx.jpg" alt="" />
+					<div>
+						<p>关注果园微信</p>
+						<p>优惠信息实时掌握</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!--手机果园结束-->
+
+		<!--下拉导航(当页面宽度不够时)-->
+		<div class="nav_list animated bounceIn">
+			<ul>
+				<li>
+					<span>首页</span>
+					<span>Home</span>
+				</li>
+				<li>
+					<span>鲜果</span>
+					<span>Fruit</span>
+				</li>
+				<li>
+					<span>生鲜</span>
+					<span>Fresh</span>
+				</li>
+				<li>
+					<span>礼品</span>
+					<span>Gift</span>
+				</li>
+				<li>
+					<span>会员中心</span>
+					<span>VIP Club</span>
+				</li>
+			</ul>
+		</div>
+		<!--下拉导航结束-->
+
+	</body>
+	<script src="../../js/nodeHover.js"></script>
+	<script src="js/city.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/data.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		// 创建标签
+		function $ce(ele) {
+			return document.createElement(ele);
+		}
+
+		// 添加轮播图
+		var loopArr = ["../../img/loop1.jpg", "../../img/loop2.jpg", "../../img/loop3.jpg"]; // 如果以后再有轮播图, 直接添图片路径即可
+		var loopWrapper = document.querySelector(".swiper-wrapper");
+		for(var i = 0; i < loopArr.length; i++) {
+			var dDiv = $ce("div");
+			dDiv.className = "swiper-slide";
+			var dImg = $ce("img");
+			dImg.src = loopArr[i];
+			dDiv.appendChild(dImg);
+			loopWrapper.appendChild(dDiv);
+		}
+		var mySwiper = new Swiper('.swiper-container', {
+			speed: 800,
+			autoplay: 2500, //可选选项，自动滑动
+			pagination: '.swiper-pagination',
+			autoplayDisableOnInteraction: false,
+			paginationClickable: true
+		})
+	</script>
+	
+	<script type="text/javascript">
+	// 中间导航的下划线代码
+		var heaCenDowLine = document.getElementById("header_center_downLine");
+		var heaCenLiArr = document.querySelectorAll(".header_center li");
+
+		for(var i = 0; i < heaCenLiArr.length; i++) {
+			(function(ind) {
+				heaCenLiArr[ind].addEventListener("click", function(ev) {
+					// 计算点击的li左边所有li的宽度之和, 才是你底部线的left值
+					var allsum = 40;
+					for(var j = 0; j < ind; j++) {
+						allsum += heaCenLiArr[j].scrollWidth;
+					}
+					heaCenDowLine.style.left = allsum + "px";
+					heaCenDowLine.style.width = this.scrollWidth + "px";
+				});
+			})(i)
+		}
+	</script>
+
+	<script>
+		// 左上角选择城市
+		var navLeft = document.querySelector(".nav_left");
+		var cityDiv = document.getElementById("nav_left_menu");
+		nodeHover(navLeft, cityDiv, "left");
+
+		// 准备城市数据
+		var myUL = document.getElementById("cUL");
+		for(var i = 0; i < cityArr.length; i++) {
+			var obj = cityArr[i];
+			var theLi = document.createElement("li");
+			if(typeof(obj) == "string") {
+				theLi.innerHTML = obj;
+				myUL.appendChild(theLi);
+			} else { // 带复合的市
+				var priDiv = document.createElement("div");
+				priDiv.className = "city_list";
+				// 取出key值
+				var prop = "";
+				for(var p in obj) {
+					prop = p; // 因为key值只有一个, 直接等了
+				}
+				theLi.innerHTML = prop;
+				var line = document.createElement("span");
+				line.innerHTML = ">";
+				line.className = "city_line_right";
+				theLi.appendChild(line);
+				myUL.appendChild(theLi);
+				// 拿到key对应的市的数组
+				var arr = obj[prop];
+
+				for(var j = 0; j < arr.length; j++) {
+					var cLi = document.createElement("li");
+					cLi.innerHTML = "&nbsp;&nbsp;&nbsp;" + arr[j];
+					cLi.className = "cityLi";
+					priDiv.appendChild(cLi);
+				}
+				theLi.appendChild(priDiv);
+				theLi.addEventListener("mousedown", provinceDown);
+				myUL.appendChild(theLi);
+			}
+		}
+		cityDiv.appendChild(myUL);
+
+		// 省的li点击事件
+		function provinceDown(ev) {
+
+			var arr = ev.target.childNodes;
+			for(var i = 0; i < arr.length; i++) {
+				var nod = arr[i];
+				if(nod.nodeName == "DIV") {
+					if(!(nod.isOpen) == true) { // !undefined 为true
+						nod.style.display = "block";
+						nod.isOpen = true;
+					} else {
+						nod.style.display = "none";
+						nod.isOpen = false;
+					}
+				}
+			}
+
+		}
+
+		// 果园公告
+		var notDiv = document.getElementById("noticeObj");
+		var noticeListDiv = document.getElementById("notice");
+		nodeHover(notDiv, noticeListDiv, "right");
+
+		// 手机果园
+		var phoneGround = document.getElementById("phone");
+		var fruitGround = document.getElementById("fruitGround");
+		nodeHover(phoneGround, fruitGround, "right");
+
+		// 搜索下拉菜单
+		var searchList = document.createElement("div");
+		var searchInput = document.getElementById("search");
+		searchList.className = "searchList";
+		searchList.addEventListener("mousedown", function(ev) {
+			searchInput.value = ev.target.innerHTML;
+		});
+		for(var i = 0; i < searchArr.length; i++) {
+			var txt = searchArr[i];
+			var tLi = document.createElement("li");
+			tLi.innerHTML = txt;
+			searchList.appendChild(tLi);
+		}
+		document.body.appendChild(searchList);
+
+		// 搜索下拉菜单事件
+		searchInput.addEventListener("mousedown", function(ev) {
+			searchList.style.display = "block";
+			searchList.style.left = ev.target.offsetLeft + "px";
+			searchList.style.top = ev.target.offsetTop + ev.target.clientHeight + 5 + "px";
+			ev.stopPropagation();
+		});
+
+		// 下拉菜单消失事件
+		document.body.onmousedown = function(ev) {
+
+			if(ev.target != searchInput || ev.target != searchList) {
+				searchList.style.display = "none";
+			}
+		}
+
+		// 点击菜单按钮事件
+		var menuDiv = document.getElementById("menu");
+		var listDiv = document.querySelector(".nav_list");
+		menuDiv.addEventListener("mousedown", function(ev) {
+
+			if(!menuDiv.isDown == true) {
+				menuDiv.src = "../../img/caidanS.png";
+				menuDiv.isDown = true;
+				listDiv.style.display = "block";
+				console.log(ev.target.offsetLeft);
+				listDiv.style.right = document.body.clientWidth - (ev.target.offsetLeft + ev.target.clientWidth) + "px";
+				listDiv.style.top = ev.target.clientHeight + ev.target.offsetTop + "px";
+			} else {
+				menuDiv.src = "../../img/caidan.png";
+				menuDiv.isDown = false;
+				listDiv.style.display = "none";
+			}
+		});
+	</script>
+
+</html>

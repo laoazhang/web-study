@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.four_Ad{
+    overflow: hidden;
+    width: 90%;
+    max-width: 1280px;
+    margin: 0 auto;
+    
+}
+.four_Ad li{
+    list-style: none;
+    float: left;
+    margin: 10px 5px 50px;
+}
+.recommend{
+    border-top: 1px solid lightgray;
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1280px;
+}
+.tfDiv{
+    overflow: hidden;
+    width: 100%;
+    margin: 20px 0 10px 0;
+}
+.titleImg{
+    float: left;
+}
+.tfDiv a{
+    margin-top: 10px;
+    text-decoration: none;
+    color: black;
+    float: right;
+}
+.thingDiv{
+    width: 240px;
+    height: 305px;
+    display: inline-block;
+    position: relative;
+    margin: 0 8px;
+    overflow: hidden;
+}
+.thingDiv .fruitImg{
+    width: 248px;
+    height: 248px;
+    transition: all 0.5s;
+}
+.cengDiv{
+    width: 248px;
+    height: 248px;
+    overflow: hidden;
+}
+.fruitImg:hover{
+    transition: all 0.5s;
+    margin: -10px 0 0 -10px;
+    width: 268px;
+    height: 268px;
+}
+
+.thingDiv .keyName{
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 5px;
+    background-color: orangered;
+    color: white;
+    font-size: 14px;
+}
+.thingDiv>span{
+    display: inline-block;
+    font-size: 15px;
+    margin: 5px 0px;
+}
+.price{
+    color: darkgray;
+}
+.buyIcon{
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+    background: url(../img/buy.png) no-repeat -514px -291px ;
+}

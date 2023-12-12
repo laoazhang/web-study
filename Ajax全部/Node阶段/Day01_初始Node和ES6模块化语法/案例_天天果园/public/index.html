@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>天天果园</title>
+	<link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+	<iframe style="height: 550px;" src="src/header/header.html" frameborder="0"></iframe>
+</body>
+<script src="js/data.js"></script>
+<script>
+	// 创建标签
+	function $ce(ele) {
+		return document.createElement(ele);
+	}
+
+	// 设置广告数据
+	var tDiv = $ce("div");
+	tDiv.className = "four_Ad";
+	var tUL = $ce("ul");
+	tDiv.appendChild(tUL);
+	document.body.appendChild(tDiv);
+	for (var i = 0; i < fourADArr.length; i++) {
+		var tLi = $ce("li");
+		var tImg = $ce("img");
+		tImg.src = fourADArr[i];
+		tLi.appendChild(tImg);
+		tUL.appendChild(tLi);
+	}
+	document.querySelector(".four_Ad").appendChild(tUL);
+
+
+	// (重要)封装设置正文内容的方法
+	function setThing(arr) {
+		var recommendDiv = $ce("div"); // 横着大的div
+		recommendDiv.className = "recommend";
+		document.body.appendChild(recommendDiv);
+		for (var i = 0; i < arr.length; i++) {
+			// 特殊情况判断
+			if (arr[i].name == "first" || arr[i].name == "last") { // 当前是顶部或者底部横着的图片
+				var tfDiv = $ce("div");
+				tfDiv.className = "tfDiv";
+				var titleFooterImg = $ce("img");
+				titleFooterImg.src = arr[i].imgPath;
+				titleFooterImg.className = (name == "first") ? "titleImg" : "footerImg";
+				tfDiv.appendChild(titleFooterImg);
+				if (arr[i].name == "first") {
+					var moreSpan = $ce("a");
+					moreSpan.innerHTML = "更多 >";
+					moreSpan.href = "###";
+					tfDiv.appendChild(moreSpan);
+				}
+				recommendDiv.appendChild(tfDiv);
+			} else { // 正常水果
+				var thingDiv = $ce("div"); // 用于保存每个食物的div
+				thingDiv.className = "thingDiv";
+				// 图片放大时容器层
+				var bDiv = $ce("div");
+				bDiv.className = "cengDiv";
+				// 图片
+				var tImg = $ce("img");
+				tImg.className = "fruitImg";
+				tImg.src = arr[i].imgPath;
+				bDiv.appendChild(tImg);
+				thingDiv.appendChild(bDiv);
+				// 左上角文字
+				if (arr[i].theKey.length > 0) {
+					var tSpan = $ce("span");
+					tSpan.className = "keyName";
+					tSpan.innerHTML = arr[i].theKey;
+					thingDiv.appendChild(tSpan);
+				}
+				// 名字
+				var name = arr[i].name;
+				var tName = $ce("span");
+				tName.innerHTML = name;
+				thingDiv.appendChild(tName);
+				thingDiv.appendChild($ce("br"));
+				// 价格
+				var tPrice = $ce("span");
+				tPrice.innerHTML = arr[i].price;
+				tPrice.className = "price";
+				thingDiv.appendChild(tPrice);
+				// 购物车图标
+				var tBuyImg = $ce("div");
+				tBuyImg.className = "buyIcon";
+				thingDiv.appendChild(tBuyImg);
+				recommendDiv.appendChild(thingDiv);
+			}
+		}
+	}
+
+	setThing(footArr); //果园推荐
+	setThing(worldFruitArr); // 全球鲜果
+	setThing(freshFoodArr); // 生鲜美食
+	setThing(giftArr); // 礼品卡卷
+
+
+	// 最后追加底部iframe(注意顺序, 一定放在最后)
+	var footerIf = $ce("iframe");
+	footerIf.src = "src/footer/footer.html";
+	footerIf.style.height = "420px";
+	footerIf.scrolling = "no";
+	footerIf.frameBorder = "0";
+	document.body.appendChild(footerIf);
+
+</script>
+
+</html>
