@@ -1,38 +1,36 @@
 <template>
   <div class="table-case">
     <table class="my-table">
-      <thead>
-        <tr>
+
+      <MyTable :goods="goods">
+        
+        <template #title>
           <th>编号</th>
           <th>图片</th>
           <th>名称</th>
           <th width="100px">标签</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>101</td>
-          <td><img src="https://yanxuan-item.nosdn.127.net/f8c37ffa41ab1eb84bff499e1f6acfc7.jpg" /></td>
-          <td>梨皮朱泥三绝清代小品壶经典款紫砂壶</td>
+        </template>
+
+         <template v-slot:content="scope">
+          <td>{{scope.row.id}}</td>
+          <td><img :src="scope.row.picture" /></td>
+          <td>{{scope.row.name}}</td>
           <td>
-            <MyTag v-model="msg"></MyTag>
+            <MyTag v-model="scope.row.tag"></MyTag>
           </td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td><img src="https://yanxuan-item.nosdn.127.net/f8c37ffa41ab1eb84bff499e1f6acfc7.jpg" /></td>
-          <td>梨皮朱泥三绝清代小品壶经典款紫砂壶</td>
-          <td>
-            <MyTag v-model="msg"></MyTag>
-          </td>
-        </tr>
-      </tbody>
+      </template>
+          
+      </MyTable>
+
+     
+      
     </table>
   </div>
 </template>
 
 <script>
 import MyTag from "./components/MyTag.vue"
+import MyTable from "./components/MyTable.vue"
 export default {
   name: 'TableCase',
   data () {
@@ -48,6 +46,7 @@ export default {
   },
   components:{
     MyTag,
+    MyTable,
   },
   methods:{
     ccc(val){
