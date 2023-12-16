@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="content">
-      <router-view></router-view>
-    </div>
+    <h1>My组件</h1>
   </div>
 </template>
 
