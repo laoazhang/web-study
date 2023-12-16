@@ -4,7 +4,105 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6fd4a94a-0c56-45e4-ad05-9503c45a1f87" name="Changes" comment="" />
+    <list default="true" id="6fd4a94a-0c56-45e4-ad05-9503c45a1f87" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/babel.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/jsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/01-插值表达式.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/02-v-bind.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/03-v-on.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/05-事件-1-参数.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/05-事件-2-事件对象.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/05-事件-3-事件修饰符.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/05-事件-4-按键修饰符.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/06-案例-反转.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/07-v-if和show-1-语法及案例.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/08-v-if-补充用法.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/09-v-model.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/10-v-model-其他表单元素.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/11-v-model-修饰符.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/12-v-text和html.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/13-案例-编辑.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/14-v-for-基本语法.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/15-key绑定-更新策略.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day01-02/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day03/02-案例-成绩管理.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day03/03-案例-大小选.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day03/04-计算属性的缓存.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day03/05-class操作.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day03/06-style.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day03/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day03/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day03/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/components/00-回顾.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/components/00-笔记.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/components/01-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/components/02-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/components/03-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/components/04-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/components/04-cptt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/components/05-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day04/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/01-v-model.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/02-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/03-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/04-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/05-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/06-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/07-cpt-dynamic.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/07-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/07-son1.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/07-son2.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/07-son3.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/08-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/components/09-cpt.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day05/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-商品列表/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-商品列表/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-商品列表/components/MyTable.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-商品列表/components/MyTag.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-商品列表/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-插槽/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-插槽/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-插槽/components/00-回顾.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-插槽/components/01-自定义指令回顾.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-插槽/components/02-具名插槽.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-插槽/components/03-作用域插槽.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-插槽/components/04-作用域插槽.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-插槽/components/05-具名与作用域插槽.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-插槽/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-生命周期/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-生命周期/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-生命周期/components/01-生命周期-1阶段.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-生命周期/components/02-生命周期-2阶段.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-生命周期/components/03-生命周期-2阶段-数据更新.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-生命周期/components/04-生命周期-3阶段.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-生命周期/components/05-小结.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-day06-生命周期/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-todos/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-todos/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-todos/components/todu.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-todos/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src-todos/todos.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src/components/MyTable.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src/components/MyTag.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/src/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/vue.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/07.Vue1/demo/yarn.lock" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +110,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2ZCqdOOcjWGhyVMbHdDfmpcyMgO" />
   <component name="ProjectLevelVcsManager">
@@ -58,6 +159,7 @@
       <workItem from="1702254899190" duration="3570000" />
       <workItem from="1702341960960" duration="216000" />
       <workItem from="1702616880139" duration="6000" />
+      <workItem from="1702690045518" duration="177000" />
     </task>
     <servers />
   </component>

@@ -2,27 +2,34 @@
   <table class="my-table">
     <thead>
       <tr>
+        <!-- 头部允许外面传入结构 -->
         <slot name="title"></slot>
       </tr>
     </thead>
+
     <tbody>
+
+
       <tr v-for="item in goods" :key="item.id">
+        <!-- 列表内每行：允许外面传入结构 -->
+        <!--      {row:item对象} -->
         <slot name="content" :row="item"></slot>
       </tr>
+
+
     </tbody>
   </table>
 </template>
 
 <script>
 export default {
-    props:{
-        goods:{
-            type:Array,
-            default:[]
-        }
+  props:{
+    goods:{ // 详细要求
+      type:Array,
+      default:[],
     }
-
-}
+  }
+};
 </script>
 
 <style lang="less" scoped>
