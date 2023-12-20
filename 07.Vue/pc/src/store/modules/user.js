@@ -14,12 +14,12 @@ const user = {
     // 设置
     set (state, value) {
       localStorage.setItem('pc-token', 'Bearer ' + value) // BOM：浏览器
-      state.token = value // 数据中心 数据也要去设置
+      state.token = 'Bearer ' + value // 数据中心 数据也要去设置
     },
     // 删除
     del (state, value) {
       localStorage.removeItem('pc-token')
-      state.token = ''
+      state.token = null
     }
 
   }
