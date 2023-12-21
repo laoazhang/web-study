@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const userRelations = {
+      '入职日期': 'timeOfEntry',
+      '手机号': 'mobile',
+      '姓名': 'username',
+      '转正日期': 'correctionTime',
+      '工号': 'workNumber'
+    }
+    let arr = [
+      {
+        "入职日期": 43535,
+        "姓名": "张飞2",
+        "工号": 88088,
+        "手机号": 15751786646,
+        "转正日期": 43719
+      },
+      {
+        "入职日期": 43535,
+        "姓名": "关于2",
+        "工号": 88088,
+        "手机号": 15751786226,
+        "转正日期": 43719
+      }
+    ]
+    let list = []
+    arr.forEach(item => {
+      let obj = {}
+      for (const key in item) {
+        const english = userRelations[key]
+        obj[english] = item[key]
+      }
+      list.push(obj)
+    })
+    console.log(list)
+
+    // 拷贝是针对什么数据类型来说的？
+    // 赋值
+    // let obj ={a:10,b:20}
+    // let obj2 = obj;
+    // let obj = { a: 10, b: 20,c:30 }
+    // let obj2 = {};
+    // obj2.a = obj.a
+    // obj2.b = obj.b
+    // for (const key in obj) {
+    //   obj2[key] = obj[key]
+    // }
+    // 深拷贝：针对对象的每一层 都进行 值的拷贝   特点：内存完全独立
+    // 浅拷贝：针对对象的第一层的简单类型进行值的拷贝，第一层的复杂类型进行地址的拷贝  特点：可能会有相同的内存空间
+
+  </script>
+</body>
+
+</html>

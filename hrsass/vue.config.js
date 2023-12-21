@@ -38,6 +38,21 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    proxy: {
+      // 会对咱们项目发起的请求进行拦截（请求里必须包含/api）
+      // 请求地址：http://localhost:8888/api/sys/login
+      // 会被咱们代理所 拦截
+      // 处理后的结果（把请求地址中api之前的地址替换成target中地址）
+      // 代理帮咱们请求的地址 http://ihrm.itheima.net/api/sys/login
+      // pathRewrite可以重写咱们代理后的地址  重写之后请求地址： http://ihrm.itheima.net/sys/login
+      '/api': {
+        // target: 'https://ihrm.itheima.net'
+        target: 'http://ihrm-java.itheima.net'
+        // target: 'http://8.142.65.7:3600'
+        // target: 'http://123.57.109.30:3000'
+        // pathRewrite: { '^/api': '' }
+      }
     }
   },
   configureWebpack: {

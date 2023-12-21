@@ -1,0 +1,6 @@
+@import url('./common.css');
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: aqua;
+}

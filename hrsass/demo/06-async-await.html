@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 语法：async 写在函数前边（修饰函数的）  await后面跟的promise
+    // 特点：
+    // 1.被async修饰的函数 默认返回的是一个promise对象
+    // 2.在async修改的函数 内部return 一个值 可以在then的回调函数中取到
+    // 3.await后面promise内部封装的异步请求 执行完之后 才会执行await后面代码
+
+    // 1.被async修饰的函数 默认返回的是一个promise对象
+    // async function fn(){}
+    // const res = fn()
+    // console.log(res)
+
+    // 2.在async修饰的函数 内部return 一个值 可以在then的回调函数中取到
+    // async function fn() {
+    //   return 123
+    // }
+    // fn().then(res => {
+    //   console.log(res)
+    // })
+
+    //  3.await后面promise内部封装的异步请求 执行完之后 才会执行await后面代码
+    function timeOut(){
+      return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+          console.log('setTimeout')
+          resolve()
+        }, 2000);
+      })
+    }
+
+    async function fn(){
+      await timeOut()
+      console.log(123)
+    }
+
+    fn()
+  </script>
+</body>
+
+</html>

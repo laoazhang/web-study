@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function Person(){
+
+    }
+    // 构造函数的原型对象上挂载的方法和属性 都可以被构造函数对应的实例所访问
+    Person.prototype.sayHi = function(){
+      console.log('hello')
+    }
+    const p = new Person()
+    p.sayHi()
+  </script>
+</body>
+</html>
