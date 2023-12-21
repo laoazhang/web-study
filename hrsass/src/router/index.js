@@ -25,6 +25,29 @@ import Layout from '@/layout'
   }
  */
 
+// 引入多个模块的规则
+import approvalsRouter from './modules/approvals'
+import departmentsRouter from './modules/departments'
+import employeesRouter from './modules/employees'
+import permissionRouter from './modules/permission'
+import attendancesRouter from './modules/attendances'
+import salarysRouter from './modules/salarys'
+import settingRouter from './modules/setting'
+import socialRouter from './modules/social'
+
+// 动态路由表 => 动态路由(需要权限才可以访问的) 我们这里准备一个数组存放
+
+export const asyncRoutes = [
+  approvalsRouter,
+  departmentsRouter,
+  employeesRouter,
+  permissionRouter,
+  attendancesRouter,
+  salarysRouter,
+  settingRouter,
+  socialRouter
+]
+
 /**
  * constantRoutes
  * a base page that does not have permission requirements
@@ -42,7 +65,7 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
+  // 首页模块
   {
     path: '/',
     component: Layout,
@@ -51,18 +74,17 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
-
   // 没有匹配到的页面, 走404
   { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  scrollBehavior: () => ({ y: 0 }), // 管理滚动行为, 让页面切换时回到顶部
+  routes: [...constantRoutes, ...asyncRoutes] // 临时合并动态路由和静态路由
 })
 
 const router = createRouter()
