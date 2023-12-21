@@ -52,7 +52,7 @@
 
       <div class="tips">
         <span style="margin-right:20px;">账号: 13800000002</span>
-        <span> 密码: 123456</span>
+        <span> 密码: 888itcast.CN764%...</span>
       </div>
 
     </el-form>
