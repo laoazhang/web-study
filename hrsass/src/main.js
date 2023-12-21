@@ -11,7 +11,6 @@ import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import '@/styles/index.scss' // global css
 import request from '@/utils/request'
 import * as directives from '@/directives' // 批量注册
-console.log(directives)
 
 // import 两个作用
 // 1.导入某个模块
