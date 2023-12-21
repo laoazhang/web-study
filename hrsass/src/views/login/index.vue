@@ -123,13 +123,20 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          this.loading = true
           // const { data } = await loginApi(this.loginForm)
           // // token存放的一般是：用户信息和登录的过期时间
           // // 存token的方式
           // // localStorage：存在浏览器中
           // // vuex: 把数据存在内存中
           // console.log(data)
-          this.$router.push({ path: '/' })
+          this.login(this.loginForm).then(res => {
+            this.$router.push({ path: '/' })
+          }).catch(err => {
+            console.dir(err)
+          }).finally(() => {
+            this.loading = false
+          })
         }
       })
     }
