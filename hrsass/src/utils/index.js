@@ -115,3 +115,23 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+/**
+ * 转换列表数据为树状结构
+ * @param {*} list 所有列表
+ * @param {*} searchVal 要查找的数据
+ * @returns
+ */
+export const transListToTreeData = (list, searchVal) => {
+  // 思路:先找父级,然后根据父级的id去列表的所有数据中找与之对应的pid
+  const arr = []
+  list.forEach(item => {
+    if (item.pid === searchVal) {
+      // 找到父级了
+      const children = transListToTreeData(list, item.id) || []
+      item.children = children
+      arr.push(item)
+    }
+  })
+  return arr
+}

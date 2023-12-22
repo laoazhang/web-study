@@ -38,13 +38,13 @@ import socialRouter from './modules/social'
 // 动态路由表 => 动态路由(需要权限才可以访问的) 我们这里准备一个数组存放
 
 export const asyncRoutes = [
-  approvalsRouter,
   departmentsRouter,
+  settingRouter,
   employeesRouter,
   permissionRouter,
+  approvalsRouter,
   attendancesRouter,
   salarysRouter,
-  settingRouter,
   socialRouter
 ]
 

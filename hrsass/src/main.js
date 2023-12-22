@@ -6,7 +6,7 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 // index.css 设置element-ui组件的样式
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+// import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
 import '@/styles/index.scss' // global css
 import request from '@/utils/request'
@@ -24,9 +24,9 @@ import '@/icons' // icon
 import '@/permission' // token登录拦截
 
 // set ElementUI lang to EN
-Vue.use(ElementUI, { locale })
+// Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
-// Vue.use(ElementUI)
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 // 构造函数的原型对象上挂载的方法和属性 都可以被构造函数对应的实例所访问
