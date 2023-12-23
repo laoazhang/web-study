@@ -22,11 +22,13 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // token登录拦截
+import components from '@/components/index'
 
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
+Vue.use(components)
 
 Vue.config.productionTip = false
 // 构造函数的原型对象上挂载的方法和属性 都可以被构造函数对应的实例所访问
