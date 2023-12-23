@@ -2,14 +2,15 @@
   <div class="setting-container">
     <div class="app-container">
       <el-card v-loading="isLoading">
-        <el-tabs>
+        <el-tabs v-model="activeName">
           <!-- 左侧 -->
-          <el-tab-pane label="角色管理">
+          <el-tab-pane label="角色管理" name="role">
             <!-- 按钮 -->
             <el-button
               icon="el-icon-plus"
               size="small"
               type="primary"
+              @click="showAddRoleDialog"
             >新增角色</el-button>
             <!-- 表格 -->
             <el-table :data="list">
@@ -20,7 +21,7 @@
                 <!-- 放到插槽中进行数据获取 -->
                 <template #default="{row}">
                   <el-button size="small" type="success">分配权限</el-button>
-                  <el-button size="small" type="primary">编辑</el-button>
+                  <el-button size="small" type="primary" @click="showEditRoleDialog(row.id)">编辑</el-button>
                   <el-button size="small" type="danger" @click="delRole(row.id)">删除</el-button>
                 </template>
               </el-table-column>
@@ -48,27 +49,94 @@
 
           </el-tab-pane>
 
-          <el-tab-pane label="公司信息">
-            <!-- 公司信息 -->
+          <el-tab-pane label="公司信息" name="company">
+            <!-- 警告信息 -->
+            <el-alert
+              title="对公司名称、公司地址、营业执照、公司地区的更新，将使得公司资料被重新审核，请谨慎修改"
+              type="info"
+              show-icon
+              :closable="false"
+            />
+            <!-- 表单 -->
+            <el-form label-width="120px" style="margin-top:50px">
+              <el-form-item label="公司名称">
+                <el-input v-model="companyForm.name" disabled style="width:400px" />
+              </el-form-item>
+              <el-form-item label="公司地址">
+                <el-input v-model="companyForm.companyAddress" disabled style="width:400px" />
+              </el-form-item>
+              <el-form-item label="邮箱">
+                <el-input v-model="companyForm.mailbox" disabled style="width:400px" />
+              </el-form-item>
+              <el-form-item label="备注">
+                <el-input v-model="companyForm.remarks" type="textarea" :rows="3" disabled style="width:400px" />
+              </el-form-item>
+            </el-form>
           </el-tab-pane>
         </el-tabs>
       </el-card>
+      <el-dialog :visible="showDialog" :title="showTitle" :close-on-click-modal="false" @close="closeDialog">
+        <el-form ref="roleForm" :model="form" :rules="rules" label-width="100px">
+          <el-form-item label="角色名称" prop="name">
+            <el-input v-model="form.name" placeholder="请输入角色名称" />
+          </el-form-item>
+          <el-form-item label="角色描述">
+            <el-input v-model="form.description" placeholder="请输入角色描述" />
+          </el-form-item>
+        </el-form>
+
+        <template #footer>
+          <el-button @click="closeDialog">取消</el-button>
+          <el-button type="primary" @click="handleAddRole">确认</el-button>
+        </template>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import { getRoleListApi, delRoleApi } from '@/api/setting'
+import { getRoleListApi, delRoleApi, addRoleApi, getRoleDetailApi, editRoleApi } from '@/api/setting'
+import { getCompanyInfoApi } from '@/api/company'
+import { mapState } from 'vuex'
 export default {
   name: 'Setting',
   data() {
     return {
-      activeName: '',
+      activeName: 'role',
       page: 1,
       pagesize: 2,
       total: 0,
       list: [],
-      isLoading: false
+      isLoading: false,
+      showDialog: false,
+      form: {
+        name: '',
+        description: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入角色名称', trigger: ['blur', 'change'] }
+        ]
+      },
+      companyForm: {
+        name: '',
+        companyAddress: '',
+        mailbox: '',
+        remarks: ''
+      }
+    }
+  },
+  computed: {
+    showTitle() {
+      return this.form.id ? '编辑角色' : '新增角色'
+    },
+    ...mapState('user', ['userInfo'])
+  },
+  watch: {
+    activeName(newVal) {
+      if (newVal === 'company') {
+        this.getCompanyInfo()
+      }
     }
   },
   created() {
@@ -107,6 +175,40 @@ export default {
         }
         this.getRoleList()
       }).catch((error) => { console.log(error) })
+    },
+    // 新增角色
+    showAddRoleDialog() {
+      this.showDialog = true
+    },
+    // 关闭弹窗
+    closeDialog() {
+      this.showDialog = false
+      this.$refs.roleForm.resetFields()
+    },
+    // 提交表单
+    handleAddRole() {
+      this.$refs.roleForm.validate(async(flag) => {
+        if (!flag) return
+        if (this.form.id) {
+          await editRoleApi(this.form)
+          this.$message.success('修改成功')
+        } else {
+          await addRoleApi(this.form)
+          this.$message.success('添加成功')
+        }
+        this.closeDialog()
+        this.getRoleList()
+      })
+    },
+    // 编辑角色信息
+    async showEditRoleDialog(id) {
+      this.showDialog = true
+      const { data } = await getRoleDetailApi(id)
+      this.form = data
+    },
+    async getCompanyInfo() {
+      const { data } = await getCompanyInfoApi(this.userInfo.companyId)
+      this.companyForm = data
     }
   }
 
