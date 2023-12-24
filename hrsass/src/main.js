@@ -11,6 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss' // global css
 import request from '@/utils/request'
 import * as directives from '@/directives' // 批量注册
+import * as filters from '@/filters'
 
 // import 两个作用
 // 1.导入某个模块
@@ -43,6 +44,9 @@ Vue.prototype.$request = request
 // 2.使用Object.key批量注册指令
 Object.keys(directives).forEach(key => {
   Vue.directive(key, directives[key])
+})
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
 })
 
 // 固定语法 process.env

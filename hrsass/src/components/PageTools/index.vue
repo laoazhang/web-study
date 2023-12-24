@@ -20,7 +20,7 @@
 export default {
   name: 'PageTools',
   created() {
-    console.log(this.$slots)
+    // console.log(this.$slots)
   }
 
 }
