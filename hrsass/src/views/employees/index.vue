@@ -32,13 +32,13 @@
             </template>
           </el-table-column>
           <el-table-column label="操作" fixed="right" width="280">
-            <template>
+            <template #default="{row}">
               <el-button type="text" size="small">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small">删除</el-button>
+              <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { getEmployeeListApi } from '@/api/employees'
+import { getEmployeeListApi, delEmployeeApi } from '@/api/employees'
 import enumObj from '@/constant/employees'
 // import dayjs from 'dayjs'
 export default {
@@ -98,6 +98,16 @@ export default {
     getEmploymentText(row, column, cellValue, index) {
       const obj = this.hireType.find(item => item.id === cellValue)
       return obj ? obj.value : '未知'
+    },
+    delEmployee(id) {
+      this.$confirm('您确定要删除吗？', '温馨提示').then(async() => {
+        await delEmployeeApi(id)
+        if (this.list.length === 1 && this.page > 1) {
+          this.page--
+        }
+        this.$message.success('删除成功！')
+        this.getEmployeeList()
+      }).catch(() => {})
     }
   }
 }
