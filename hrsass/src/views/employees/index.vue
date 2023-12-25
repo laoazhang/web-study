@@ -9,7 +9,7 @@
         <template #right>
           <el-button type="warning" size="small">excel导入</el-button>
           <el-button type="danger" size="small">excel导出</el-button>
-          <el-button type="primary" size="small">新增员工</el-button>
+          <el-button type="primary" size="small" @click="showAddEmployeeDialog">新增员工</el-button>
         </template>
       </page-tools>
 
@@ -47,6 +47,9 @@
           <el-pagination :total="total" :current-page="page" :page-size="pageSize" layout="prev, pager, next" @current-change="handleCurrentChange" />
         </div>
       </el-card>
+      <add-employee :show-dialog.sync="showDialog">
+        s
+      </add-employee>
     </div>
   </div>
 </template>
@@ -54,9 +57,13 @@
 <script>
 import { getEmployeeListApi, delEmployeeApi } from '@/api/employees'
 import enumObj from '@/constant/employees'
+import addEmployee from './components/add-employee.vue'
 // import dayjs from 'dayjs'
 export default {
   name: 'Employees',
+  components: {
+    addEmployee
+  },
   // filters: {
   //   getFormateTime(value) {
   //     return dayjs(value).format('YYYY-MM-DD')
@@ -69,7 +76,8 @@ export default {
       total: 0,
       list: [],
       isLoading: false,
-      hireType: enumObj.hireType
+      hireType: enumObj.hireType,
+      showDialog: false
     }
   },
   created() {
@@ -108,6 +116,9 @@ export default {
         this.$message.success('删除成功！')
         this.getEmployeeList()
       }).catch(() => {})
+    },
+    showAddEmployeeDialog() {
+      this.showDialog = true
     }
   }
 }

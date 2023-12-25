@@ -37,3 +37,16 @@ export const delEmployeeApi = (id) => {
     method: 'delete'
   })
 }
+
+/**
+ * 添加员工接口
+ * @param {*} from
+ * @returns
+ */
+export const addEmployeeApi = from => {
+  return request({
+    url: '/sys/user',
+    method: 'post',
+    data: from
+  })
+}
