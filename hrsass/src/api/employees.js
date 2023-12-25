@@ -63,3 +63,16 @@ export const batchAddEmployeeApi = list => {
     data: list
   })
 }
+
+/**
+ * 保存用户信息
+ * @param {*} data
+ * @returns
+ */
+export const saveUserDetailByIdApi = (data) => {
+  return request({
+    url: `/sys/user/${data.id}`,
+    method: 'put',
+    data
+  })
+}
