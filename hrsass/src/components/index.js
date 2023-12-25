@@ -1,6 +1,7 @@
 // import Vue from 'vue'
 
 import PageTools from './PageTools'
+import UploadExcel from './UploadExcel'
 // Vue.component('PageTools', PageTools)
 
 // 使用VUe.use 注册插件这种方式来进行全局注册
@@ -15,4 +16,5 @@ import PageTools from './PageTools'
 
 export default (Vue) => {
   Vue.component('PageTools', PageTools)
+  Vue.component('UploadExcel', UploadExcel)
 }

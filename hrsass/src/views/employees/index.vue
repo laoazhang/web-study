@@ -7,8 +7,8 @@
         </template>
 
         <template #right>
-          <el-button type="warning" size="small">excel导入</el-button>
-          <el-button type="danger" size="small">excel导出</el-button>
+          <el-button type="warning" size="small" @click="$router.push('/import?type=user')">excel导入</el-button>
+          <el-button type="danger" size="small" @click="exportExcel">excel导出</el-button>
           <el-button type="primary" size="small" @click="showAddEmployeeDialog">新增员工</el-button>
         </template>
       </page-tools>
@@ -58,6 +58,7 @@
 import { getEmployeeListApi, delEmployeeApi } from '@/api/employees'
 import enumObj from '@/constant/employees'
 import addEmployee from './components/add-employee.vue'
+import { getFormateTime } from '@/filters'
 // import dayjs from 'dayjs'
 export default {
   name: 'Employees',
@@ -119,6 +120,68 @@ export default {
     },
     showAddEmployeeDialog() {
       this.showDialog = true
+    },
+    /**
+     * 导出excel
+     */
+    async exportExcel() {
+      // 先获取所有数据
+      const { data: { rows }} = await getEmployeeListApi(1, this.total)
+      const headersArr = ['姓名', '手机号', '入职日期', '聘用形式', '转正日期', '工号', '部门']
+      const multiHeader = [['姓名', '主要信息', '', '', '', '', '部门']]
+      const merges = ['A1:A2', 'B1:F1', 'G1:G2']
+      const headersRelations = {
+        '姓名': 'username',
+        '手机号': 'mobile',
+        '入职日期': 'timeOfEntry',
+        '聘用形式': 'formOfEmployment',
+        '转正日期': 'correctionTime',
+        '工号': 'workNumber',
+        '部门': 'departmentName'
+      }
+      const exportData = this.formateExceportData(rows, headersArr, headersRelations)
+      import('@/vendor/Export2Excel').then(excel => {
+        // 导出excel使用的方法
+        excel.export_json_to_excel({
+        // 表头
+          header: headersArr,
+          // 数据 data 是一个二维数组
+          data: exportData,
+          // 文件名
+          filename: '员工信息',
+          // 单元格 宽度是否是自适应
+          autoWidth: true,
+          // 文件的后缀名
+          bookType: 'xlsx',
+          multiHeader,
+          merges
+        })
+      })
+    },
+    /**
+     * 处理数据中的格式为二维数组
+     *  */
+    formateExceportData(rows, headersArr, headersRelations) {
+      const result = []
+      rows.forEach(item => {
+        const arr = []
+        headersArr.forEach(key => {
+          const englishKey = headersRelations[key]
+          let value = item[englishKey]
+          // 时间格式转换
+          if (['timeOfEntry', 'correctionTime'].includes(englishKey)) {
+            value = item[englishKey] ? getFormateTime(item[englishKey]) : ''
+          }
+          // 聘用方式转换
+          if (englishKey === 'formOfEmployment') {
+            const obj = this.hireType.find(enumObj => enumObj.id === item[englishKey])
+            value = obj ? obj.value : '未知'
+          }
+          arr.push(value)
+        })
+        result.push(arr)
+      })
+      return result
     }
   }
 }
