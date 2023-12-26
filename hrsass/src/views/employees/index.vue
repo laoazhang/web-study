@@ -42,7 +42,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="showEditRoleDialogFn(row.id)">角色</el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -58,6 +58,7 @@
           <canvas ref="myCanvas" />
         </el-row>
       </el-dialog>
+      <assign-Role :show-role-dialog.sync="showRoleDialog" :user-id="userId" />
     </div>
   </div>
 </template>
@@ -69,11 +70,13 @@ import addEmployee from './components/add-employee.vue'
 import { getFormateTime } from '@/filters'
 import errorImg from '@/assets/404_images/404.png'
 import QrCode from 'qrcode'
+import assignRole from './components/assign-role.vue'
 // import dayjs from 'dayjs'
 export default {
   name: 'Employees',
   components: {
-    addEmployee
+    addEmployee,
+    assignRole
   },
   // filters: {
   //   getFormateTime(value) {
@@ -91,7 +94,9 @@ export default {
       showDialog: false,
       defaultImg: 'https://hrsass-1305847999.cos.ap-beijing.myqcloud.com/1703558459813%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231104104548.jpg',
       errorImg,
-      showCodeDialog: false
+      showCodeDialog: false,
+      showRoleDialog: false,
+      userId: ''
     }
   },
   created() {
@@ -209,6 +214,11 @@ export default {
     },
     closeImgDialogFn() {
       this.showCodeDialog = false
+    },
+    // 展示修改角色的弹框
+    showEditRoleDialogFn(id) {
+      this.showRoleDialog = true
+      this.userId = id
     }
   }
 }
