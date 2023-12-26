@@ -16,6 +16,11 @@
       <el-card v-loading="isLoading" style="margin-top: 10px;">
         <el-table border :data="list">
           <el-table-column label="序号" type="index" :index="indexMethod" />
+          <el-table-column label="头像" prop="staffPhoto">
+            <template #default="{row}">
+              <img v-imgerror="errorImg" :src="row.staffPhoto || defaultImg" class="avatar_photo" @click="showImgDialogFn(row.staffPhoto)">
+            </template>
+          </el-table-column>
           <el-table-column label="姓名" prop="username" />
           <el-table-column label="手机号" prop="mobile" />
           <el-table-column label="工号" prop="workNumber" />
@@ -47,9 +52,12 @@
           <el-pagination :total="total" :current-page="page" :page-size="pageSize" layout="prev, pager, next" @current-change="handleCurrentChange" />
         </div>
       </el-card>
-      <add-employee :show-dialog.sync="showDialog">
-        s
-      </add-employee>
+      <add-employee :show-dialog.sync="showDialog" />
+      <el-dialog width="300px" title="二维码图片" :visible="showCodeDialog" :close-on-click-modal="false" @close="closeImgDialogFn">
+        <el-row type="flex" justify="center">
+          <canvas ref="myCanvas" />
+        </el-row>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -59,6 +67,8 @@ import { getEmployeeListApi, delEmployeeApi } from '@/api/employees'
 import enumObj from '@/constant/employees'
 import addEmployee from './components/add-employee.vue'
 import { getFormateTime } from '@/filters'
+import errorImg from '@/assets/404_images/404.png'
+import QrCode from 'qrcode'
 // import dayjs from 'dayjs'
 export default {
   name: 'Employees',
@@ -78,7 +88,10 @@ export default {
       list: [],
       isLoading: false,
       hireType: enumObj.hireType,
-      showDialog: false
+      showDialog: false,
+      defaultImg: 'https://hrsass-1305847999.cos.ap-beijing.myqcloud.com/1703558459813%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231104104548.jpg',
+      errorImg,
+      showCodeDialog: false
     }
   },
   created() {
@@ -182,11 +195,32 @@ export default {
         result.push(arr)
       })
       return result
+    },
+    showImgDialogFn(url) {
+      if (!url) {
+        this.$message.error('当前用户没有头像')
+        return
+      }
+      this.showCodeDialog = true
+      this.$nextTick(() => {
+        // 如果这里 url 写的是网址, 就会跳转到对应网址 (二维码分享效果)
+        QrCode.toCanvas(this.$refs.myCanvas, url)
+      })
+    },
+    closeImgDialogFn() {
+      this.showCodeDialog = false
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.avatar_photo{
+  width: 70px;
+  height: 70px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+}
 
 </style>

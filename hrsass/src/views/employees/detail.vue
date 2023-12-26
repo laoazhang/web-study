@@ -19,10 +19,20 @@
           </el-tab-pane>
           <el-tab-pane label="个人详情">
             <!-- 放置个人详情 -->
+            <el-tooltip class="tooltip-box" content="打印基本个人信息">
+              <router-link :to="`/employees/print/${userId}?type=personal`">
+                <i class="el-icon-printer" />
+              </router-link>
+            </el-tooltip>
             <user-info />
           </el-tab-pane>
           <el-tab-pane label="岗位信息">
             <!-- 内容 -->
+            <el-tooltip class="tooltip-box" content="打印基本岗位信息">
+              <router-link :to="`/employees/print/${userId}?type=job`">
+                <i class="el-icon-printer" />
+              </router-link>
+            </el-tooltip>
             <job-info />
           </el-tab-pane>
         </el-tabs>
@@ -81,3 +91,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.employees-detail-container {
+  .el-tab-pane {
+    padding-top: 10px;
+  }
+  .tooltip-box {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    z-index: 999;
+  }
+}
+</style>

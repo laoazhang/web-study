@@ -13,6 +13,9 @@ import request from '@/utils/request'
 import * as directives from '@/directives' // 批量注册
 import * as filters from '@/filters'
 
+import Print from 'vue-print-nb'
+Vue.use(Print)
+
 // import 两个作用
 // 1.导入某个模块
 // 2.直接执行导入的js文件
