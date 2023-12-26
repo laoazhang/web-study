@@ -34,3 +34,4 @@ export const getBaseUserInfoApi = (id) => {
     url: `/sys/user/${id}`
   })
 }
+

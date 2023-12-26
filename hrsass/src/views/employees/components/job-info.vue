@@ -151,12 +151,11 @@
   </div>
 
 </template>
-
 <script>
 import EmployeeEnum from '@/constant/employees'
+import { getSimpleUserListApi, getJobDetailApi, updateJobApi } from '@/api/employees'
 
 export default {
-  name: 'JobInfo',
   data() {
     return {
       list: [],
@@ -196,10 +195,32 @@ export default {
       return this.$route.params.id
     }
   },
+  created() {
+    this.getJobDetail()
+    this.getEmployeeSimple()
+  },
   methods: {
-    saveJob() {
-
+    // 获取基本岗位详情数据
+    async getJobDetail() {
+      const { data } = await getJobDetailApi(this.userId)
+      this.formData = data
+    },
+    // 获取员工列表, 用于将来用户选择上级 (以及, 上级员工名称的显示)
+    async getEmployeeSimple() {
+      const { data } = await getSimpleUserListApi()
+      this.list = data
+    },
+    async saveJob() {
+      await updateJobApi({
+        ...this.formData,
+        userId: this.userId
+      })
+      this.$message.success('保存成功')
     }
   }
 }
 </script>
+
+<style>
+
+</style>
