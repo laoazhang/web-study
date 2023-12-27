@@ -94,7 +94,7 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }), // 管理滚动行为, 让页面切换时回到顶部
   routes: [...constantRoutes] // 临时合并动态路由和静态路由
 })

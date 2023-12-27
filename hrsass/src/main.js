@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 // 重置默认样式 reset.css
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
+import '@/styles/element-variables.scss' // global css
 
 // index.css 设置element-ui组件的样式
 import ElementUI from 'element-ui'
@@ -27,11 +28,16 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // token登录拦截
 import components from '@/components/index'
+import i18n from '@/lang'
 
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
+// 配置ElementUI的中英切换逻辑
+Vue.use(ElementUI, {
+  i18n: (key, value) => i18n.t(key, value)
+})
 Vue.use(components)
 
 Vue.config.productionTip = false
@@ -59,5 +65,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
 })
