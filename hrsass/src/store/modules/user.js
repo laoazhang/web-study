@@ -1,5 +1,6 @@
 import { loginApi, getUserInfoApi, getBaseUserInfoApi } from '@/api/user'
 import { setToken, getToken, removeToken } from '@/utils/auth'
+import { resetRouter } from '@/router'
 
 const state = {
   token: getToken() || '',
@@ -71,8 +72,14 @@ const actions = {
   },
   // 注意：在真实的开发场景中，退出是要调用后端接口，同步前后端的token信息
   logout({ commit }) {
+    // 清除token
     commit('clearToken')
+    // 清除用户信息
     commit('clearUserInfo')
+    // 清除router里面的路由表
+    resetRouter()
+    // 清除vuex路由表
+    commit('permission/setRoutes', [], { root: true })
   }
 
 }

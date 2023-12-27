@@ -88,15 +88,15 @@ export const constantRoutes = [
         component: () => import('@/views/import/index')
       }
     ]
-  },
+  }
   // 没有匹配到的页面, 走404
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }), // 管理滚动行为, 让页面切换时回到顶部
-  routes: [...constantRoutes, ...asyncRoutes] // 临时合并动态路由和静态路由
+  routes: [...constantRoutes] // 临时合并动态路由和静态路由
 })
 
 const router = createRouter()

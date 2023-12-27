@@ -38,12 +38,15 @@
           </el-table-column>
           <el-table-column label="操作" fixed="right" width="280">
             <template #default="{row}">
-              <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
+              <!-- v-if="checkPermission('EMP_LOOK')" -->
+              <el-button v-permission="'EMP_LOOK'" type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small" @click="showEditRoleDialogFn(row.id)">角色</el-button>
-              <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
+              <!-- v-if="checkPermission('EMP_ROLE')" -->
+              <!-- v-if="checkPermission('EMP_DELETE')" -->
+              <el-button v-permission="'EMP_ROLE'" type="text" size="small" @click="showEditRoleDialogFn(row.id)">角色</el-button>
+              <el-button v-permission="'EMP_DELETE'" type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -71,6 +74,7 @@ import { getFormateTime } from '@/filters'
 import errorImg from '@/assets/404_images/404.png'
 import QrCode from 'qrcode'
 import assignRole from './components/assign-role.vue'
+import { mapGetters } from 'vuex'
 // import dayjs from 'dayjs'
 export default {
   name: 'Employees',
@@ -98,6 +102,9 @@ export default {
       showRoleDialog: false,
       userId: ''
     }
+  },
+  computed: {
+    ...mapGetters(['roles'])
   },
   created() {
     this.getEmployeeList()
@@ -219,6 +226,10 @@ export default {
     showEditRoleDialogFn(id) {
       this.showRoleDialog = true
       this.userId = id
+    },
+    // 判断用户是否有二级权限
+    checkPermission(permission) {
+      return this.roles?.points.includes(permission)
     }
   }
 }
