@@ -1,15 +1,18 @@
 <template>
   <div>
-    <h2>子组件</h2>
+    <h2>父亲组件</h2>
     <p>{{ money }}$</p>
     <p>{{ msg }}</p>
     <p><button @click="changePar">
       点击修改
     </button></p>
   </div>
+  <hr>
+  <GrandSon/>
 </template>
 
 <script setup>
+import GrandSon from './grandSon.vue'
 
 // 2.使用defineProps({变量1，变量2...})
 const props = defineProps({

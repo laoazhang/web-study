@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>父组件</h1>
+    <h1>爷爷组件</h1>
     <hr>
     <Son 
     :money="money" 
@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { provide, ref } from 'vue';
 import Son from './son.vue'
 
 // 场景一：父传子 == 单向数据流 ==
@@ -29,6 +29,12 @@ const changeMky=(mky)=>{
   money.value=mky
 }
 
+// 场景三：跨级通信（爷爷=》孙子通信）=》依赖注入
+// 1.注入数据 =》语法： provide('注入数据名字',data)
+provide('money',money)
+
+// 注入修改数据的方法
+provide('changeMky',changeMky)
 
 </script>
 

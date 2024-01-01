@@ -2,7 +2,7 @@
   <div>
     <h1>reactive函数的使用</h1>
     <ul>
-      <li>{{ person }}</li>
+      <li>{{ name }},{{ age }}</li>
       <li>
         <button @click="changePerson">修改年龄</button>
       </li>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {reactive} from 'vue'
+import {reactive, toRefs} from 'vue'
 export default {
   setup () {
     /**
@@ -27,18 +27,25 @@ export default {
      */
     // 1.语法：const 变量名 = reactive({a,b,c...})
     // const 变量名 = reactive({a,b,c...}) 
-    const person = reactive({name:'李白',age:18})
+    let person = reactive({name:'李白',age:18})
+    // 不能直接接口person ，会失去响应式
+    // let {name,age} = reactive({name:'李白',age:18})
+    // 解决：解构使用toRefs函数=》语法：toRefs(传入解构的reactive变量)
+    const {name,age} = toRefs(person) // 变成ref函数的定义的响应变量
 
     // 修改变量=》数据驱动视图
     const changePerson = () => {
       // person.age=19
-      person.age++
+      // person.age++
       // 不能=号覆盖式修改
       // person={}
+      age.value++
     }
 
     // 2.必须返回定义的变量或函数
-    return {person,changePerson}
+    // return {person,changePerson}
+    return{name,age,changePerson}
+
   }
 }
 </script>
