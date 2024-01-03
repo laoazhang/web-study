@@ -5,5 +5,13 @@ import './style.css'
 // import App from './views/组件通信/index.vue'
 // import App from './views/事件处理/index.vue'
 import App from './views/黑马头条案例/index.vue'
+// import App from './views/pinia使用/index.vue'
 
-createApp(App).mount('#app')
+// 1.导入创建pinia的方法
+import { createPinia } from 'pinia'
+
+// 2.创建pinia实例
+const pinia = createPinia()
+
+// 3.注册pinia
+createApp(App).use(pinia).mount('#app')
