@@ -1,14 +1,20 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import pinia from '@/stores/index'
 
+// vant需要单独引入的样式
+import 'vant/lib/index.css'
+
+// 导入全局样式
+import '@/styles/index.css'
+
+// 1. 创建vue根实例
 const app = createApp(App)
 
-app.use(createPinia())
+// 2. 注册pinia和router
+app.use(pinia)
 app.use(router)
-
+// 3. 挂载渲染App根组件
 app.mount('#app')
