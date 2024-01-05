@@ -8,7 +8,10 @@ import pinia from '@/stores/index'
 import 'vant/lib/index.css'
 
 // 导入全局样式
-import '@/styles/index.css'
+import '@/styles/index.scss'
+
+// 注册图标
+import 'virtual:svg-icons-register'
 
 // 1. 创建vue根实例
 const app = createApp(App)
