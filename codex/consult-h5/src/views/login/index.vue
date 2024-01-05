@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 // 导入校验规则
 import { mobileRules, passwordRules } from '@/utils/rules'
-import { showFailToast, showToast } from 'vant'
+import { showFailToast } from 'vant'
 
 const clickRight = () => {
   console.log('点击了右边的文字')
