@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 // 导入校验规则
-import { mobileRules, passwordRules } from '@/utils/rules'
-import { showFailToast } from 'vant'
+import { mobileRules, passwordRules, codeRules } from '@/utils/rules'
+import { showFailToast, showSuccessToast, type FormInstance, formProps } from 'vant'
+import { loginByPassword, sendMobileCode, loginByMobile } from '@/api/user'
+// 导入用户store
+import { useUserStore } from '@/stores'
+import { useRoute, useRouter } from 'vue-router'
+import { onUnmounted } from 'vue'
 
 const clickRight = () => {
   console.log('点击了右边的文字')
@@ -17,15 +22,59 @@ const agree = ref(false)
  */
 const isShowPass = ref(false)
 
+// 切换短信登录
+const isPass = ref(true)
+
 //准备账号密码响应变量
-const mobile = ref('')
-const password = ref('')
+const mobile = ref('13230000001')
+const password = ref('abc12345')
+const code = ref('')
 // 点击登录
-const login = () => {
-  console.log('校验通过了')
+// pinia持久化
+const store = useUserStore()
+// 跳转页面使用
+const router = useRouter()
+// 获取路由参数
+const route = useRoute()
+const login = async () => {
+  // console.log('校验通过了')
   if (!agree.value) return showFailToast('请勾选用户协议')
-  // 进行登录
+  // 验证完毕，进行登录
+  try {
+    const res = isPass.value
+      ? await loginByPassword(mobile.value, password.value)
+      : await loginByMobile(mobile.value, code.value)
+    store.setUser(res.data)
+    // 说明：存在route.query.returnUrl 回跳地址=> 跳转teturnUrl地址
+    // 相反，默认跳转用户个人中心
+    router.push((route.query.returnUrl as string) || '/user')
+    showSuccessToast('登录成功')
+  } catch (error) {
+    console.log(error)
+  }
 }
+
+const time = ref(0)
+const form = ref<FormInstance>()
+let timeId: number
+const send = async () => {
+  // 已经倒计时time的值大于0，60s内不能重复发送验证码
+  if (time.value > 0) return
+  // 验证不通过报错，阻止程序继续执行
+  await form.value?.validate('mobile')
+  const res = await sendMobileCode(mobile.value, 'login')
+  showSuccessToast('发送成功')
+  code.value = res.data.code
+  time.value = 60
+  // 倒计时
+  timeId = window.setInterval(() => {
+    time.value--
+    if (time.value <= 0) window.clearInterval(timeId)
+  }, 1000)
+}
+onUnmounted(() => {
+  window.clearInterval(timeId)
+})
 </script>
 
 <template>
@@ -34,9 +83,9 @@ const login = () => {
     <div class="login">
       <!-- 1. 头部 -->
       <div class="login-head">
-        <h3>密码登录</h3>
-        <a href="javascript:;">
-          <span>短信验证码登录</span>
+        <h3>{{ isPass ? '密码登录' : '短信验证码登录' }}</h3>
+        <a href="javascript:;" @click="isPass = !isPass">
+          <span>{{ !isPass ? '密码登录' : '短信验证码登录' }}</span>
           <van-icon name="arrow"></van-icon>
         </a>
       </div>
@@ -45,12 +94,14 @@ const login = () => {
         <!-- 1. 手机号输入框 -->
         <van-field
           v-model="mobile"
+          name="mobile"
           :rules="mobileRules"
           placeholder="请输入手机号"
           type="tel"
         ></van-field>
         <!-- 2. 密码输入框 -->
         <van-field
+          v-if="isPass"
           v-model="password"
           :rules="passwordRules"
           placeholder="请输入密码"
@@ -61,6 +112,11 @@ const login = () => {
               @click="isShowPass = !isShowPass"
               :name="`login-eye-${isShowPass ? 'on' : 'off'}`"
             ></cp-icon>
+          </template>
+        </van-field>
+        <van-field v-else v-model="code" placeholder="短信验证码" :rules="codeRules">
+          <template #button>
+            <span @click="send">{{ time > 0 ? `${time}后再次发送` : '发送验证码' }}</span>
           </template>
         </van-field>
         <div class="cp-cell">
