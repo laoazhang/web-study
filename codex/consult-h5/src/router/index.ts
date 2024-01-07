@@ -5,6 +5,7 @@ const Test = () => import('@/views/test/index.vue')
 
 // 路由配置数组
 const routes = [
+  // 一级路由 => router-view挂载点放到App.vue根组件
   {
     path: '/login',
     name: 'login',
@@ -15,6 +16,20 @@ const routes = [
     path: '/test',
     name: 'test',
     component: Test
+  },
+  // tabBar页面
+  {
+    // 父路由：layout公共布局页面
+    path: '/',
+    component: () => import('@/views/layout/index.vue'),
+    children: [
+      // 二级路由：挂载点放到父路由指定位置
+      // 子路由：首页、健康百科、消息中心、我的个人中心
+      { path: '/home', component: () => import('@/views/home/index.vue') },
+      { path: '/article', component: () => import('@/views/article/index.vue') },
+      { path: '/notify', component: () => import('@/views/notify/index.vue') },
+      { path: '/user', component: () => import('@/views/user/index.vue') }
+    ]
   }
 ]
 

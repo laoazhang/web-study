@@ -15,6 +15,21 @@ const clickRight = () => {
 // 是否同意网站使用协议
 const agree = ref(false)
 
+type Obj = {
+  name: string
+  age: number
+}
+let obj = ref({} as Obj) // 通过断言指定类型，不用加可选链?
+// let obj = ref<Obj>() // 通过泛型指定类型
+// !在ts中叫非空断言=> 语法：变量!
+// obj.value!.age = 1
+obj.value.age = 1
+
+// if (obj.value) {
+//   // 如果存在，则进行赋值，代码更严谨
+//   obj.value.age = 1
+// }
+
 /**
  * 动态切换密码框眼睛图标，控制是否显示密码
  * 1. 定义一个响应变量isShowPass
@@ -116,7 +131,9 @@ onUnmounted(() => {
         </van-field>
         <van-field v-else v-model="code" placeholder="短信验证码" :rules="codeRules">
           <template #button>
-            <span @click="send">{{ time > 0 ? `${time}后再次发送` : '发送验证码' }}</span>
+            <span @click="send" :class="{ active: time > 0 }">{{
+              time > 0 ? `${time}后再次发送` : '发送验证码'
+            }}</span>
           </template>
         </van-field>
         <div class="cp-cell">
@@ -140,6 +157,9 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
+.active {
+  color: red;
+}
 .login {
   padding-top: 46px;
   &-head {
