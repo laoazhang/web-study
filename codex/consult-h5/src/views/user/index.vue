@@ -10,6 +10,7 @@ const userData = ref({} as UserInfo)
 const getUserInfo = async () => {
   const { data } = await userInfo()
   userData.value = data
+  // console.log(data)
 }
 
 // 3. 组件挂载
@@ -53,7 +54,7 @@ onMounted(() => {
         <h3>药品订单</h3>
         <router-link to="/order">全部订单 <van-icon name="arrow" /></router-link>
       </div>
-      <van-row>
+      <van-row v-if="userData.orderInfo">
         <van-col span="6">
           <cp-icon name="user-paid" />
           <p>待付款:{{ userData.orderInfo.paidNumber }}</p>
