@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 // 导入校验规则
 import { mobileRules, passwordRules, codeRules } from '@/utils/rules'
-import { showFailToast, showSuccessToast, type FormInstance, formProps } from 'vant'
+import { showFailToast, showSuccessToast, type FormInstance } from 'vant'
 import { loginByPassword, sendMobileCode, loginByMobile } from '@/api/user'
 // 导入用户store
 import { useUserStore } from '@/stores'
