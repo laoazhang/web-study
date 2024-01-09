@@ -30,6 +30,7 @@ const routes = [
   {
     // 父路由：layout公共布局页面
     path: '/',
+    redirect: '/home',
     component: () => import('@/views/layout/index.vue'),
     children: [
       // 二级路由：挂载点放到父路由指定位置

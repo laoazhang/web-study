@@ -71,10 +71,32 @@
       </van-swipe>
     </div>
     <!-- 4. 知识列表：关注、推荐、减脂、饮食 -->
+    <van-tabs shrink sticky v-model:active="active">
+      <van-tab name="like" title="关注">
+        <KnowledgeList> </KnowledgeList>
+      </van-tab>
+      <van-tab name="recommend" title="推荐">
+        <KnowledgeList> </KnowledgeList>
+      </van-tab>
+      <van-tab name="fatReduction" title="减脂">
+        <KnowledgeList> </KnowledgeList>
+      </van-tab>
+      <van-tab name="food" title="饮食">
+        <KnowledgeList> </KnowledgeList>
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+// 导入知识列表组件
+import KnowledgeList from './components/KnowledgeList.vue'
+import type { KnowledgeType } from '@/types/consult'
+
+// 当前选中页签
+const active = ref<KnowledgeType>('like')
+</script>
 
 <style lang="scss" scoped>
 .home-page {
