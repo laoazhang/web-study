@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { getPatientList, addPatient } from '@/api/user'
+import { getPatientList, addPatient, editPatient, delPatient } from '@/api/user'
 import { ref } from 'vue'
 import type { Patient, PatientList } from '@/types/user'
 import { onMounted } from 'vue'
 // import { watch } from 'vue'
 import { computed } from 'vue'
-import { showFailToast, showSuccessToast } from 'vant'
+import { showConfirmDialog, showFailToast, showSuccessToast } from 'vant'
 // 导入校验身份证格式插件
 import Validator from 'id-validator'
 
@@ -24,8 +24,14 @@ onMounted(() => {
 // 控制新增患者弹层显隐
 const show = ref(false)
 // 打开新增患者弹层
-const openDialog = () => {
-  patient.value = { ...defaultPatinet }
+const openDialog = async (item?: Patient) => {
+  if (item) {
+    // 如果点的是编辑，解构出后台需要的数据
+    const { id, gender, name, idCard, defaultFlag } = item
+    patient.value = { id, gender, name, idCard, defaultFlag }
+  } else {
+    patient.value = { ...defaultPatinet }
+  }
   show.value = true
 }
 
@@ -89,12 +95,29 @@ const submit = async () => {
   const { sex } = cardValid.getInfo(patient.value.idCard)
   if (patient.value.gender !== sex) return showFailToast('选择的性别和身份证性别不一致')
   try {
-    await addPatient(patient.value)
+    patient.value.id ? await editPatient(patient.value) : await addPatient(patient.value)
     closeDialog()
     loadList()
-    showSuccessToast('新增成功')
+    showSuccessToast(patient.value.id ? '编辑成功' : '新增成功')
   } catch (error) {
     console.log(error)
+  }
+}
+
+// 删除
+const remove = () => {
+  if (patient.value.id) {
+    showConfirmDialog({
+      title: '温馨提示',
+      message: `您确认要删除 ${patient.value.name} 患者信息吗 ？`
+    })
+      .then(async () => {
+        await delPatient(patient.value.id)
+        closeDialog()
+        loadList()
+        showSuccessToast('删除成功')
+      })
+      .catch(() => {})
   }
 }
 </script>
@@ -118,12 +141,12 @@ const submit = async () => {
           <span>{{ item.age }}岁</span>
         </div>
         <!-- 点击修改 -->
-        <div class="icon"><cp-icon name="user-edit" /></div>
+        <div class="icon" @click="openDialog(item)"><cp-icon name="user-edit" /></div>
         <!-- 默认患者显示div.tag元素 -->
         <div class="tag" v-if="item.defaultFlag === 1">默认</div>
       </div>
       <!-- 点击新增患者 -->
-      <div @click="openDialog" class="patient-add" v-if="patientList.length < 100">
+      <div @click="openDialog()" class="patient-add" v-if="patientList.length < 100">
         <cp-icon name="user-add" />
         <p>添加患者</p>
       </div>
@@ -140,7 +163,7 @@ const submit = async () => {
       <!-- 放置弹层内容 -->
       <!-- 1. 导航栏 -->
       <cp-nav-bar
-        title="新增患者"
+        :title="patient.id ? '编辑患者' : '新增患者'"
         @click-right="submit"
         right-text="保存"
         :back="closeDialog"
@@ -163,6 +186,9 @@ const submit = async () => {
           </template>
         </van-field>
       </van-form>
+      <van-action-bar>
+        <van-action-bar-button @click="remove" type="danger" text="删除"></van-action-bar-button>
+      </van-action-bar>
     </van-popup>
   </div>
 </template>
