@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { userInfo } from '@/api/user'
+import { useUserStore } from '@/stores'
 import type { UserInfo } from '@/types/user'
+import { showConfirmDialog, showSuccessToast } from 'vant'
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
+// 一、获取用户数据渲染展示
 // 1. 响应变量存储用户数据
 const userData = ref({} as UserInfo)
 
@@ -17,6 +21,42 @@ const getUserInfo = async () => {
 onMounted(() => {
   getUserInfo()
 })
+// 二、获取快捷工具
+const tools = [
+  { label: '我的问诊', path: '/user/consult' },
+  { label: '我的处方', path: '/' },
+  { label: '家庭档案', path: '/user/patient' },
+  { label: '地址管理', path: '/user/address' },
+  { label: '我的评价', path: '/' },
+  { label: '官方客服', path: '/' },
+  { label: '设置', path: '/' }
+]
+// 三、退出登录
+const store = useUserStore()
+// 说明：use开头的钩子函数，只能在setup中使用
+const router = useRouter()
+const logout = () => {
+  /**
+   * 1. 用户确认
+   * 2. 点击确定，执行退出：
+   *    1. 调用退出登录api接口（没有）
+   *    2. 删除pinia用户信息
+   *    3. 跳回登录页
+   */
+  showConfirmDialog({
+    title: '提示',
+    message: '确认退出在线问诊吗？'
+  })
+    .then(() => {
+      // 确定
+      store.delUser()
+      showSuccessToast('退出成功')
+      router.push('/login')
+    })
+    .catch(() => {
+      // 取消
+    })
+}
 </script>
 
 <template>
@@ -76,15 +116,23 @@ onMounted(() => {
     <!-- 2. 快捷工具 -->
     <div class="user-page-group">
       <h3>快捷工具</h3>
-      <van-cell title="标题" is-link :border="false">
-        <template #icon><cp-icon name="user-tool-01" /></template>
+      <!-- is-link 开启链接 -->
+      <van-cell
+        v-for="(tool, i) in tools"
+        :key="i"
+        :title="tool.label"
+        is-link
+        :to="tool.path"
+        :border="false"
+      >
+        <template #icon><cp-icon :name="`user-tool-0${i + 1}`" /></template>
       </van-cell>
       <van-cell title="标题" is-link :border="false">
         <template #icon><cp-icon name="user-tool-01" /></template>
       </van-cell>
     </div>
     <!-- 3. 退出登录 -->
-    <a class="logout" href="javascript:;">退出登录</a>
+    <a class="logout" href="javascript:;" @click="logout">退出登录</a>
   </div>
 </template>
 
