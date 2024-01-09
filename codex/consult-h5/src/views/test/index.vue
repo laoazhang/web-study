@@ -1,6 +1,24 @@
 <template>
   <div>
     <h1 class="test">测试页面</h1>
+
+    <!-- 语法糖写法 -->
+    <Son v-model="count" v-model:show="show"></Son>
+
+    <!-- 2.完整写法
+    $event:
+      1. 如果是原生js事件，它的值是 => 事件对象
+      2. 如果是组件的自定义事件，它的值是 => 子传父的data
+    -->
+    <!-- <Son :model-value="count" @update:model-value="count = $event"></Son> -->
+    <!-- <Son
+      :model-value="count"
+      @update:model-value="changeCount"
+      :show="show"
+      @update:show="show = $event"
+    ></Son> -->
+
+    <hr />
     <p class="cp-use" style="font-size: 18px">我是p元素</p>
     <img src="@/icons/consult/alipay.svg" alt="" />
 
@@ -31,6 +49,29 @@ import { useRoute } from 'vue-router'
 // 导入封装request
 import { request } from '@/utils/request'
 import { onMounted } from 'vue'
+
+// 导入子组件
+import Son from '@/views/test/son.vue'
+import { ref } from 'vue'
+/**
+ * vue3的v-model语法糖
+ * 背景：父子通信，父传子的变量，因为遵循单向数据流，父传子的变量，只能通过子传父自定义事件，去修改父组件中的变量 => 使用上有点麻烦
+ * 解决：可以用v-model语法糖解决子改父麻烦的问题
+ * v-model绑定父的变量
+ * 1. 父的变量变化 => 子变化
+ * 2. 子变化 => 父的变量变化
+ * 原理：
+ * v-model === :modelValue + @update:model-value="count = $event"
+ * v-model:属性名 === :属性名 + @update:属性名 (多个) => .sync的变种
+ * 说明：vue3元素身上可以写多个v-model
+ */
+
+const count = ref(1)
+const show = ref(true)
+
+const changeCount = (data: number) => {
+  count.value = data
+}
 
 const store = useUserStore()
 // 点击修改用户store全局数据

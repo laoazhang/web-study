@@ -7,6 +7,11 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const onClickLeft = () => {
   // 点击左侧执行 => 返回上次访问的页面
+  // 自定义返回逻辑
+  if (props.back) {
+    // return 阻止代码往后执行 + 执行传入的back函数
+    return props.back()
+  }
   /**
    * 返回上次访问的页面可能不存在？
    * 使用router.replace跳转,不能返回
@@ -21,9 +26,11 @@ const onClickLeft = () => {
 }
 
 // 1. 接收父传子变量
-defineProps<{
+const props = defineProps<{
   title: string
-  rightText: string
+  // 指定属性是可选的
+  rightText?: string
+  back?: () => void // 接收一个back函数，自定义返回逻辑
 }>()
 
 // 2. 子传父
@@ -34,8 +41,14 @@ const emit = defineEmits<{
 
 <template>
   <!-- 二次封装：内核=>vant的导航栏模块 -->
-  <van-nav-bar left-arrow @click-left="onClickLeft" fixed :title="title" :right-text="rightText"
-    @click-right="emit('click-right')"></van-nav-bar>
+  <van-nav-bar
+    left-arrow
+    @click-left="onClickLeft"
+    fixed
+    :title="title"
+    :right-text="rightText"
+    @click-right="emit('click-right')"
+  ></van-nav-bar>
 </template>
 
 <style lang="scss" scoped>

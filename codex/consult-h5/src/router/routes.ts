@@ -63,6 +63,12 @@ const routes = [
         }
       }
     ]
+  },
+  // 家庭档案
+  {
+    path: '/user/patient',
+    component: () => import('@/views/user/PatientInfo.vue'),
+    meta: { title: '家庭档案' }
   }
 ]
 

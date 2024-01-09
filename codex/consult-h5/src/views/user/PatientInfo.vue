@@ -1,34 +1,129 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getPatientList, addPatient } from '@/api/user'
+import { ref } from 'vue'
+import type { Patient, PatientList } from '@/types/user'
+import { onMounted } from 'vue'
+// import { watch } from 'vue'
+import { computed } from 'vue'
+import { showFailToast, showSuccessToast } from 'vant'
+// 导入校验身份证格式插件
+import Validator from 'id-validator'
+
+const patientList = ref<PatientList>([])
+// 1. 获取患者列表方法
+const loadList = async () => {
+  const { data } = await getPatientList()
+  patientList.value = data
+  // console.log('患者列表', data)
+}
+onMounted(() => {
+  loadList()
+})
+
+// 2. 新增患者功能
+// 控制新增患者弹层显隐
+const show = ref(false)
+// 打开新增患者弹层
+const openDialog = () => {
+  patient.value = { ...defaultPatinet }
+  show.value = true
+}
+
+// 关闭弹层
+const closeDialog = () => {
+  show.value = false
+}
+
+// 性别选项
+const options = [
+  { label: '男', value: 1 },
+  { label: '女', value: 0 }
+]
+// 存储选中的性别value值
+// const gender = ref(0)
+// 准备一个患者表单数据默认值
+const defaultPatinet: Patient = {
+  name: '', // 患者名字
+  idCard: '', // 患者身份证
+  gender: 1, // 患者性别
+  defaultFlag: 0 // 是否是默认患者，0不是默认 1是默认患者
+}
+
+const patient = ref<Patient>({ ...defaultPatinet })
+//是否是默认患者
+// const defaultFlag = ref(false)
+// 监控defaultFlag变化,把defaultFlag选中的boolean值换成 0 | 1
+// watch(defaultFlag, () => {
+//   // console.log('是否是默认患者', defaultFlag)
+//   patient.value.defaultFlag = defaultFlag.value ? 1 : 0
+//   defaultFlag.value = patient.value.defaultFlag ? true : false
+// })
+// 默认值需要转换
+const defaultFlag = computed({
+  get() {
+    return patient.value.defaultFlag === 1 ? true : false
+  },
+  set(value) {
+    patient.value.defaultFlag = value ? 1 : 0
+  }
+})
+// 点击导航栏保存按钮=> 提交
+// 创建身份证校验的实例
+const cardValid = new Validator()
+const submit = async () => {
+  /**
+   * 流程：
+   * 1. 校验患者名字和身份证
+   *    // 校验身份证格式
+   * 2. 校验通过调用api函数新增函数
+   *    新增成功后：
+   *    1. 关闭弹层
+   *    2. 刷新患者列表
+   *
+   */
+  if (!patient.value.name) return showFailToast('请输入患者名字')
+
+  if (!patient.value.idCard) return showFailToast('请输入患者身份证')
+  // 校验身份证格式
+  if (!cardValid.isValid(patient.value.idCard)) return showFailToast('身份证格式错误')
+  const { sex } = cardValid.getInfo(patient.value.idCard)
+  if (patient.value.gender !== sex) return showFailToast('选择的性别和身份证性别不一致')
+  try {
+    await addPatient(patient.value)
+    closeDialog()
+    loadList()
+    showSuccessToast('新增成功')
+  } catch (error) {
+    console.log(error)
+  }
+}
+</script>
 
 <template>
   <div class="patient-page">
-    <cp-nav-bar title="家庭档案" />
+    <!-- 1. 导航栏 -->
+    <cp-nav-bar title="家庭档案"></cp-nav-bar>
     <!-- 头部选择提示 -->
     <div class="patient-change" v-if="false">
       <h3>请选择患者信息</h3>
       <p>以便医生给出更准确的治疗，信息仅医生可见</p>
     </div>
+    <!-- 2. 患者列表 -->
     <div class="patient-list">
-      <div class="patient-item">
+      <div v-for="item in patientList" :key="item.id" class="patient-item">
         <div class="info">
-          <span class="name">李富贵</span>
-          <span class="id">321***********6164</span>
-          <span>男</span>
-          <span>32岁</span>
+          <span class="name">{{ item.name }}</span>
+          <span class="id">{{ item.idCard.replace(/^(.{6})(?:\d+)(.{4})$/, '\$1******\$2') }}</span>
+          <span>{{ item.gender === 0 ? '女' : '男' }}</span>
+          <span>{{ item.age }}岁</span>
         </div>
+        <!-- 点击修改 -->
         <div class="icon"><cp-icon name="user-edit" /></div>
-        <div class="tag">默认</div>
+        <!-- 默认患者显示div.tag元素 -->
+        <div class="tag" v-if="item.defaultFlag === 1">默认</div>
       </div>
-      <div class="patient-item">
-        <div class="info">
-          <span class="name">李富贵</span>
-          <span class="id">321***********6164</span>
-          <span>男</span>
-          <span>32岁</span>
-        </div>
-        <div class="icon"><cp-icon name="user-edit" /></div>
-      </div>
-      <div class="patient-add">
+      <!-- 点击新增患者 -->
+      <div @click="openDialog" class="patient-add" v-if="patientList.length < 100">
         <cp-icon name="user-add" />
         <p>添加患者</p>
       </div>
@@ -36,12 +131,50 @@
     </div>
     <!-- 患者选择下一步 -->
     <div class="patient-next" v-if="false">
-      <van-button type="primary"  round block>下一步</van-button>
+      <van-button type="primary" round block>下一步</van-button>
     </div>
+    <!-- 新增患者弹层 
+        position 从什么方向出来
+    -->
+    <van-popup v-model:show="show" position="bottom">
+      <!-- 放置弹层内容 -->
+      <!-- 1. 导航栏 -->
+      <cp-nav-bar
+        title="新增患者"
+        @click-right="submit"
+        right-text="保存"
+        :back="closeDialog"
+      ></cp-nav-bar>
+      <!-- 2. 新增患者 -->
+      <van-form autocomplete="off">
+        <van-field v-model="patient.name" label="真实姓名" placeholder="请输入真实姓名" />
+        <van-field v-model="patient.idCard" label="身份证号" placeholder="请输入身份证号" />
+        <van-field label="性别">
+          <!-- 不是输入框，需要通过具名插槽自定义表单项 -->
+          <!-- 单选按钮组件 -->
+          <template #input>
+            <cp-radio-btn :options="options" v-model="patient.gender"></cp-radio-btn>
+          </template>
+        </van-field>
+        <van-field label="默认就诊人">
+          <template #input>
+            <!-- 说明：需要单独绑定一个boolean变量 -->
+            <van-checkbox round v-model="defaultFlag" />
+          </template>
+        </van-field>
+      </van-form>
+    </van-popup>
   </div>
 </template>
 
 <style lang="scss" scoped>
+::v-deep() .van-popup {
+  width: 100%;
+  height: 100%;
+  padding-top: 46px;
+  box-sizing: border-box;
+}
+
 .patient-page {
   padding: 46px 0 80px;
 }
