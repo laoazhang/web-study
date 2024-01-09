@@ -73,16 +73,16 @@
     <!-- 4. 知识列表：关注、推荐、减脂、饮食 -->
     <van-tabs shrink sticky v-model:active="active">
       <van-tab name="like" title="关注">
-        <KnowledgeList> </KnowledgeList>
+        <KnowledgeList type="like"> </KnowledgeList>
       </van-tab>
       <van-tab name="recommend" title="推荐">
-        <KnowledgeList> </KnowledgeList>
+        <KnowledgeList type="recommend"> </KnowledgeList>
       </van-tab>
       <van-tab name="fatReduction" title="减脂">
-        <KnowledgeList> </KnowledgeList>
+        <KnowledgeList type="fatReduction"> </KnowledgeList>
       </van-tab>
       <van-tab name="food" title="饮食">
-        <KnowledgeList> </KnowledgeList>
+        <KnowledgeList type="food"> </KnowledgeList>
       </van-tab>
     </van-tabs>
   </div>
