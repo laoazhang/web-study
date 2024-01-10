@@ -18,7 +18,7 @@
           </router-link>
         </van-col>
         <van-col span="8">
-          <router-link to="/consult/fast" class="nav">
+          <router-link @click="store.setType(ConsultType.Fast)" to="/consult/fast" class="nav">
             <cp-icon name="home-graphic"></cp-icon>
             <p class="title">极速问诊</p>
             <p class="desc">20s医生极速回复</p>
@@ -97,9 +97,12 @@ import { ref } from 'vue'
 import KnowledgeList from './components/KnowledgeList.vue'
 import type { KnowledgeType } from '@/types/consult'
 import FollowDoctor from './components/FollowDoctor.vue'
+import { useConsultStore } from '@/stores'
+import { ConsultType } from '@/enums/index'
 
 // 当前选中页签
 const active = ref<KnowledgeType>('like')
+const store = useConsultStore()
 </script>
 
 <style lang="scss" scoped>

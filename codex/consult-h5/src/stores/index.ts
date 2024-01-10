@@ -18,3 +18,4 @@ export default pinia
 
 // 对modules中store仓库做统一导出
 export * from './modules/user'
+export * from './modules/consult'

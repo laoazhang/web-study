@@ -70,6 +70,24 @@ const routes = [
     path: '/user/patient',
     component: () => import('@/views/user/PatientInfo.vue'),
     meta: { title: '家庭档案' }
+  },
+  // 问诊级别
+  {
+    path: '/consult/fast',
+    component: () => import('@/views/consult/ConsultFast.vue'),
+    meta: { title: '极速问诊' }
+  },
+  // 选择科室
+  {
+    path: '/consult/dep',
+    component: () => import('@/views/consult/ConsultDep.vue'),
+    meta: { title: '选择科室' }
+  },
+  // 病情描述
+  {
+    path: '/consult/illness',
+    component: () => import('@/views/consult/ConsultIllness.vue'),
+    meta: { title: '病情描述' }
   }
 ]
 

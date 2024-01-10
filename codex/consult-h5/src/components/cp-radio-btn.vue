@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // 定义api
 defineProps<{
-  modelValue: number | string //选中的value值
+  modelValue?: number | string //选中的value值
   // 单选列表
   options: { label: string; value: number | string }[]
 }>()
