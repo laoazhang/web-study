@@ -2,12 +2,12 @@
 import { ref } from 'vue'
 // 导入校验规则
 import { mobileRules, passwordRules, codeRules } from '@/utils/rules'
-import { showFailToast, showSuccessToast, type FormInstance } from 'vant'
-import { loginByPassword, sendMobileCode, loginByMobile } from '@/api/user'
+import { showFailToast, showSuccessToast } from 'vant'
+import { loginByPassword, loginByMobile } from '@/api/user'
 // 导入用户store
 import { useUserStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router'
-import { onUnmounted } from 'vue'
+import { useSendCode } from './service'
 
 const clickRight = () => {
   console.log('点击了右边的文字')
@@ -37,13 +37,9 @@ obj.value.age = 1
  */
 const isShowPass = ref(false)
 
-// 切换短信登录
-const isPass = ref(true)
-
 //准备账号密码响应变量
 const mobile = ref('13230000001')
 const password = ref('abc12345')
-const code = ref('')
 // 点击登录
 // pinia持久化
 const store = useUserStore()
@@ -69,27 +65,32 @@ const login = async () => {
   }
 }
 
-const time = ref(0)
-const form = ref<FormInstance>()
-let timeId: number
-const send = async () => {
-  // 已经倒计时time的值大于0，60s内不能重复发送验证码
-  if (time.value > 0) return
-  // 验证不通过报错，阻止程序继续执行
-  await form.value?.validate('mobile')
-  const res = await sendMobileCode(mobile.value, 'login')
-  showSuccessToast('发送成功')
-  code.value = res.data.code
-  time.value = 60
-  // 倒计时
-  timeId = window.setInterval(() => {
-    time.value--
-    if (time.value <= 0) window.clearInterval(timeId)
-  }, 1000)
-}
-onUnmounted(() => {
-  window.clearInterval(timeId)
-})
+// 2. 验证码登录
+// 发送验证码
+const isPass = ref(true)
+// const code = ref('')
+// const time = ref(0)
+// const form = ref<FormInstance>()
+// let timeId: number
+// const send = async () => {
+//   // 已经倒计时time的值大于0，60s内不能重复发送验证码
+//   if (time.value > 0) return
+//   // 验证不通过报错，阻止程序继续执行
+//   await form.value?.validate('mobile')
+//   const res = await sendMobileCode(mobile.value, 'login')
+//   showSuccessToast('发送成功')
+//   code.value = res.data.code
+//   time.value = 60
+//   // 倒计时
+//   timeId = window.setInterval(() => {
+//     time.value--
+//     if (time.value <= 0) window.clearInterval(timeId)
+//   }, 1000)
+// }
+// onUnmounted(() => {
+//   window.clearInterval(timeId)
+// })
+const { code, time, form, send } = useSendCode(mobile.value)
 </script>
 
 <template>
@@ -105,7 +106,7 @@ onUnmounted(() => {
         </a>
       </div>
       <!-- == 2. form 表单 == -->
-      <van-form @submit="login" autocomplete="off">
+      <van-form @submit="login" ref="form" autocomplete="off">
         <!-- 1. 手机号输入框 -->
         <van-field
           v-model="mobile"
