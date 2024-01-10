@@ -34,7 +34,9 @@ const formData = ref<InllnessType>({
 const fileList = ref<Image[]>([])
 const onAfterRead: UploaderAfterRead = (item) => {
   // TODO 上传图片：调用后台api上传接口
+  // 1. 排除多图上传数组在情况
   if (Array.isArray(item)) return
+  // 2. 非空判断
   if (!item.file) return
   // 开始上传
   item.status = 'uploading'
