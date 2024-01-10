@@ -73,6 +73,9 @@
     <!-- 4. 知识列表：关注、推荐、减脂、饮食 -->
     <van-tabs shrink sticky v-model:active="active">
       <van-tab name="like" title="关注">
+        <!-- 关注医生列表 -->
+        <FollowDoctor></FollowDoctor>
+        <!-- 当前模块知识列表 -->
         <KnowledgeList type="like"> </KnowledgeList>
       </van-tab>
       <van-tab name="recommend" title="推荐">
@@ -93,6 +96,7 @@ import { ref } from 'vue'
 // 导入知识列表组件
 import KnowledgeList from './components/KnowledgeList.vue'
 import type { KnowledgeType } from '@/types/consult'
+import FollowDoctor from './components/FollowDoctor.vue'
 
 // 当前选中页签
 const active = ref<KnowledgeType>('like')

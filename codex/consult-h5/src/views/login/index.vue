@@ -38,7 +38,7 @@ obj.value.age = 1
 const isShowPass = ref(false)
 
 //准备账号密码响应变量
-const mobile = ref('13230000001')
+const mobile = ref('13230000088')
 const password = ref('abc12345')
 // 点击登录
 // pinia持久化
