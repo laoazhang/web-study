@@ -127,3 +127,17 @@ export type InllnessType = Pick<
   PartialConsult,
   'illnessDesc' | 'illnessTime' | 'pictures' | 'consultFlag'
 >
+
+// 5. 预支付订单信息
+// 问诊订单预支付传参
+export type ConsultOrderPreParams = Pick<PartialConsult, 'type' | 'illnessType'>
+
+// 问诊订单预支付信息
+export type ConsultOrderPreData = {
+  pointDeduction: number
+  couponDeduction: number
+  couponId: string
+  payment: number // 应付
+  couponId: number
+  actualPayment: number // 实付
+}

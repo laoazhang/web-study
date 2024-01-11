@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import type { InllnessType, Image } from '@/types/consult'
-import { computed } from 'vue'
 import { useConsultStore } from '@/stores'
 import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { showConfirmDialog } from 'vant'
 import { uploadImage } from '@/api/consult'
 import type { UploaderAfterRead, UploaderFileListItem } from 'vant/lib/uploader/types'

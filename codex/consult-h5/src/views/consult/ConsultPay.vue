@@ -1,11 +1,121 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getConsultOrderPre, createConsultOrder, getConsultOrderPayUrl } from '@/api/consult'
+import { getPatientDetail } from '@/api/user'
+import { useConsultStore } from '@/stores'
+import type { ConsultOrderPreData } from '@/types/consult'
+import type { Patient } from '@/types/user'
+import { showConfirmDialog, showFailToast, showToast } from 'vant'
+import { onMounted } from 'vue'
+import { ref } from 'vue'
+import { onBeforeRouteLeave } from 'vue-router'
+import { useRouter } from 'vue-router'
+
+// 1. 获取支付信息
+const payInfo = ref<ConsultOrderPreData>()
+
+const store = useConsultStore()
+const router = useRouter()
+const getPayInfo = async () => {
+  try {
+    const { data } = await getConsultOrderPre({
+      type: store.consult.type, // 问诊类型
+      illnessType: store.consult.illnessType // 问诊级别: 三甲或普通
+    })
+    // console.log('支付信息', data)
+    payInfo.value = data
+    // 存储优惠券ID
+    store.setCunpon(data.couponId)
+  } catch (error) {
+    // 访问支付页面，但是缺少问诊数据，跳回首页
+    showFailToast('缺少必要的问诊信息,请重新选择!')
+    router.push('/home')
+  }
+}
+
+// 2. 获取患者信息
+const patient = ref({} as Patient)
+const getPatient = async () => {
+  if (!store.consult.patientId) return
+  const { data } = await getPatientDetail(store.consult.patientId)
+  // console.log('患者信息', data)
+  patient.value = data
+}
+onMounted(() => {
+  getPayInfo()
+  getPatient()
+})
+
+// 3. 点击立即支付，打开支付弹层
+const show = ref(false)
+const agree = ref(false)
+// 支付方式
+const paymentMethod = ref<0 | 1>()
+// 存储订单ID
+const orderId = ref('')
+const openPay = async () => {
+  if (!agree.value) return showFailToast('请勾选同意支付协议!')
+  // 打开支付窗口
+  show.value = true
+  // 创建订单
+  try {
+    const { data } = await createConsultOrder(store.consult)
+    // 存储问诊订单ID, 获取支付地址需要使用
+    orderId.value = data.id
+    // 说明：订单创建成功,需要清空之前记录在pinia的问诊数据
+    store.clear()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// 4. 支付窗口打开后,订单创建成功
+onBeforeRouteLeave(() => {
+  // 存在订单ID，说明订单已经创建成功了，页面不能再执行跳转
+  if (orderId.value) return false
+})
+
+// 控制是否关闭支付窗口
+const onClose = async () => {
+  try {
+    await showConfirmDialog({
+      title: '关闭支付',
+      message: '取消支付将无法获得医生回复，医生接诊名额有限，是否确认关闭？',
+      cancelButtonText: '仍要关闭',
+      confirmButtonText: '继续支付',
+      confirmButtonColor: 'var(--cp-primary)'
+    })
+    // 点击确定代码走到这里
+    return false
+  } catch (error) {
+    // 点击仍要关闭代码走到这里
+    console.log(error)
+    // 说明？：订单ID改为空之后，才能正常跳转问诊记录列表
+    orderId.value = ''
+    router.push('/user/consult')
+    return true
+  }
+}
+
+// 5. 点击支付弹层中支付按钮，获取支付地址进行跳转支付
+const payOrder = async () => {
+  if (!paymentMethod.value === undefined) return showFailToast('请选择支付方式！')
+  showToast('跳转支付')
+  const { data } = await getConsultOrderPayUrl({
+    paymentMethod: paymentMethod.value, //支付方式
+    orderId: orderId.value, // 问诊订单ID
+    payCallback: 'http://127.0.0.1:5173/room' // 支付成功后跳转地址
+  })
+  // 跳转到支付宝平台进行支付
+  window.location.href = data.payUrl
+}
+</script>
 
 <template>
   <div class="consult-pay-page">
     <cp-nav-bar title="支付" />
     <!-- 1. 支付信息 -->
     <div class="pay-info">
-      <p class="tit">图文问诊 49 元</p>
+      <p class="tit">图文问诊 {{ payInfo?.actualPayment }} 元</p>
       <img class="img" src="@/assets/avatar-doctor.svg" />
       <p class="desc">
         <span>极速问诊</span>
@@ -13,21 +123,55 @@
       </p>
     </div>
     <van-cell-group>
-      <van-cell title="优惠券" value="-¥10.00" />
-      <van-cell title="积分抵扣" value="-¥10.00" />
-      <van-cell title="实付款" value="¥29.00" class="pay-price" />
+      <van-cell title="优惠券" :value="`-¥${payInfo?.couponDeduction}`" />
+      <van-cell title="积分抵扣" :value="`-¥${payInfo?.pointDeduction}`" />
+      <van-cell title="实付款" :value="`¥${payInfo?.actualPayment}`" class="pay-price" />
     </van-cell-group>
     <div class="pay-space"></div>
     <!-- 2. 患者信息  -->
     <van-cell-group>
-      <van-cell title="患者信息" value="李富贵 | 男 | 30岁"></van-cell>
-      <van-cell title="病情描述" label="头痛，头晕，恶心"></van-cell>
+      <van-cell
+        title="患者信息"
+        :value="`${patient.name} | ${patient.gender === 0 ? '女' : '男'} | ${patient.age}岁`"
+      ></van-cell>
+      <van-cell title="病情描述" :label="store.consult.illnessDesc"></van-cell>
     </van-cell-group>
     <div class="pay-schema">
-      <van-checkbox>我已同意 <span class="text">支付协议</span></van-checkbox>
+      <van-checkbox v-model="agree">我已同意 <span class="text">支付协议</span></van-checkbox>
     </div>
     <!-- 3. 打开支付弹层并创建问诊订单 -->
-    <van-submit-bar button-type="primary" :price="2900" button-text="立即支付" text-align="left" />
+    <van-submit-bar
+      button-type="primary"
+      :price="payInfo?.actualPayment! * 100"
+      button-text="立即支付"
+      text-align="left"
+      @click="openPay"
+    />
+
+    <!-- 支付弹层 -->
+    <van-action-sheet
+      :before-close="onClose"
+      :closeable="false"
+      v-model:show="show"
+      title="选择支付方式"
+    >
+      <div class="pay-type">
+        <p class="amount">￥{{ payInfo?.actualPayment.toFixed(2) }}</p>
+        <van-cell-group>
+          <van-cell title="微信支付" @click="paymentMethod = 0">
+            <template #icon><cp-icon name="consult-wechat" /></template>
+            <template #extra><van-checkbox :checked="paymentMethod === 0" /></template>
+          </van-cell>
+          <van-cell title="支付宝支付" @click="paymentMethod = 1">
+            <template #icon><cp-icon name="consult-alipay" /></template>
+            <template #extra><van-checkbox :checked="paymentMethod === 1" /></template>
+          </van-cell>
+        </van-cell-group>
+        <div class="btn">
+          <van-button @click="payOrder" type="primary" round block>立即支付</van-button>
+        </div>
+      </div>
+    </van-action-sheet>
   </div>
 </template>
 
