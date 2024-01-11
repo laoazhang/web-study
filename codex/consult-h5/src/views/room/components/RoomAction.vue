@@ -2,6 +2,7 @@
 
 <template>
   <div class="room-action">
+    <!-- 1. 输入框：发送文字消息 -->
     <van-field
       type="text"
       class="input"
@@ -9,6 +10,7 @@
       placeholder="问医生"
       autocomplete="off"
     ></van-field>
+    <!-- 2. 图片上传：发送图片消息 -->
     <van-uploader :preview-image="false">
       <cp-icon name="consult-img" />
     </van-uploader>

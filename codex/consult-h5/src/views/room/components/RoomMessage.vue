@@ -1,39 +1,80 @@
 <script setup lang="ts">
 // 评价医生
+import type { Message } from '@/types/room'
 import EvaluateCard from './EvaluateCard.vue'
+import { ConsultTime, MsgType } from '@/enums'
+// 导入患病时间和是否就诊过常量
+import { timeOptions, flagOptions } from '@/api/const'
+// 预览图片方法
+import { showImagePreview, showToast } from 'vant'
+import type { Image } from '@/types/consult'
+
+// 接收患者和医生聊天列表
+defineProps<{
+  list: Message[]
+}>()
+
+// 1. 定义格式化病情描述中患病时间和是否就诊过数据方法
+const formatIllness = (value: ConsultTime) => {
+  return timeOptions.find((item) => item.value === value)?.label
+}
+const formatFlag = (value: 0 | 1) => {
+  return flagOptions.find((item) => item.value === value)?.label
+}
+
+// 2. 预览患者病情描述图片数据
+const perviewImg = (imgs?: Image[]) => {
+  if (imgs && imgs.length > 0) {
+    // 说明：ImagePreview([url1,url2...])
+    showImagePreview(imgs.map((item) => item.url))
+  } else {
+    showToast('没有上传病情描述图片')
+  }
+}
 </script>
 
 <template>
-  <!-- 消息列表 -->
-  <template v-for="item in 2" :key="item">
+  <!-- 消息列表: 医生和患者聊天的内容(列表)-->
+  <!-- template不会生成任何元素 -->
+  <template v-for="{ msgType, msg, id } in list" :key="id">
+    <!-- item的消息显示需要根据当前消息类型，匹配对应的消息卡片进行渲染 -->
     <!-- 1. 病情描述 -->
-    <div class="msg msg-illness" v-if="true">
-      <div class="patient van-hairline--bottom">
-        <p>李富贵 男 31岁</p>
-        <p>一周内 | 未去医院就诊</p>
+    <div class="msg msg-illness" v-if="msgType === MsgType.CardPat">
+      <div class="patient van-hairline--bottom" v-if="msg.consultRecord">
+        <p>
+          {{ msg.consultRecord.patientInfo.name }}
+          {{ msg.consultRecord.patientInfo.genderValue }}
+          {{ msg.consultRecord.patientInfo.age }}岁
+        </p>
+        <p>
+          <!-- 患病时间 -->
+          {{ formatIllness(msg.consultRecord.illnessTime) }} |
+          <!-- 是否就诊过 -->
+          {{ formatFlag(msg.consultRecord.consultFlag) }}
+        </p>
       </div>
       <van-row>
         <van-col span="6">病情描述</van-col>
-        <van-col span="18">头痛、头晕、恶心</van-col>
+        <van-col span="18">{{ msg.consultRecord?.illnessDesc }}</van-col>
         <van-col span="6">图片</van-col>
-        <van-col span="18">点击查看</van-col>
+        <van-col span="18" @click="perviewImg(msg.consultRecord?.pictures)"> 点击查看 </van-col>
       </van-row>
     </div>
-    <!-- 2. 温馨提示 -->
-    <div class="msg msg-tip" v-if="true">
+    <!--2.  温馨提示 -->
+    <div class="msg msg-tip" v-if="msgType === MsgType.NotifyTip">
       <div class="content">
         <span class="green">温馨提示：</span>
-        <span>在线咨询不能代替面诊，医护人员建议仅供参考</span>
+        <span>{{ msg.content }}</span>
       </div>
     </div>
     <!-- 3. 通用通知 -->
-    <div class="msg msg-tip" v-if="true">
+    <div class="msg msg-tip" v-if="msgType === MsgType.Notify">
       <div class="content">
-        <span>医护人员正在赶来，请耐心等候</span>
+        <span>{{ msg.content }}</span>
       </div>
     </div>
-     <!-- 4. 发送文字 -->
-     <div class="msg msg-to" v-if="false">
+    <!-- 4. 发送文字 -->
+    <div class="msg msg-to" v-if="false">
       <div class="content">
         <div class="time">20:12</div>
         <div class="pao">大夫你好？</div>

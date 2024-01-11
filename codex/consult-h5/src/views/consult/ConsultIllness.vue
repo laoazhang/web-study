@@ -6,19 +6,20 @@ import { ref, onMounted, computed } from 'vue'
 import { showConfirmDialog } from 'vant'
 import { uploadImage } from '@/api/consult'
 import type { UploaderAfterRead, UploaderFileListItem } from 'vant/lib/uploader/types'
+import { timeOptions, flagOptions } from '@/api/const'
 
-// 患病时间选项
-const timeOptions = [
-  { label: '一周内', value: 1 },
-  { label: '一月内', value: 2 },
-  { label: '半年内', value: 3 },
-  { label: '大于半年', value: 4 }
-]
-// 是否就诊选项
-const flagOptions = [
-  { label: '就诊过', value: 0 },
-  { label: '没就诊过', value: 1 }
-]
+// // 患病时间选项
+// const timeOptions = [
+//   { label: '一周内', value: 1 },
+//   { label: '一月内', value: 2 },
+//   { label: '半年内', value: 3 },
+//   { label: '大于半年', value: 4 }
+// ]
+// // 是否就诊选项
+// const flagOptions = [
+//   { label: '就诊过', value: 0 },
+//   { label: '没就诊过', value: 1 }
+// ]
 
 // 1. 记录病情描述：基本情况、患病时间、是否就诊过、病情描述图片
 const formData = ref<InllnessType>({
