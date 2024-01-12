@@ -4,6 +4,7 @@ import { OrderType } from '@/enums'
 import { ref, computed } from 'vue'
 import { showConfirmDialog, showFailToast, showSuccessToast, type PopoverAction } from 'vant'
 import { cancelOrder, deleteOrder } from '@/api/consult'
+import { useLookPre } from '@/hooks/index'
 
 const props = defineProps<{
   item: ConsultOrderItem
@@ -22,11 +23,17 @@ const actions = computed(() => [
   { text: '查看处方', disabled: !props.item.prescriptionId }, // 没有开处方不能查看
   { text: '删除订单' }
 ])
+const { lookPre } = useLookPre()
 // 操作项的点击回调
 const onSelect = (action: PopoverAction, i: number) => {
+  console.log('更多', action, i)
+
   if (i === 1) {
     // 删除订单
     deleteConsultOrder(props.item)
+  }
+  if (i === 0) {
+    lookPre(props.item.prescriptionId)
   }
 }
 
@@ -96,7 +103,9 @@ const deleteConsultOrder = (item: ConsultOrderItem) => {
         >{{ item.statusValue }}</span
       >
     </div>
-    <!-- 患者信息 -->
+    <!-- 患者信息 
+        说明：$router是vue2组件实例 =》 this.$router.push
+    -->
     <div class="body" @click="$router.push(`/user/consult/${item.id}`)">
       <div class="body-row">
         <div class="body-label">患者姓名</div>
@@ -148,7 +157,14 @@ const deleteConsultOrder = (item: ConsultOrderItem) => {
     </div>
     <!-- 3. 咨询中：查看处方（如果开了）+继续沟通 -->
     <div class="foot" v-if="item.status === OrderType.ConsultChat">
-      <van-button v-if="item.prescriptionId" class="gray" plain size="small" round>
+      <van-button
+        @click="lookPre(item.prescriptionId)"
+        v-if="item.prescriptionId"
+        class="gray"
+        plain
+        size="small"
+        round
+      >
         查看处方
       </van-button>
       <van-button type="primary" plain size="small" round :to="`/room?orderId=${item.id}`">

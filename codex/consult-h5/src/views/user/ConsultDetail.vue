@@ -1,29 +1,84 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getConsultOrderDetail } from '@/api/consult'
+import type { ConsultOrderItem } from '@/types/consult'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { OrderType } from '@/enums/index'
+import { timeOptions, flagOptions } from '@/api/const'
+import { useCopy } from '@/hooks/index'
+// import { useClipboard } from '@vueuse/core'
+// import { showFailToast, showSuccessToast } from 'vant'
+// import { watch } from 'vue'
+
+// 1. 根据订单ID，查询订单详情，进行数据渲染
+const route = useRoute()
+const item = ref<ConsultOrderItem>()
+onMounted(async () => {
+  const { data } = await getConsultOrderDetail(route.params.id as string)
+  console.log(data)
+  item.value = data
+})
+
+// 2. 复制订单号
+const { onCopy } = useCopy()
+/**
+ * 1. copy 函数 =》 使用：copy（复制文本）=》 copy方法会把传入的文本存储到系统剪切版
+ * 2. copied ref响应变量 =》true 复制成功 ｜ false 复制失败
+ * 3. isSupported ref 响应变量 =》 true 授权支持= ｜ false 未授权不支持
+ */
+// const { copy, copied, isSupported } = useClipboard()
+
+// // 复制方法
+// const onCopy = () => {
+//   if (!isSupported.value) return showFailToast('系统不支持复制！')
+//   copy('放入需要复制的订单号')
+// }
+// // 监听复制是否成功，做提示
+// watch(copied, () => {
+//   if (copied.value) showSuccessToast('复制成功！')
+// })
+</script>
 
 <template>
-  <div class="consult-detail-page">
+  <div class="consult-detail-page" v-if="item">
     <cp-nav-bar title="问诊详情" />
     <div class="detail-head">
       <div class="text">
-        <h3>图文问诊 39 元</h3>
-        <span class="sta green">待支付</span>
+        <h3>图文问诊 {{ item.payment }} 元</h3>
+        <span
+          class="sta"
+          :class="{
+            orange: item.status === OrderType.ConsultPay,
+            green: item.status === OrderType.ConsultChat
+          }"
+          >{{ item.statusValue }}</span
+        >
         <p class="tip">服务医生信息</p>
       </div>
       <div class="card">
         <img class="avatar" src="@/assets/avatar-doctor.svg" alt="" />
         <p class="doc">
           <span>极速问诊</span>
-          <span>自动分配医生</span>
+          <span>{{ item.docInfo?.name }}</span>
         </p>
         <van-icon name="arrow" />
       </div>
     </div>
     <div class="detail-patient">
       <van-cell-group :border="false">
-        <van-cell title="患者信息" value="李富贵 | 男 | 30岁" />
-        <van-cell title="患病时长" value="一周内" />
-        <van-cell title="就诊情况" value="未就诊过" />
-        <van-cell title="病情描述" label="头痛，头晕，恶心" />
+        <van-cell
+          title="患者信息"
+          :value="`${item.patientInfo.name} | ${item.patientInfo.genderValue} | ${item.patientInfo.age}岁`"
+        />
+        <van-cell
+          title="患病时长"
+          :value="timeOptions.find((i) => i.value === item?.illnessTime)?.label"
+        />
+        <van-cell
+          title="就诊情况"
+          :value="flagOptions.find((i) => i.value === item?.consultFlag)?.label"
+        />
+        <van-cell title="病情描述" :label="item.illnessDesc" />
       </van-cell-group>
     </div>
     <div class="detail-order">
@@ -31,25 +86,22 @@
       <van-cell-group :border="false">
         <van-cell title="订单编号">
           <template #value>
-            <span class="copy">复制</span>
-            202201127465
+            <span @click="onCopy(item.orderNo)" class="copy">复制</span>
+            {{ item.orderNo }}
           </template>
         </van-cell>
-        <van-cell title="创建时间" value="2022-01-23 09:23:46" />
-        <van-cell title="应付款" value="￥39" />
-        <van-cell title="优惠券" value="-￥0" />
-        <van-cell title="积分抵扣" value="-￥0" />
-        <van-cell title="实付款" value="￥39" class="price" />
+        <van-cell title="创建时间" :value="item.createTime" />
+        <van-cell title="应付款" :value="`￥${item.payment}`" />
+        <van-cell title="优惠券" :value="`-￥${item.couponDeduction}`" />
+        <van-cell title="积分抵扣" :value="`-￥${item.pointDeduction}`" />
+        <van-cell title="实付款" :value="`￥${item.actualPayment}`" class="price" />
       </van-cell-group>
     </div>
-    <div class="detail-action van-hairline--top">
-      <div class="price">
-        <span>需付款</span>
-        <span>￥39.00</span>
-      </div>
-      <van-button type="default" round>取消问诊</van-button>
-      <van-button type="primary" round>继续支付</van-button>
-    </div>
+  </div>
+  <div class="consult-detail-page" v-else>
+    <cp-nav-bar title="问诊详情" />
+    <van-skeleton title :row="4" style="margin-top: 30px" />
+    <van-skeleton title :row="4" style="margin-top: 30px" />
   </div>
 </template>
 

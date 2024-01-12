@@ -10,8 +10,9 @@ import { showFailToast, showImagePreview, showToast } from 'vant'
 import type { Image } from '@/types/consult'
 import dayjs from 'dayjs'
 import { useUserStore } from '@/stores'
-import { getPrescriptionPic } from '@/api/consult'
+// import { getPrescriptionPic } from '@/api/consult'
 import { useRouter } from 'vue-router'
+import { useLookPre } from '@/hooks/index'
 
 // 接收患者和医生聊天列表
 defineProps<{
@@ -45,19 +46,20 @@ const loadSuccess = () => {
 }
 
 // 5.查看处方
-const lookPre = async (id?: string) => {
-  try {
-    // 1. if (!id) return // 排除undefined清空，限定类型(推荐)
-    if (!id) return
-    // const { data } = await getPrescriptionPic(id!)
-    const { data } = await getPrescriptionPic(id)
-    console.log(data)
-    // 实现图片的预览
-    showImagePreview([data.url])
-  } catch (error) {
-    console.log(error)
-  }
-}
+const { lookPre } = useLookPre()
+// const lookPre = async (id?: string) => {
+//   try {
+//     // 1. if (!id) return // 排除undefined清空，限定类型(推荐)
+//     if (!id) return
+//     // const { data } = await getPrescriptionPic(id!)
+//     const { data } = await getPrescriptionPic(id)
+//     console.log(data)
+//     // 实现图片的预览
+//     showImagePreview([data.url])
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
 // 6. 点击购买处方中的药品
 const router = useRouter()
