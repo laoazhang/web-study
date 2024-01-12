@@ -100,6 +100,12 @@ const routes = [
     path: '/room',
     component: () => import('@/views/room/index.vue'),
     meta: { title: '问诊室' }
+  },
+  // 问诊订单
+  {
+    path: '/user/consult',
+    component: () => import('@/views/user/ConsultOrder.vue'),
+    meta: { title: '问诊记录' }
   }
 ]
 
