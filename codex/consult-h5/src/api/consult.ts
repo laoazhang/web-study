@@ -8,7 +8,8 @@ import type {
   TopDep,
   ConsultOrderPreData,
   ConsultOrderPreParams,
-  PartialConsult
+  PartialConsult,
+  ConsultOrderItem
 } from '@/types/consult'
 import { request } from '@/utils/request'
 
@@ -48,3 +49,20 @@ export const getConsultOrderPayUrl = (data: {
   orderId: string
   payCallback: string
 }) => request.post<{ payUrl: string }>('/patient/consult/pay', data)
+
+// 获取订单详情
+export const getConsultOrderDetail = (orderId: string) =>
+  request.get<ConsultOrderItem>('/patient/consult/order/detail', { params: { orderId } })
+
+// 查看处方
+export const getPrescriptionPic = (id: string) =>
+  request.get<{ url: string }>(`/patient/consult/prescription/${id}`)
+
+// 评价问诊
+export const evaluateConsultOrder = (data: {
+  docId: string // 医生ID
+  orderId: string // 订单ID
+  score: number
+  content: string
+  anonymousFlag: 0 | 1
+}) => request.post<{ id: string }>('/patient/order/evaluate', data)
