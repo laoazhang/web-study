@@ -4,12 +4,14 @@
  * 1. 相同部分拷贝
  * 2. 不同的部分以函数参数形式传入
  */
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { followDoctor } from '@/api/consult'
 import { showSuccessToast, showImagePreview, showFailToast } from 'vant'
 import type { FollowType } from '@/types/consult'
 import { getPrescriptionPic } from '@/api/consult'
 import { useClipboard } from '@vueuse/core'
+import { getMedicalOrderDetail } from '@/api/medicine'
+import type { OrderDetail } from '@/types/medicine'
 
 // 关注医生或文章
 const useFollow = (type: FollowType = 'doc') => {
@@ -69,4 +71,15 @@ const useCopy = () => {
   return { onCopy }
 }
 
-export { useFollow, useLookPre, useCopy }
+// 获取订单详情数据封装
+const useMedicineDetail = (id: string) => {
+  // 药品订单详情
+  const order = ref<OrderDetail>()
+  onMounted(async () => {
+    const { data } = await getMedicalOrderDetail(id)
+    order.value = data
+  })
+  return { order }
+}
+
+export { useFollow, useLookPre, useCopy, useMedicineDetail }

@@ -112,6 +112,24 @@ const routes = [
     path: '/user/consult/:id',
     component: () => import('@/views/user/ConsultDetail.vue'),
     meta: { title: '问诊详情' }
+  },
+  // 支付结果
+  {
+    path: '/medicine/pay/result',
+    component: () => import('@/views/medicine/OrderPayResult.vue'),
+    meta: { title: '药品支付结果' }
+  },
+  // 药品支付
+  {
+    path: '/medicine/pay',
+    component: () => import('@/views/medicine/OrderPay.vue'),
+    meta: { title: '药品支付' }
+  },
+  // 药品订单详情
+  {
+    path: '/medicine/:id',
+    component: () => import('@/views/medicine/OrderDetail.vue'),
+    meta: { title: '药品订单详情' }
   }
 ]
 
