@@ -1,0 +1,37 @@
+{
+  "entryPagePath": "pages/index/index",
+  "pages": [
+    "pages/test/test",
+    "pages/index/index",
+    "pages/logs/logs"
+    
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "月薪过万",
+    "navigationBarBackgroundColor": "#fd1800"
+  },
+  "tabBar": {
+    "color": "#000",
+    "selectedColor": "#fff",
+    "backgroundColor": "#456",
+    "position": "top",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "首页"
+    },
+    {
+      "pagePath": "pages/logs/logs",
+      "text": "日志"
+    },
+    {
+      "pagePath": "pages/test/test",
+      "text": "测试"
+    }
+  ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

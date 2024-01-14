@@ -1,0 +1,15 @@
+<!--pages/home/home.wxml-->
+<!-- 重点掌握：view、text可分别与html中的div、span 对应
+html元素：div 块元素 span 行内元素
+wxml元素：view(div) 块元素 text(span) 行内元素
+ -->
+<view class="box">
+<text>000</text><text>001</text>
+<view class="one">002</view>
+<view class="two">003</view>
+</view>
+<view class="box2">
+<text>000</text><text>001</text>
+<view class="one">002</view>
+<view class="two">003</view>
+</view>

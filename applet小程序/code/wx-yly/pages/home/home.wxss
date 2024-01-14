@@ -1,0 +1,22 @@
+/* pages/home/home.wxss */
+/*
+盒子模型：
+1. 标准 =》 基于宽高，叠加border,padding => box-sizing: content-box;
+2. ie怪异 =》 基于宽高，不叠加border,padding => box-sizing: border-box;
+*/
+.box {
+  width: 750rpx;
+  border: 1px solid red;
+  padding: 10px;
+  /* box-sizing: border-box; */
+  /* box-sizing: content-box; */
+}
+.box2 {
+  margin: 20px;
+  border: 2px solid green;
+  display: flex;
+  justify-content: space-around;
+}
+.box2 text:first-child {
+  color: red;
+}
