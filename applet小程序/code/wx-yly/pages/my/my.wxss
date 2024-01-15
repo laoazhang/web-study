@@ -1,1 +1,11 @@
 /* pages/my/my.wxss */
+.par {
+  margin-top: 30rpx;
+  padding: 50px;
+  background: red;
+}
+
+.son { 
+  padding:30rpx;
+  background: green;
+}

@@ -1,2 +1,15 @@
 <!--pages/card/card.wxml-->
-<text>卡券</text>
+<view class="go">
+<!-- 
+navigator跳转路由说明：
+1.url页面路径一定要加 => /
+2.如果跳转的是tabbar的页面 => open-type="switchTab"
+ -->
+<navigator url="/pages/test/test?id=1&name=abc">go1-类似vue的 => $router.push</navigator>
+<navigator open-type="redirect" url="/pages/test/test">go1-类似vue的 => $router.replace</navigator>
+
+<navigator open-type="switchTab?id=1" url="/pages/my/my">go3</navigator>
+
+<!-- 常用api -->
+<button bindtap="useApi" type="primary">常用api</button>
+</view>

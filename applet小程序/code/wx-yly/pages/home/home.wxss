@@ -20,3 +20,66 @@
 .box2 text:first-child {
   color: red;
 }
+/* 首页布局样式 */
+/* 页面设置背景色 */
+page {
+  background: #f0f0f0;
+}
+/* 轮播图 */
+.slider,
+.slider image {
+width: 750rpx;
+height: 320rpx;
+}
+
+/* 乐园活动 */
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  padding: 28rpx 34rpx;
+}
+.image {
+  /* 父元素相对定义 */
+  position: relative;
+}
+.image text {
+  /* 子元素绝对定位 */
+  position: absolute;
+  top: -7rpx;
+  left: 34rpx;
+  /* 小程序css中不能引入本地图片资源 =》 只能使用base64或网络文件 */
+  background: url(https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/miniapp/going.png);
+  width: 136rpx;
+  height: 58rpx;
+  background-size: cover;
+  font-size: 24rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 56rpx;
+}
+.image image {
+  width: 750rpx;
+  height: 388rpx;
+}
+.info {
+  padding: 30rpx 34rpx;
+  background: #fff;
+}
+
+.info .tit {
+  font-size: 30rpx;
+}
+
+.info .btn {
+  margin-top:16rpx;
+  width: 86rpx;
+  height: 42rpx;
+  line-height: 42rpx;
+  background: #ffc64b;
+  border-radius: 4rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  text-align: center;
+  color: #ffffff;
+}
