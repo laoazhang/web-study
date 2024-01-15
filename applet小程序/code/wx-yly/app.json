@@ -2,7 +2,8 @@
   "pages": [
     "pages/home/home",
     "pages/card/card",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/test/test"
   ],
   "window": {
     "navigationBarTextStyle": "black",

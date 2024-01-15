@@ -1,2 +1,72 @@
 <!--pages/my/my.wxml-->
-<text>我的</text>
+<view>
+  <view>{{msg}}</view>
+  <view>{{bool?1:2}}</view>
+  <view>{{obj.name}}</view>
+  <view>{{obj.say}}</view>
+  <view>{{arr[0]}}</view>
+</view>
+
+<view style="margin: 10px; border: 1px solid red;">
+<!-- 列表渲染 -->
+<!-- 1. 数组 -->
+<view wx:for="{{arr}}" wx:key="index">索引：{{index}} - 数组项：{{item}}</view>
+<view style="margin: 10px 0;"></view>
+
+<!-- 2. 对象 -->
+<view wx:for="{{obj}}" wx:key="index">key：{{index}} - value：{{item}}</view>
+
+<view style="margin: 10px 0;"></view>
+
+<view wx:for="{{6}}" wx:key="index">索引：{{index}} - value：{{item}}</view>
+
+<view style="margin: 10px 0;"></view>
+
+<view wx:for="{{arr}}" wx:for-index="i" wx:for-item="num" wx:key="i">索引：{{i}} - value：{{num}}</view>
+</view>
+
+<!-- 遍历用户 -->
+<view class="user">
+  <view wx:for="{{users}}" wx:for-index="i" wx:for-item="userObj" wx:key="id">
+  {{userObj.name}} - {{userObj.gender}}
+  </view>
+</view>
+
+<view class="if" style="margin: 10px;">
+  <view class="one" wx:if="{{bool}}">one</view>
+  <view class="two" wx:else>two</view>
+</view>
+
+<view class="stu">
+  <!-- 遍历显示学生成绩 -->
+  <view class="item" wx:for="{{students}}" wx:key="id">
+    <text data-fs="{{item.fs}}" data-id="{{item.id}}" bindtap="getFs">姓名：{{item.name}}，</text>
+    <!-- 条件渲染 -->
+    <text wx:if="{{item.fs>90?true:false}}">优秀</text>
+    <text wx:elif="{{item.fs>=60?true:false}}">良好</text>
+    <text wx:else>不及格</text>
+  </view>
+</view>
+
+<!-- 事件处理 -->
+<view>
+<!-- tap相当于click事件 -->
+  <button bind:tap="hanlderClick" type="primary">点击事件</button>
+  <button bindtap="hanlderClick" type="primary">点击事件</button>
+
+  <input bindfocus="hanlderFocus" style="border: 1px solid red;" type="text"/>
+</view>
+
+<!-- 事件冒泡 -->
+<view class="par" bind:tap="parFn">
+父
+<!-- 通过catch+事件名，阻止事件冒泡 -->
+<view class="son" catch:tap="sonFn">
+子
+</view>
+</view>
+
+<!-- 数据驱动视图：修改data -->
+<view class="change">
+  <button bind:tap="changeData" type="primary">数据驱动视图：修改data</button>
+</view>
