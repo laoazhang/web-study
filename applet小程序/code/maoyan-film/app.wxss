@@ -1,0 +1,39 @@
+
+image {
+  vertical-align: middle;
+}
+
+.header {
+  height: 88rpx;
+  line-height: 88rpx;
+  border-bottom: 1rpx solid #E6E6E6;
+  font-size: 30rpx;
+  color: #666;
+  display: flex;
+}
+
+
+.play {
+  display: block;
+  position: absolute;
+
+  width: 50rpx;
+  height: 50rpx;
+  border: 1rpx solid #FFF;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.play::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-3rpx, -50%);
+  border-width: 15rpx;
+  border-color: transparent transparent transparent #FFF;
+  border-style: solid;
+}

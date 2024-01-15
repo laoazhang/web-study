@@ -1,0 +1,363 @@
+<!-- 头部 -->
+<view class="header">
+  <!-- 位置 -->
+  <navigator url="./index" hover-class="none" class="location">北京</navigator>
+  <!-- 切换 -->
+  <view class="tabs">
+    <!-- <text class="current">热映</text>
+		<text>待映</text> -->
+    <text data-type="{{item.type}}" bindtap="changeTab" class="{{active === item.type?'current':'' }}" wx:for="{{tabs}}" wx:key="type">{{item.name}}</text>
+  </view>
+  <!-- 搜索 -->
+  <navigator url="./index" hover-class="none" class="search"></navigator>
+</view>
+
+<!-- 电影列表 1. 热映 -->
+<view class="items hots" wx:if="{{active==='hot'}}">
+  <navigator wx:for="{{list}}" wx:key="id" url="./detail">
+    <view class="item">
+      <!-- 播放按钮 -->
+      <text class="play"></text>
+      <image src="{{item.img}}"></image>
+      <!-- 信息 -->
+      <view class="meta">
+        <text class="name">{{item.nm}}</text>
+        <text class="type">{{item.cat}}</text>
+        <text class="actor">{{item.desc}}</text>
+        <text class="count">{{item.boxInfo}}</text>
+      </view>
+      <!-- 状态 -->
+      <view class="status">
+        <block wx:if="{{item.globalReleased}}">
+          <view class="extra">
+            {{item.mk}}<text>分</text>
+          </view>
+          <text class="btn">购票</text>
+        </block>
+        <block wx:else>
+          <view class="extra">
+            {{item.wish}}<text>人想看</text>
+          </view>
+          <text class="btn presell">预售</text>
+        </block>
+      </view>
+    </view>
+  </navigator>
+
+</view>
+
+<!-- 电影列表 2. 待映 -->
+<view class="items-wrap" wx:else>
+  <text class="title">近期最受欢迎</text>
+  <scroll-view scroll-x>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-11.jpg"></image>
+        <text class="name">爱情公寓</text>
+        <text class="count">480793人想看</text>
+        <text class="date">8月10号</text>
+      </navigator>
+    </view>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-12.jpg"></image>
+        <text class="name">新乌龙院之笑闹江湖</text>
+        <text class="count">258662人想看</text>
+        <text class="date">7月13号</text>
+      </navigator>
+    </view>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-13.jpg"></image>
+        <text class="name">狄仁杰之四大天王</text>
+        <text class="count">213853人想看</text>
+        <text class="date">7月27号</text>
+      </navigator>
+    </view>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-14.jpg"></image>
+        <text class="name">动物世界</text>
+        <text class="count">139346人想看</text>
+        <text class="date">6月29号</text>
+      </navigator>
+    </view>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-15.jpg"></image>
+        <text class="name">金蝉脱壳2</text>
+        <text class="count">101054人想看</text>
+        <text class="date">6月29号</text>
+      </navigator>
+    </view>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-16.jpg"></image>
+        <text class="name">爵迹2</text>
+        <text class="count">90902人想看</text>
+        <text class="date">7月6号</text>
+      </navigator>
+    </view>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-17.jpg"></image>
+        <text class="name">邪不压正</text>
+        <text class="count">78093人想看</text>
+        <text class="date">7月13号</text>
+      </navigator>
+    </view>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-18.jpg"></image>
+        <text class="name">昨日晴空</text>
+        <text class="count">76172人想看</text>
+        <text class="date">8月10号</text>
+      </navigator>
+    </view>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-19.jpg"></image>
+        <text class="name">大轰炸</text>
+        <text class="count">67771人想看</text>
+        <text class="date">8月17号</text>
+      </navigator>
+    </view>
+    <view class="cell">
+      <text class="collect"></text>
+      <navigator url="./detail">
+        <image src="https://static.botue.com/maoyan/movie-20.jpg"></image>
+        <text class="name">超人总动员2</text>
+        <text class="count">61887人想看</text>
+        <text class="date">6月22号</text>
+      </navigator>
+    </view>
+  </scroll-view>
+  <!-- 列表 -->
+  <view class="items plan">
+    <text class="title">6月21日 周四</text>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-1.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">侏罗纪世界2</text>
+          <text class="type">动作,冒险,科幻</text>
+          <text class="actor">主演: 克里斯·帕拉特,布莱丝·达拉斯·霍华德,泰德·拉文</text>
+          <text class="count">今天205家影院放映4445场</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            8.5<text>分</text>
+          </view>
+          <text class="btn">购票</text>
+        </view>
+      </view>
+    </navigator>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-2.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">猛虫过江</text>
+          <text class="type">喜剧,动作</text>
+          <text class="actor">主演: 小沈阳,潘斌龙,宋芸桦</text>
+          <text class="count">今天189家影院放映1067场</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            8.1<text>分</text>
+          </view>
+          <text class="btn">购票</text>
+        </view>
+      </view>
+    </navigator>
+    <text class="title">6月22日 周五</text>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-3.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">超人总动员2</text>
+          <text class="type">动画,动作,冒险</text>
+          <text class="actor">主演: 格雷格·T·尼尔森,霍利·亨特,莎拉·沃威尔</text>
+          <text class="count">2018-06-22 本周五上映</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            59972<text>人想看</text>
+          </view>
+          <text class="btn presell">预售</text>
+        </view>
+      </view>
+    </navigator>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-4.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">泄密者</text>
+          <text class="type">动作,悬疑,犯罪</text>
+          <text class="actor">主演: 吴镇宇,张智霖,佘诗曼</text>
+          <text class="count">今天182家影院放映644场</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            7.9<text>分</text>
+          </view>
+          <text class="btn">购票</text>
+        </view>
+      </view>
+    </navigator>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-5.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">龙虾刑警</text>
+          <text class="type">喜剧,动作,犯罪</text>
+          <text class="actor">主演: 王千源,袁姗姗,刘桦</text>
+          <text class="count">2018-06-22 本周五上映</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            42371<text>人想看</text>
+          </view>
+          <text class="btn presell">预售</text>
+        </view>
+      </view>
+    </navigator>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-6.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">动物世界</text>
+          <text class="type">动作,悬疑,冒险</text>
+          <text class="actor">主演: 李易峰,迈克尔·道格拉斯,周冬雨</text>
+          <text class="count">2018-06-29 下周五上映</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            136247<text>人想看</text>
+          </view>
+          <text class="btn presell">预售</text>
+        </view>
+      </view>
+    </navigator>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-7.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">超时空同居</text>
+          <text class="type">喜剧,爱情,奇幻</text>
+          <text class="actor">主演: 雷佳音,佟丽娅,徐峥</text>
+          <text class="count">今日121家影院放映440场</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            8.6<text>分</text>
+          </view>
+          <text class="btn">购票</text>
+        </view>
+      </view>
+    </navigator>
+    <text class="title">6月23日 周六</text>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-8.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">金蝉脱壳2</text>
+          <text class="type">动作,惊悚,犯罪</text>
+          <text class="actor">主演: 西尔维斯特·史泰龙,黄晓明,戴夫·巴蒂斯塔</text>
+          <text class="count">2018-06-29 下周五上映</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            98214<text>人想看</text>
+          </view>
+          <text class="btn presell">预售</text>
+        </view>
+      </view>
+    </navigator>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-9.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">复仇者联盟3: 无限战争</text>
+          <text class="type">动作,冒险,科幻</text>
+          <text class="actor">主演: 小罗伯特·唐尼,克里斯·海姆斯沃斯,马克·鲁法洛</text>
+          <text class="count">今天102家影院放映260场</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            8.6<text>分</text>
+          </view>
+          <text class="btn">购票</text>
+        </view>
+      </view>
+    </navigator>
+    <navigator url="./detail">
+      <view class="item">
+        <!-- 播放按钮 -->
+        <text class="play"></text>
+        <image src="https://static.botue.com/maoyan/movie-10.jpg"></image>
+        <!-- 信息 -->
+        <view class="meta">
+          <text class="name">第七个小矮人</text>
+          <text class="type">喜剧,动画,冒险</text>
+          <text class="actor">主演: Otto Waalkes,Mirco Nontschew,Boris Aljinovic</text>
+          <text class="count">今天130家影院放映255场</text>
+        </view>
+        <!-- 状态 -->
+        <view class="status">
+          <view class="extra">
+            8.4<text>分</text>
+          </view>
+          <text class="btn">购票</text>
+        </view>
+      </view>
+    </navigator>
+  </view>
+</view>
+
+<!-- 加载更多... -->
+<text class="loading">加载更多...</text>
