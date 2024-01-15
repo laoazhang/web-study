@@ -1,0 +1,377 @@
+
+page {
+  padding-bottom: 100rpx;
+  background-color: #F2F2F2;
+}
+
+.detail {
+  padding: 30rpx;
+  background-color: #333;
+  overflow: hidden;
+
+  position: relative;
+}
+
+.detail .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 9;
+}
+
+.detail navigator {
+  position: relative;
+}
+
+.detail image {
+  width: 220rpx;
+  height: 300rpx;
+}
+
+.detail .play {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.detail .meta {
+  margin-left: 30rpx;
+}
+
+.detail .meta text {
+  display: block;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.detail .meta .name {
+  font-size: 40rpx;
+  color: #FFF;
+}
+
+.detail .meta .rank {
+  width: 240rpx;
+  height: 30rpx;
+  margin-top: 20rpx;
+  margin-bottom: 6rpx;
+}
+
+.detail .meta .pic {
+  width: 150rpx;
+  height: 30rpx;
+  margin-top: -2rpx;
+  margin-right: 16rpx;
+  background-image: url(https://static.botue.com/maoyan/rank.png);
+  background-size: 150rpx 300rpx;
+  float: left;
+}
+
+.detail .meta .num {
+  color: #ffac2d;
+  font-size: 30rpx;
+  line-height: 1;
+}
+
+.detail .meta .count {
+  font-size: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.detail .action {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0;
+  margin-top: 30rpx;
+}
+
+.detail .action text {
+  width: 48%;
+  text-align: center;
+  line-height: 1;
+  padding: 15rpx 0;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 6rpx;
+  font-size: 24rpx;
+}
+
+.detail .filter {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(40rpx);
+  opacity: 0.55;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.tips {
+  line-height: 1;
+  padding: 20rpx 30rpx 16rpx;
+  margin-bottom: 20rpx;
+  font-size: 24rpx;
+  color: #333;
+  background-color: #FFF;
+  border-bottom: 1rpx solid #E6E6E6;
+}
+
+.tips image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 6rpx;
+  margin-top: -8rpx;
+}
+
+.brief {
+  height: 120rpx;
+  text-align: center;
+  padding: 20rpx 30rpx 40rpx;
+  margin-bottom: 20rpx;
+  background-color: #FFF;
+  border-bottom: 1rpx solid #E6E6E6;
+  position: relative;
+}
+
+.brief .wrap {
+  height: 100%;
+  text-align: left;
+  font-size: 30rpx;
+  color: #333;
+  overflow: hidden;
+}
+
+.brief .more {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+
+  display: block;
+  width: 40rpx;
+  height: 40rpx;
+  transform: translate(-50%);
+  background-image: url(https://static.botue.com/maoyan/down.png);
+  background-size: cover;
+}
+
+.spread {
+  height: auto;
+}
+
+.spread .more {
+  background-image: url(https://static.botue.com/maoyan/up.png);
+}
+
+.panel {
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  background-color: #FFF;
+  border-top: 1rpx solid #E6E6E6;
+  border-bottom: 1rpx solid #E6E6E6;
+}
+
+.panel .title {
+  display: block;
+  width: 100%;
+  line-height: 1;
+  text-align: left;
+  margin-bottom: 20rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.panel scroll-view {
+  white-space: nowrap;
+}
+
+.actor .cell {
+  display: inline-block;
+  width: 130rpx;
+  margin-right: 20rpx;
+  font-size: 24rpx;
+  color: #333;
+}
+
+.actor .cell:last-child {
+  margin-right: 0;
+}
+
+.actor .cell image {
+  width: 130rpx;
+  height: 180rpx;
+  margin-bottom: 10rpx;
+}
+
+.actor .cell text {
+  display: block;
+  width: 100%;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.actor .cell .role {
+  color: #999;
+}
+
+.sales {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.sales .item {
+  width: 30%;
+}
+
+.sales text {
+  display: block;
+  text-align: center;
+  font-size: 36rpx;
+  color: #e54847;
+}
+
+.sales text:last-child {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.media {
+  position: relative;
+}
+
+.media navigator {
+  position: absolute;
+  top: 0;
+  right: 30rpx;
+  
+  width: 80rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  padding-right: 6rpx;
+  font-size: 24rpx;
+  color: #999;
+  background-repeat: no-repeat;
+  background-image: url(https://static.botue.com/maoyan/right.png);
+  background-size: 32rpx;
+  background-position: right center;
+}
+
+.media image {
+  height: 140rpx;
+  margin-right: 10rpx;
+}
+
+.media image:last-child {
+  margin-right: 0;
+}
+
+.media .video {
+  width: 250rpx;
+}
+
+.media .picture {
+  width: 180rpx;
+}
+
+.comments {
+  overflow: hidden;
+}
+
+.comments .item {
+  padding: 20rpx 0 0 30rpx;
+  margin: 0 -30rpx;
+}
+
+.comments .item:first-of-type {
+  border-top: 1rpx solid #E6E6E6;
+}
+
+.comments .item:last-of-type {
+  border-bottom: 1rpx solid #E6E6E6;
+}
+
+.comments .item:last-of-type .info {
+  border-bottom: none;
+}
+
+.comments image {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  float: left;
+}
+
+.comments .info {
+  padding-bottom: 20rpx;
+  padding-right: 30rpx;
+  margin-left: 80rpx;
+  border-bottom: 1rpx solid #E6E6E6;
+}
+
+.comments .info text {
+  display: block;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.comments .rank {
+  width: 120rpx;
+  height: 24rpx;
+  background-image: url(https://static.botue.com/maoyan/rank.png);
+  background-size: 120rpx 240rpx;
+}
+
+.comments .content {
+  margin-top: 20rpx;
+}
+
+.comments .extra {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10rpx;
+}
+
+.comments .extra text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.comments .like {
+  padding-left: 36rpx;
+  background-image: url(https://static.botue.com/maoyan/like.png);
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+}
+
+.comments navigator {
+  line-height: 1;
+  text-align: center;
+  padding-top: 30rpx;
+  font-size: 30rpx;
+  color: #EF4238;
+}
+
+.buy {
+  position: fixed;
+  bottom: 0;
+
+  width: 100%;
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 36rpx;
+  color: #FFF;
+  background-color: #e54847;
+}
+
+
+
+
+
+

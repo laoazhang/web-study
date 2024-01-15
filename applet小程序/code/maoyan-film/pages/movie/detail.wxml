@@ -1,0 +1,181 @@
+
+<!-- 简介 -->
+<view class="detail">
+  <!-- 背景滤镜 -->
+  <div class="filter" style="background-image: url(https://static.botue.com/maoyan/movie-21.jpg)"></div>
+  <view class="wrap">
+    <!-- 封面 -->
+    <navigator url="./video">
+      <text class="play"></text>
+      <image src="https://static.botue.com/maoyan/movie-21.jpg"></image>
+    </navigator>
+    <!-- 影片信息 -->
+    <view class="meta">
+      <text class="name">侏罗纪世界2</text>
+      <text class="en">Jurassic World: Fallen Kingdom</text>
+      <text class="rank">
+        <text class="pic"></text>
+        <text class="num">7.9</text>
+      </text>
+      <text class="count">(38.8万人评)</text>
+      <text class="type">动作,冒险,科幻</text>
+      <text class="">美国/128分钟</text>
+      <text class="date">2018-06-15大陆上映</text>
+    </view>
+    <!-- 操作 -->
+    <view class="action">
+      <text>想看</text>
+      <text>评分</text>
+    </view>
+  </view>
+</view>
+
+<!-- 提示 -->
+<view class="tips">
+  <image src="https://static.botue.com/maoyan/egg.png"></image>有1个彩单，片尾字幕后
+</view>
+
+<!-- 简介 -->
+<view class="brief {{spread ? 'spread' : ''}}">
+  <view class="wrap">
+  侏罗纪世界主题公园及豪华度假村被失控的恐龙们摧毁已有三年。如今，纳布拉尔岛已经被人类遗弃，岛上幸存的恐龙们在丛林中自给自足。当岛上的休眠火山开始活跃以后，欧文（克里斯·帕拉特 饰）与克莱尔（布莱丝·达拉斯·霍华德 饰）发起了一场运动，想要保护岛上幸存的恐龙们免于灭绝。欧文一心想要找到自己依然失踪在野外的迅猛龙首领布鲁，克莱尔如今也尊重起这些生物，以保护它们为己任。两人在熔岩开始喷发时来到了危险的小岛，他们的冒险也揭开了一个可能让地球回到史前时代般混乱秩序的阴谋。</view>
+  <text class="more" bind:tap="spread"></text>
+</view>
+
+<!-- 演员表 -->
+<view class="panel actor">
+  <text class="title">演职人员</text>
+  <scroll-view scroll-x>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-1.jpg"></image>
+      <text class="name">胡安·安东尼奥·巴亚纳</text>
+      <text class="role">导演</text>
+    </view>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-2.jpg"></image>
+      <text class="name">费斯·费伊纳</text>
+      <text class="role">Mercenary</text>
+    </view>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-3.jpg"></image>
+      <text class="name">克里斯·帕拉特</text>
+      <text class="role">Owen Grady</text>
+    </view>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-4.jpg"></image>
+      <text class="name">布莱丝·达拉斯·霍华德</text>
+      <text class="role">Claire Dearing</text>
+    </view>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-5.jpg"></image>
+      <text class="name">泰德·拉文</text>
+      <text class="role">Ken Wheatley</text>
+    </view>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-6.jpg"></image>
+      <text class="name">托比·琼斯</text>
+      <text class="role">Gunnar Eversol</text>
+    </view>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-7.jpg"></image>
+      <text class="name">贾斯蒂斯·史密斯</text>
+      <text class="role">Franklin</text>
+    </view>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-8.jpg"></image>
+      <text class="name">詹姆斯·克伦威尔</text>
+      <text class="role">Benjamin Lockwood</text>
+    </view>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-9.jpg"></image>
+      <text class="name">黄荣亮</text>
+      <text class="role">Dr. Henry Wu</text>
+    </view>
+    <view class="cell">
+      <image src="https://static.botue.com/maoyan/actor-10.jpg"></image>
+      <text class="name">拉菲·斯波</text>
+      <text class="role">Eli Mills</text>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 票房 -->
+<view class="panel sales">
+  <text class="title">票房</text>
+  <view class="item">
+    <text>1</text>
+    <text>昨日票房排行</text>
+  </view>
+  <view class="item">
+    <text>73308</text>
+    <text>首周票房(万)</text>
+  </view>
+  <view class="item">
+    <text>119001</text>
+    <text>累计票房(万)</text>
+  </view>
+</view>
+
+<!-- 视频和剧照 -->
+<view class="panel media">
+  <text class="title">视频和剧照</text>
+  <navigator>62</navigator>
+  <scroll-view scroll-x>
+    <view class="cell">
+      <image class="video" mode="aspectFill" src="https://static.botue.com/maoyan/media-1.jpg"></image>
+      <image class="picture" mode="aspectFill" src="https://static.botue.com/maoyan/media-2.jpg"></image>
+      <image class="picture" mode="aspectFill" src="https://static.botue.com/maoyan/media-3.jpg"></image>
+      <image class="picture" mode="aspectFill" src="https://static.botue.com/maoyan/media-4.jpg"></image>
+      <image class="picture" mode="aspectFill" src="https://static.botue.com/maoyan/media-5.jpg"></image>
+      <image class="picture" mode="aspectFill" src="https://static.botue.com/maoyan/media-6.jpg"></image>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 评论 -->
+<view class="panel comments">
+  <text class="title">观众评论</text>
+  <view class="item">
+    <image src="https://static.botue.com/maoyan/avatar-1.jpg"></image>
+    <view class="info">
+      <text>茶三刘</text>
+      <text class="rank"></text>
+      <text class="content">那个敲地板的恐龙真的要吓死我😂😂😂</text>
+      <view class="extra">
+        <text class="date">06-15</text>
+        <text class="like">4740</text>
+      </view>
+    </view>
+  </view>
+  <view class="item">
+    <image src="https://static.botue.com/maoyan/avatar-2.jpg"></image>
+    <view class="info">
+      <text>天人丶之心</text>
+      <text class="rank"></text>
+      <text class="content">总体来说还是很完美。布鲁比以前意识很强。对于人类所制造出来的迅猛龙还是和历史的真真的迅猛龙来相对比较。他还是一个开胃菜吧。所以呢。这部侏罗纪世界2非常不错。在侏罗纪公园大家应该还记得。苍龙吧。那是一个更了不得龙，虽然这部见苍龙只有两次。也正名了他的存在必要。在下一部侏罗纪世界3。大家会见到真真苍龙的厉害。那就是人类的灾难。到这里我想说。我期待下部。布鲁会又给大家带来惊喜。以为布鲁是恐龙里面的主角。欢迎大家。下次观看。侏罗纪世界3丶期待吧</text>
+      <view class="extra">
+        <text class="date">06-15</text>
+        <text class="like">4740</text>
+      </view>
+    </view>
+  </view>
+  <view class="item">
+    <image src="https://static.botue.com/maoyan/avatar-3.jpg"></image>
+    <view class="info">
+      <text>山～下</text>
+      <text class="rank"></text>
+      <text class="content">真的JA,男神，拍的太好了!梅茜的身世也震惊了我!恐龙超级逼真，有幸参加了导演沙龙和侏罗纪世界2的发布会，知道了很多花絮，虽然那时候说，看花絮，觉得基本就看完了侏罗纪2，但是真实看，还是超级震撼。装死还在偷笑，啊啊啊啊啊，完蛋，要喜欢上“小”恐龙了。我的blue!JA拍的电影不偏剧情，所以给人留下映象最深的当然是逼真的特效。结尾梅茜的举动我觉得要站在她的立场去想，也许对正常人来讲，不应该去按这个键，这样，人类会受到攻击，但对她来讲，她觉得她和那些恐龙是一样的，是再生，是复制，她想他们活下去。即便，没有按这个键，有的恐龙也已经卖出去，送出去了，恐龙已经被放出，可能，这就是侏罗纪世界3要讲得了吧。</text>
+      <view class="extra">
+        <text class="date">06-15</text>
+        <text class="like">4740</text>
+      </view>
+    </view>
+  </view>
+  <navigator>查看全部93761条观众评论</navigator>
+</view>
+
+<!-- 购票 -->
+<navigator class="buy">优惠购票</navigator>
+
+
+
