@@ -1,84 +1,143 @@
 <script>
-  export default {
-    /**
-     * 需求：搜索状态切换 => 
-     * 1. 用户点击搜索输入框，输入框获取焦点，进入到搜索状态
-     * 2. 用户点击取消按钮，退出搜索状态
-     */
-    data(){
-      return{
-        // 是否进入搜索状态
-        isSearch:false
+import { source } from '@dcloudio/vue-cli-plugin-uni/packages/postcss/tags'
+
+export default {
+  /**
+   * 需求：搜索状态切换 =>
+   * 1. 用户点击搜索输入框，输入框获取焦点，进入到搜索状态
+   * 2. 用户点击取消按钮，退出搜索状态
+   */
+  data() {
+    return {
+      // 是否进入搜索状态
+      isSearch: false,
+      // 关键词
+      keyWord: '',
+      // 建议商品列表
+      suggestList: [],
+      // 定时器ID
+      timer: null,
+      // 搜索历史记录
+      history: uni.getStorageSync('history') || [],
+    }
+  },
+  watch: {
+    history(newValue) {
+      // 监听history变化 => 数据发生变化执行本地存储
+      uni.setStorageSync('search-history', this.history)
+    },
+  },
+  methods: {
+    // 清除搜索历史
+    clearHistory() {
+      this.history = []
+      uni.removeStorageSync('history')
+    },
+    // 输入完关键词以后，跳转到搜索结果页面
+    goList() {
+      if (!this.keyWord) return
+      uni.navigateTo({
+        url: `/packone/list/index?query=${this.keyWord}`,
+      })
+      //存储搜索历史记录 => 把this.keyWord存到一个数组中，本地需要持久化(注意排重)
+      /**
+       * this.history.push(this.keyWord)
+      // 去重
+      this.history = [...new Set(this.history)]
+       */
+      if (!this.history.some((item) => item === this.keyWord)) {
+        this.history.push(this.keyWord)
       }
     },
-    methods:{
-      // 1. 进入搜索状态
-      goSearch(){
-        this.isSearch=true
-        // 进入搜索状态后，getStstemInfoSync计算手机屏幕高度，然后传给父页面控制高度，防止滚动
-        const pageHeight = uni.getSystemInfoSync().windowHeight +"px"
-        uni.hideTabBar({animation:true}) // 隐藏tabBar
-        this.$emit('search',pageHeight)
-      },
-      exitSearch(){
-        this.isSearch=false
-        uni.showTabBar({animation:true}); // 显示tabBar
-        this.$emit("search", "auto");
-      }
-    }
-  }
-   
+    // 用户输入期间，调用api接口获取建议商品列表数据
+    getSuggestList() {
+      /**
+       * 1. 判断关键词是否为空, 为空就return
+       * 2. 发送请求获取建议商品列表数据
+       * 防抖好处：
+       * 1. 减轻服务器的压力
+       * 2. 提升前端渲染性能
+       */
+      // 说明：每次执行的时候判断定时器ID是否存在，如果存在，就会清除上一次的定时器任务
+      this.timer && clearTimeout(this.timer)
+      this.timer = setTimeout(async () => {
+        // 如果输入为空，清空上一次建议商品列表
+        if (!this.keyWord) return (this.suggestList = [])
+        const { data } = await this.request({
+          url: '/api/public/v1/goods/qsearch',
+          data: {
+            query: this.keyWord,
+          },
+        })
+        this.suggestList = data
+        console.log('建议商品列表数据', data)
+      }, 600)
+    },
+    // 1. 进入搜索状态
+    goSearch() {
+      this.isSearch = true
+      // 进入搜索状态后，getStstemInfoSync计算手机屏幕高度，然后传给父页面控制高度，防止滚动
+      const pageHeight = uni.getSystemInfoSync().windowHeight + 'px'
+      uni.hideTabBar({ animation: true }) // 隐藏tabBar
+      this.$emit('search', pageHeight)
+    },
+    exitSearch() {
+      this.isSearch = false
+      uni.showTabBar({ animation: true }) // 显示tabBar
+      this.$emit('search', 'auto')
+      this.keyWord = ''
+    },
+  },
+}
 </script>
 
 <template>
-  <view class="search" :class="{focused:isSearch}" >
-    <!-- 搜索区域 -->
-      <view class="sinput">
-        <input @focus="goSearch" type="text" placeholder="搜索" />
-        <button @click="exitSearch">取消</button>
-      </view>
-      <!-- 搜索状态显示=》下边内容 -->
-      <view class="scontent" v-show="isSearch">
+  <view class="search" :class="{ focused: isSearch }">
+    <!-- 1. 搜索区域 -->
+    <view class="sinput">
+      <input
+        @focus="goSearch"
+        v-model="keyWord"
+        @input="getSuggestList"
+        @confirm="goList"
+        type="text"
+        placeholder="搜索"
+      />
+      <button @click="exitSearch">取消</button>
+    </view>
+    <!-- 2. 搜索状态显示=》下边内容 -->
+    <view class="scontent" v-show="isSearch">
+      <!-- 1. 搜索历史记录 -->
+      <!-- vue空标签：template，不会渲染任何元素，可以作为包裹多个结构做条件渲染 -->
+      <template v-if="suggestList.length === 0">
         <div class="title">
           搜索历史
-          <span class="clear"></span>
+          <span class="clear" @click="clearHistory"></span>
         </div>
         <!-- 搜索历史 -->
         <div class="history">
-          <navigator url="/pages/list/index">小米</navigator>
-          <navigator url="/pages/list/index">智能电视</navigator>
-          <navigator url="/pages/list/index">小米空气净化器</navigator>
-          <navigator url="/pages/list/index">西门子洗碗机</navigator>
-          <navigator url="/pages/list/index">华为手机</navigator>
-          <navigator url="/pages/list/index">苹果</navigator>
-          <navigator url="/pages/list/index">锤子</navigator>
+          <navigator
+            :url="`/packone/list/index?query=${this.keyWord}`"
+            v-for="(item, i) in history"
+            :key="i"
+            >{{ item }}</navigator
+          >
         </div>
-        <!-- 搜索建议商品 -->
-        <scroll-view scroll-y class="result" style="display: none">
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-          <navigator url="/pages/goods/index">小米</navigator>
-        </scroll-view>
-      </view>
+      </template>
+      <!-- 2. 搜索建议商品 -->
+      <scroll-view scroll-y class="result" v-else>
+        <navigator
+          :url="`/packone/goods/index?id=${item.id}`"
+          v-for="item in suggestList"
+          :key="item.goods_id"
+          >{{ item.goods_name }}</navigator
+        >
+      </scroll-view>
     </view>
+  </view>
 </template>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 // 搜索
 .search {
   display: flex;
@@ -93,7 +152,7 @@
       position: absolute;
       top: 28rpx;
       left: 302rpx;
-      content: "";
+      content: '';
       width: 44rpx;
       height: 44rpx;
       line-height: 1;
