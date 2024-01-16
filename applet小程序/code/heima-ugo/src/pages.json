@@ -5,8 +5,8 @@
       "path": "pages/index/index",
       // 配置页面自己的window => 标题、背景色、文字颜色
       "style": {
-        "navigationBarTitleText": "首页"
-        // "enablePullDownRefresh": true
+        "navigationBarTitleText": "首页",
+        "enablePullDownRefresh": true
       }
     },
     // 新增ugo页面

@@ -1,17 +1,29 @@
 <script>
   export default {
+    /**
+     * 需求：搜索状态切换 => 
+     * 1. 用户点击搜索输入框，输入框获取焦点，进入到搜索状态
+     * 2. 用户点击取消按钮，退出搜索状态
+     */
     data(){
       return{
-        // 是否是搜索状态
+        // 是否进入搜索状态
         isSearch:false
       }
     },
     methods:{
-      search(){
+      // 1. 进入搜索状态
+      goSearch(){
         this.isSearch=true
+        // 进入搜索状态后，getStstemInfoSync计算手机屏幕高度，然后传给父页面控制高度，防止滚动
+        const pageHeight = uni.getSystemInfoSync().windowHeight +"px"
+        uni.hideTabBar({animation:true}) // 隐藏tabBar
+        this.$emit('search',pageHeight)
       },
-      cancel(){
+      exitSearch(){
         this.isSearch=false
+        uni.showTabBar({animation:true}); // 显示tabBar
+        this.$emit("search", "auto");
       }
     }
   }
@@ -20,12 +32,13 @@
 
 <template>
   <view class="search" :class="{focused:isSearch}" >
+    <!-- 搜索区域 -->
       <view class="sinput">
-        <input @focus="search" type="text" placeholder="搜索" />
-        <button @click="cancel">取消</button>
+        <input @focus="goSearch" type="text" placeholder="搜索" />
+        <button @click="exitSearch">取消</button>
       </view>
       <!-- 搜索状态显示=》下边内容 -->
-      <view class="scontent" style="display: none" v-show="isSearch">
+      <view class="scontent" v-show="isSearch">
         <div class="title">
           搜索历史
           <span class="clear"></span>
@@ -112,6 +125,7 @@
       color: #666;
     }
   }
+  // & 指的父级
   &.focused {
     position: absolute;
     width: 100%;

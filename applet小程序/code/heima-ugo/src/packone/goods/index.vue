@@ -46,6 +46,9 @@
 
 <script>
 export default {
+  onLoad(query){
+    console.log('路由参数',query.id);
+  },
   methods: {
     goCart() {
       uni.switchTab({
