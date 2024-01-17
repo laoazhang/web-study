@@ -114,11 +114,11 @@ export default {
       console.log('点击全选')
       if (this.isAll) {
         this.carts.forEach((item) => {
-          item.goods_checked === false
+          item.goods_checked = false
         })
       } else {
         this.carts.forEach((item) => {
-          item.goods_checked === true
+          item.goods_checked = true
         })
       }
     },
