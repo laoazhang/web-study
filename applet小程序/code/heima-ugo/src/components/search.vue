@@ -70,7 +70,7 @@ export default {
           },
         })
         this.suggestList = data
-        console.log('建议商品列表数据', data)
+        // console.log('建议商品列表数据', data)
       }, 600)
     },
     // 1. 进入搜索状态

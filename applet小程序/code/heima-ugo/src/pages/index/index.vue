@@ -92,9 +92,12 @@ export default {
     this.getCate()
     this.getFloor()
   },
+  onReachBottom() {
+    console.log('页面滚动到底部会执行')
+  },
   // 页面向下拖动，松手之后执行
   onPullDownRefresh() {
-    console.log('开始下拉更新 ')
+    // console.log('开始下拉更新 ')
     // 真机中，需要等到三个接口都调用成功，关闭下拉刷新效果
     Promise.all([this.getSwiper(), this.getCate(), this.getFloor()]).then(
       () => {
@@ -105,7 +108,7 @@ export default {
   },
   // 页面滚动执行
   onPageScroll(e) {
-    console.log('页面滚动高度：', e.scrollTop)
+    // console.log('页面滚动高度：', e.scrollTop)
     // 需求：页面滚动高度大于屏幕高度一半的时候，显示回顶按钮，相反不显示
     if (e.scrollTop > uni.getSystemInfoSync().windowHeight / 2) {
       this.isShowTop = true
@@ -130,7 +133,7 @@ export default {
       const { data } = await this.request({
         url: '/api/public/v1/home/swiperdata',
       })
-      console.log('轮播图：', data)
+      // console.log('轮播图：', data)
       this.swiperList = data
     },
     // 获取导航
@@ -138,7 +141,7 @@ export default {
       const { data } = await this.request({
         url: '/api/public/v1/home/catitems',
       })
-      console.log('导航：', data)
+      // console.log('导航：', data)
       this.cateList = data
     },
     // 楼层
@@ -146,7 +149,7 @@ export default {
       const { data } = await this.request({
         url: '/api/public/v1/home/floordata',
       })
-      console.log('楼层：', data)
+      // console.log('楼层：', data)
       this.floorList = data
     },
     // 测试uni.request请求

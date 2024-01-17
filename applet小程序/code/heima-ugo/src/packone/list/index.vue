@@ -7,84 +7,97 @@
       <text>价格</text>
     </view>
     <!-- 商品列表 -->
-    <scroll-view class="goods" scroll-y>
-      <view class="item" @click="goDetail">
+    <scroll-view @scrolltolower="getMore" class="goods" scroll-y>
+      <view
+        class="item"
+        @click="goDetail(item.goods_id)"
+        v-for="item in list"
+        :key="item.goods_id"
+      >
         <!-- 商品图片 -->
-        <image class="pic" src="http://static.botue.com/ugo/uploads/goods_1.jpg" />
+        <image class="pic" :src="item.goods_small_logo" />
         <!-- 商品信息 -->
         <view class="meta">
-          <view class="name">【海外购自营】黎珐(ReFa) MTG日本 CARAT铂金微电流瘦脸瘦身提拉紧致V脸美容仪 【保税仓发货】</view>
+          <view class="name">{{ item.goods_name }}</view>
           <view class="price">
-            <text>￥</text>1399
+            <text>￥</text>{{ item.goods_price }}
             <text>.00</text>
           </view>
         </view>
       </view>
-      <view class="item" @click="goDetail">
-        <!-- 商品图片 -->
-        <image class="pic" src="http://static.botue.com/ugo/uploads/goods_2.jpg" />
-        <!-- 商品信息 -->
-        <view class="meta">
-          <view class="name">卡奇莱德汽车车载空气净化器负离子除甲醛PM2.5除烟异味车用氧吧双涡轮出风（红色）</view>
-          <view class="price">
-            <text>￥</text>168
-            <text>.00</text>
-          </view>
-        </view>
-      </view>
-      <view class="item" @click="goDetail">
-        <!-- 商品图片 -->
-        <image class="pic" src="http://static.botue.com/ugo/uploads/goods_3.jpg" />
-        <!-- 商品信息 -->
-        <view class="meta">
-          <view class="name">沿途（yantu）车载充电器车充一拖二usb转接口手机智能头多功能汽车点烟器</view>
-          <view class="price">
-            <text>￥</text>168
-            <text>.00</text>
-          </view>
-        </view>
-      </view>
-      <view class="item" @click="goDetail">
-        <!-- 商品图片 -->
-        <image class="pic" src="http://static.botue.com/ugo/uploads/goods_4.jpg" />
-        <!-- 商品信息 -->
-        <view class="meta">
-          <view class="name">车载冰箱7.5L 冷暖两用汽车冰箱半导体12V迷你电冰箱升级款</view>
-          <view class="price">
-            <text>￥</text>168
-            <text>.00</text>
-          </view>
-        </view>
-      </view>
-      <view class="item" @click="goDetail">
-        <!-- 商品图片 -->
-        <image class="pic" src="http://static.botue.com/ugo/uploads/goods_5.jpg" />
-        <!-- 商品信息 -->
-        <view class="meta">
-          <view class="name">神行者电子狗 神行者L70电子狗测速 测速雷达 流动测速 多种警示路段提醒</view>
-          <view class="price">
-            <text>￥</text>168
-            <text>.00</text>
-          </view>
-        </view>
-      </view>
+      <!-- 数据加载完成提示 -->
+      <view class="nomore" v-if="hasMore">没有更多了...</view>
     </scroll-view>
   </view>
 </template>
 
 <script>
 export default {
-  methods: {
-    goDetail() {
-      uni.navigateTo({
-        url: "/pages/goods/index"
-      });
+  // onReachBottom() {
+  //   console.log('页面滚动到底部会执行')
+  // },
+
+  onLoad(params) {
+    this.query.query = params.query
+    this.getList(this.query)
+  },
+  data() {
+    return {
+      // 商品搜索列表
+      list: [],
+      // 商品总数
+      total: 0,
+      query: {
+        query: '', // 查询的关键词
+        pagenum: 1, // 查询页码
+        pagesize: 20, // 查询每页数量
+      },
     }
-  }
-};
+  },
+  computed: {
+    // 是否还有数据：true 没有数据了 | false 还有数据
+    hasMore() {
+      return this.total === this.list.length
+    },
+  },
+  methods: {
+    getMore() {
+      // 商品列表滚动到底部触发执行 => 加载下一页数据
+      console.log('触底了')
+      /**
+       * 判断数据是否加载完
+       * 2. 没有加载完 => 页码+1，重新发送下一页数据，追加到列表
+       */
+      if (this.hasMore) return
+      this.query.pagenum++
+      this.getList(this.query)
+    },
+    async getList(params) {
+      const { data } = await this.request({
+        url: '/api/public/v1/goods/search',
+        data: params,
+      })
+      console.log('商品搜索列表数据', data)
+      this.total = data.total
+      // 追加当前的数据
+      this.list.push(...data.goods)
+    },
+    goDetail(id) {
+      uni.navigateTo({
+        url: `/packone/goods/index?id=${id}`,
+      })
+    },
+  },
+}
 </script>
 
 <style scoped lang="scss">
+.nomore {
+  font-size: 32rpx;
+  margin: 30rpx auto;
+  text-align: center;
+  color: #ddd;
+}
 .filter {
   display: flex;
   height: 96rpx;

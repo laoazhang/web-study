@@ -15,105 +15,36 @@
       <view class="item">
         <!-- 店铺名称 -->
         <view class="shopname">优购生活馆</view>
-        <view class="goods">
+        <view class="goods" v-for="(good, i) in carts" :key="good.goods_id">
           <!-- 商品图片 -->
-          <image
-            class="pic"
-            src="http://static.botue.com/ugo/uploads/goods_1.jpg"
-          />
+          <image class="pic" :src="good.goods_small_logo" />
           <!-- 商品信息 -->
           <view class="meta">
-            <view class="name">【海外购自营】黎珐(ReFa) MTG日本 CARAT铂金微电流瘦脸瘦身提拉紧致V脸美容仪 【保税仓发货】</view>
+            <view class="name">{{ good.goods_name }}</view>
             <view class="price">
-              <text>￥</text>1399
+              <text>￥</text>{{ good.goods_price }}
               <text>.00</text>
             </view>
             <!-- 加减 -->
             <view class="amount">
-              <text class="reduce">-</text>
+              <!-- 减1 -->
+              <text @click="changeCount(i, -1)" class="reduce">-</text>
               <input
                 type="number"
                 disabled
-                value="1"
+                :value="good.goods_count"
                 class="number"
               />
-              <text class="plus">+</text>
+              <!-- 加1 -->
+              <text @click="changeCount(i, 1)" class="plus">+</text>
             </view>
           </view>
-          <!-- 选框 -->
-          <view class="checkbox">
+          <!-- 单选框 -->
+          <view class="checkbox" @click="singleCheck(i)">
             <icon
               type="success"
               size="20"
-              color="#ea4451"
-            ></icon>
-          </view>
-        </view>
-        <view class="goods">
-          <!-- 商品图片 -->
-          <image
-            class="pic"
-            src="http://static.botue.com/ugo/uploads/goods_2.jpg"
-          />
-          <!-- 商品信息 -->
-          <view class="meta">
-            <view class="name">【海外购自营】黎珐(ReFa) MTG日本 CARAT铂金微电流瘦脸瘦身提拉紧致V脸美容仪 【保税仓发货】</view>
-            <view class="price">
-              <text>￥</text>1399
-              <text>.00</text>
-            </view>
-            <!-- 加减 -->
-            <view class="amount">
-              <text class="reduce">-</text>
-              <input
-                type="number"
-                disabled
-                value="1"
-                class="number"
-              />
-              <text class="plus">+</text>
-            </view>
-          </view>
-          <!-- 选框 -->
-          <view class="checkbox">
-            <icon
-              type="success"
-              size="20"
-              color="#ea4451"
-            ></icon>
-          </view>
-        </view>
-        <view class="goods">
-          <!-- 商品图片 -->
-          <image
-            class="pic"
-            src="http://static.botue.com/ugo/uploads/goods_5.jpg"
-          />
-          <!-- 商品信息 -->
-          <view class="meta">
-            <view class="name">【海外购自营】黎珐(ReFa) MTG日本 CARAT铂金微电流瘦脸瘦身提拉紧致V脸美容仪 【保税仓发货】</view>
-            <view class="price">
-              <text>￥</text>1399
-              <text>.00</text>
-            </view>
-            <!-- 加减 -->
-            <view class="amount">
-              <text class="reduce">-</text>
-              <input
-                disabled
-                type="number"
-                value="1"
-                class="number"
-              />
-              <text class="plus">+</text>
-            </view>
-          </view>
-          <!-- 选框 -->
-          <view class="checkbox">
-            <icon
-              type="success"
-              size="20"
-              color="#ccc"
+              :color="good.goods_checked ? '#ea4451' : '#ccc'"
             ></icon>
           </view>
         </view>
@@ -121,12 +52,13 @@
     </view>
     <!-- 其它 -->
     <view class="extra">
-      <label class="checkall">
+      <label class="checkall" @click="selAll">
         <icon
           type="success"
-          color="#ccc"
+          :color="isAll ? '#ea4451' : '#ccc'"
           size="20"
-        ></icon>全选
+        ></icon
+        >全选
       </label>
       <view class="total">
         合计:
@@ -140,7 +72,94 @@
 </template>
 
 <script>
-export default {};
+import { i, tr } from '@dcloudio/vue-cli-plugin-uni/packages/postcss/tags'
+
+export default {
+  data() {
+    return {
+      // 问题：放到这里，只会再页面第一次加载时，从本地获取获取一次 => 以后购物车有更新，这里不会获取到更新
+      carts: [],
+    }
+  },
+  computed: {
+    // 是否是全部选中状态
+    isAll() {
+      // 条件：购物车选中商品的数量=购物车商品的总数量
+      return this.seledGoods.length === this.carts.length
+    },
+    seledGoods() {
+      return this.carts.filter((item) => item.goods_checked)
+    },
+  },
+  watch: {
+    carts: {
+      deep: true,
+      handler(newValue) {
+        console.log('carts数据变化了')
+        uni.setStorageSync('carts', newValue)
+      },
+    },
+  },
+  onShow() {
+    console.log('页面打开运行了')
+    this.carts = uni.getStorageSync('carts')
+  },
+  methods: {
+    /**
+     * 判断全选框是否是选中状态?
+     * 1. true => 全选框选中 => 购物车列表中商品都选中
+     * 2. false => 未选中 => 购物车列表中商品全未选中
+     */
+    selAll() {
+      console.log('点击全选')
+      if (this.isAll) {
+        this.carts.forEach((item) => {
+          item.goods_checked === false
+        })
+      } else {
+        this.carts.forEach((item) => {
+          item.goods_checked === true
+        })
+      }
+    },
+    /**
+     * 商品单选
+     * @param {*} index 当前点击进行单选操作的商品的索引值
+     */
+    singleCheck(index) {
+      const good = this.carts[index]
+      // 每次点击对上次的选中状态做取反
+      good.goods_checked = !good.goods_checked
+    },
+    /**
+     *
+     * @param {*} index 当前修改数量的商品索引值
+     * @param {*} step -1 代表减一 | 1 代表加一
+     */
+    changeCount(index, step) {
+      /**
+       * 1. 边界判断：1<count <= 商品库存
+       * 2. 满足边界条件执行加减操作
+       * 3. 更新本地数据
+       */
+      const currGoodCout = this.carts[index].goods_count
+      if (step === -1 && currGoodCout === 1) {
+        // 已经等于1 不能再减了
+        uni.showToast({
+          title: '最少购买数量为1',
+        })
+        return
+      }
+      if (step === 1 && currGoodCout >= 6) {
+        uni.showToast({
+          title: '没有库存了',
+        })
+        return
+      }
+      this.carts[index].goods_count += step
+    },
+  },
+}
 </script>
 
 <style scoped lang="scss">
@@ -347,4 +366,3 @@ export default {};
   }
 }
 </style>
-

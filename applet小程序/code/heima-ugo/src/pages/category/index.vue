@@ -73,7 +73,7 @@ export default {
     // 获取所有分类数据
     async getCates() {
       const { data } = await this.request({ url: '/api/public/v1/categories' })
-      console.log('所有分类数据', data)
+      // console.log('所有分类数据', data)
       this.cateList = data
     },
     // 修改当前选中父级分类索引值

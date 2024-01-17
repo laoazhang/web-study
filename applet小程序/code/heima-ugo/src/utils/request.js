@@ -16,7 +16,7 @@ const request = async ({ url, method, header = {}, data }) => {
    */
   uni.showLoading({
     title: '请求中...',
-    mask: true, // 避免没有数据时候，用户点击页面中元素
+    mask: true, // 遮罩：避免没有数据时候，用户点击页面中元素
   })
   // 从本地获取token
   // 说明：未来登录成功后，本地会存储：名为'ugo-token-150'token值
