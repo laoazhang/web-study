@@ -1,15 +1,16 @@
 <template>
   <view class="wrapper">
     <!-- 收货信息 -->
-    <view class="shipment">
+    <view class="shipment" v-if="address">
       <view class="dt">收货人:</view>
       <view class="dd meta">
-        <text class="name">刘德华</text>
-        <text class="phone">13535337057</text>
+        <text class="name">{{address.userName}}</text>
+        <text class="phone">{{address.telNumber}}</text>
       </view>
       <view class="dt">收货地址:</view>
-      <view class="dd">广东省广州市天河区一珠吉</view>
+      <view class="dd">{{address.provinceName+address.cityName+address.countyName+address.detailInfo}}</view>
     </view>
+    <button @click="getAddress" class="addressBtn" type="primary" v-else>获取收货地址</button>
     <!-- 购物车 -->
     <view class="carts">
       <view class="item">
@@ -60,25 +61,27 @@
         ></icon
         >全选
       </label>
+      <!-- 选中的商品 -->
       <view class="total">
         合计:
         <text>￥</text>
-        <label>14110</label>
+        <label>{{seledGoodsTotal}}</label>
         <text>.00</text>
       </view>
-      <view class="pay">结算(3)</view>
+          <view class="pay">结算({{seledGoods.length}})</view>
     </view>
   </view>
 </template>
 
 <script>
-import { i, tr } from '@dcloudio/vue-cli-plugin-uni/packages/postcss/tags'
 
 export default {
   data() {
     return {
       // 问题：放到这里，只会再页面第一次加载时，从本地获取获取一次 => 以后购物车有更新，这里不会获取到更新
       carts: [],
+      // 收货地址
+      address:null
     }
   },
   computed: {
@@ -87,9 +90,21 @@ export default {
       // 条件：购物车选中商品的数量=购物车商品的总数量
       return this.seledGoods.length === this.carts.length
     },
+    // 选中商品列表
     seledGoods() {
       return this.carts.filter((item) => item.goods_checked)
     },
+    // 计算选中商品的总价
+    seledGoodsTotal(){
+      // 1. forEach循环
+      // let total = 0
+      // // 累加每个商品的价格
+      // this.seledGoods.forEach(item=>total+=item.goods_price*item.goods_count)
+      // return total
+      // 2. reduce方法
+      return this.seledGoods.reduce((acc,item)=> acc+=item.goods_price*item.goods_count,0)
+    }
+
   },
   watch: {
     carts: {
@@ -105,6 +120,14 @@ export default {
     this.carts = uni.getStorageSync('carts')
   },
   methods: {
+    /**
+     * 获取微信用户收货地址
+     */
+    async getAddress(){
+    const res = await uni.chooseAddress()
+    this.address=res
+    console.log('获取地址信息',res);
+    },
     /**
      * 判断全选框是否是选中状态?
      * 1. true => 全选框选中 => 购物车列表中商品都选中
@@ -163,6 +186,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.addressBtn {
+  margin-top: 20rpx;
+}
 .shipment {
   height: 100rpx;
   line-height: 2;
