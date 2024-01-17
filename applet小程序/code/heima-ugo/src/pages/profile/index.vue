@@ -3,11 +3,13 @@
     <!-- 个人资料 -->
     <view class="profile">
       <view class="meta">
-        <image
+        <!-- <image
           class="avatar"
           src="http://static.botue.com/ugo/uploads/monkey.png"
         />
-        <text class="nickname">孙悟空</text>
+        <text class="nickname">孙悟空</text> -->
+        <open-data class="avatar" type="userAvatarUrl"></open-data>
+        <open-data class="nickname" type="userNickName"></open-data>
       </view>
     </view>
     <!-- 统计 -->
@@ -43,14 +45,22 @@
     <view class="address icon-arrow">收货地址</view>
     <!-- 其它 -->
     <view class="extra">
-      <view class="item icon-arrow">联系客服</view>
-      <button class="item icon-arrow">分享优购</button>
+      <view @click="callSer" class="item icon-arrow">联系客服</view>
+      <button open-type="share" class="item icon-arrow">分享优购</button>
     </view>
   </view>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    callSer() {
+      uni.makePhoneCall({
+        phoneNumber:"10086"
+      })
+    }
+  },
+};
 </script>
 
 <style scoped lang="scss">
