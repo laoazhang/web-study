@@ -62,7 +62,8 @@
       "urlCheck": false
     },
     "usingComponents": true,
-    "requiredPrivateInfos": ["chooseAddress"]
+    "requiredPrivateInfos": ["chooseAddress"],
+    "lazyCodeLoading": "requiredComponents"
   },
   "mp-alipay": {
     "usingComponents": true

@@ -6,8 +6,15 @@
       <text>销量</text>
       <text>价格</text>
     </view>
-    <!-- 商品列表 -->
-    <scroll-view @scrolltolower="getMore" class="goods" scroll-y>
+    <!-- 区域滚动 商品列表 -->
+    <scroll-view
+      @scrolltolower="getMore"
+      :refresher-triggered="triggered"
+      @refresherrefresh="refresh"
+      class="goods"
+      refresher-enabled
+      scroll-y
+    >
       <view
         class="item"
         @click="goDetail(item.goods_id)"
@@ -43,6 +50,7 @@ export default {
   },
   data() {
     return {
+      triggered: false,
       // 商品搜索列表
       list: [],
       // 商品总数
@@ -61,6 +69,16 @@ export default {
     },
   },
   methods: {
+    async refresh() {
+      console.log('页面下拉刷新')
+      this.triggered = true
+      this.list = []
+      this.query.pagenum = 1
+      await this.getList(this.query)
+      // this.$nextTick(() => {
+      this.triggered = false
+      // })
+    },
     getMore() {
       // 商品列表滚动到底部触发执行 => 加载下一页数据
       console.log('触底了')
