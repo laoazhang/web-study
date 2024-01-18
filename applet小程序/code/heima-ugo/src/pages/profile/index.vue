@@ -53,14 +53,18 @@
 
 <script>
 export default {
+  // 检查用户是否登录？在哪个钩子函数
+  onShow() {
+    this.checkAuth()
+  },
   methods: {
     callSer() {
       uni.makePhoneCall({
-        phoneNumber:"10086"
+        phoneNumber: '10086',
       })
-    }
+    },
   },
-};
+}
 </script>
 
 <style scoped lang="scss">

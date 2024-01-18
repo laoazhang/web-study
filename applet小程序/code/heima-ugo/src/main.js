@@ -5,6 +5,8 @@ import './uni.promisify.adaptor'
 import Search from '@/components/search.vue'
 // 导入插件
 import plugins from '@/utils/plugins'
+// 导入全局混入对象
+import mixins from '@/utils/mixins'
 
 Vue.config.productionTip = false
 
@@ -15,6 +17,9 @@ Vue.component('Search', Search)
 
 // 注册插件
 Vue.use(plugins)
+
+// 注册全局混入对象
+Vue.mixin(mixins)
 
 const app = new Vue({
   ...App,

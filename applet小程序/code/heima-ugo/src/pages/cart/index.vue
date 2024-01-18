@@ -4,13 +4,15 @@
     <view class="shipment" v-if="address">
       <view class="dt">收货人:</view>
       <view class="dd meta">
-        <text class="name">{{address.userName}}</text>
-        <text class="phone">{{address.telNumber}}</text>
+        <text class="name">{{ address.userName }}</text>
+        <text class="phone">{{ address.telNumber }}</text>
       </view>
       <view class="dt">收货地址:</view>
-      <view class="dd">{{address.provinceName+address.cityName+address.countyName+address.detailInfo}}</view>
+      <view class="dd">{{ allAddress }}</view>
     </view>
-    <button @click="getAddress" class="addressBtn" type="primary" v-else>获取收货地址</button>
+    <button @click="getAddress" class="addressBtn" type="primary" v-else>
+      获取收货地址
+    </button>
     <!-- 购物车 -->
     <view class="carts">
       <view class="item">
@@ -65,26 +67,33 @@
       <view class="total">
         合计:
         <text>￥</text>
-        <label>{{seledGoodsTotal}}</label>
+        <label>{{ seledGoodsTotal }}</label>
         <text>.00</text>
       </view>
-          <view class="pay">结算({{seledGoods.length}})</view>
+      <view @click="createOrder" class="pay"
+        >结算({{ seledGoods.length }})</view
+      >
     </view>
   </view>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       // 问题：放到这里，只会再页面第一次加载时，从本地获取获取一次 => 以后购物车有更新，这里不会获取到更新
       carts: [],
       // 收货地址
-      address:null
+      address: null,
     }
   },
   computed: {
+    // 完整收货地址
+    allAddress() {
+      if (!this.address) return ''
+      const { provinceName, cityName, countyName, detailInfo } = this.address
+      return provinceName + cityName + countyName + detailInfo
+    },
     // 是否是全部选中状态
     isAll() {
       // 条件：购物车选中商品的数量=购物车商品的总数量
@@ -95,16 +104,18 @@ export default {
       return this.carts.filter((item) => item.goods_checked)
     },
     // 计算选中商品的总价
-    seledGoodsTotal(){
+    seledGoodsTotal() {
       // 1. forEach循环
       // let total = 0
       // // 累加每个商品的价格
       // this.seledGoods.forEach(item=>total+=item.goods_price*item.goods_count)
       // return total
       // 2. reduce方法
-      return this.seledGoods.reduce((acc,item)=> acc+=item.goods_price*item.goods_count,0)
-    }
-
+      return this.seledGoods.reduce(
+        (acc, item) => (acc += item.goods_price * item.goods_count),
+        0
+      )
+    },
   },
   watch: {
     carts: {
@@ -121,12 +132,70 @@ export default {
   },
   methods: {
     /**
+     * 点击结算创建支付订单
+     */
+    async createOrder() {
+      /**
+       * 1. 满足：收货地址、至少选中一件商品、登录
+       * 2. 调用后台接口创建订单
+       */
+      if (!this.address || !this.seledGoods.length) {
+        return uni.showToast({
+          title: '请选择收货地址，同时至少选中一件商品进行结算',
+          icon: 'none', // 不显示图标，保证title都显示
+        })
+      }
+      // 判断是否登录
+      if (!uni.getStorageSync('ugo-token')) {
+        return uni.navigateTo({
+          url: '/packone/auth/index',
+        })
+      }
+      // 创建订单
+      console.log('创建订单')
+      const { msg, data } = await this.request({
+        url: '/api/public/v1/my/orders/create',
+        method: 'post',
+        data: {
+          order_price: this.seledGoodsTotal, // 选中商品的总价
+          consignee_addr: this.allAddress, // 收货地址
+          goods: this.seledGoods.map((item) => {
+            // 追加后台需要的商品数量字段
+            item.goods_number = item.goods_count
+            return item
+          }),
+        },
+      })
+
+      if (msg.status === 200) {
+        /**
+         * 订单创建成功
+         * 1. 将购物车中选中的商品删除
+         * 2. 跳转订单列表页面
+         */
+        // 获取到购物车中未选中的商品
+        let unSeled = this.carts.filter((item) => item.goods_checked === false)
+        // 更新到本地
+        uni.setStorageSync('carts', unSeled)
+        uni.showToast({
+          title: '订单创建成功！',
+        })
+        uni.navigateTo({
+          url: '/packone/order/index',
+        })
+      } else {
+        uni.showToast({
+          title: '订单创建失败！',
+        })
+      }
+    },
+    /**
      * 获取微信用户收货地址
      */
-    async getAddress(){
-    const res = await uni.chooseAddress()
-    this.address=res
-    console.log('获取地址信息',res);
+    async getAddress() {
+      const res = await uni.chooseAddress()
+      this.address = res
+      console.log('获取地址信息', res)
     },
     /**
      * 判断全选框是否是选中状态?
