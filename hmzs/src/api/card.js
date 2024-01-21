@@ -11,3 +11,16 @@ export const getCardListAPI = (params) => {
     params
   })
 }
+
+/**
+ * 新增月卡
+ * @param {*} data
+ * @returns
+ */
+export const createCardAPI = (data) => {
+  return request({
+    url: '/parking/card',
+    method: 'POST',
+    data
+  })
+}

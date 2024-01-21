@@ -44,34 +44,41 @@ export const routes = [
       component: () => import('@/views/Park/Enterprise/index')
     }]
   },
-
+  {
+    path: '/cardAdd',
+    component: () => import('@/views/Car/CarCard/addMounthCard')
+  },
   {
     path: '/parking',
     component: Layout,
     permission: 'parking',
     meta: { title: '行车管理', icon: 'el-icon-guide' },
-    children: [{
-      path: 'area',
-      permission: 'parking:area',
-      component: () => import('@/views/Car/CarArea'),
-      meta: { title: '区域管理' }
-    }, {
-      path: 'card',
-      permission: 'parking:card',
-      component: () => import('@/views/Car/CarCard'),
-      meta: { title: '月卡管理' }
-    }, {
-      path: 'pay',
-      permission: 'parking:payment',
-      component: () => import('@/views/Car/CarPay'),
-      meta: { title: '停车缴费管理' }
-    },
-    {
-      path: 'rule',
-      permission: 'parking:rule',
-      component: () => import('@/views/Car/CarRule'),
-      meta: { title: '计费规则管理' }
-    }]
+    children: [
+      {
+        path: 'area',
+        permission: 'parking:area',
+        component: () => import('@/views/Car/CarArea'),
+        meta: { title: '区域管理' }
+      },
+      {
+        path: 'card',
+        permission: 'parking:card',
+        component: () => import('@/views/Car/CarCard'),
+        meta: { title: '月卡管理' }
+      },
+      {
+        path: 'pay',
+        permission: 'parking:payment',
+        component: () => import('@/views/Car/CarPay'),
+        meta: { title: '停车缴费管理' }
+      },
+      {
+        path: 'rule',
+        permission: 'parking:rule',
+        component: () => import('@/views/Car/CarRule'),
+        meta: { title: '计费规则管理' }
+      }
+    ]
   },
   {
     path: '/pole',

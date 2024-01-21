@@ -3,18 +3,18 @@
     <!-- 搜索区域 -->
     <div class="search-container">
       <span class="search-label">车牌号码：</span>
-      <el-input clearable placeholder="请输入内容" class="search-main" />
+      <el-input v-model="params.carNumber" clearable placeholder="请输入内容" class="search-main" />
       <span class="search-label">车主姓名：</span>
-      <el-input clearable placeholder="请输入内容" class="search-main" />
+      <el-input v-model="params.personName" clearable placeholder="请输入内容" class="search-main" />
       <span class="search-label">状态：</span>
-      <el-select>
-        <el-option v-for="item in []" :key="item.id" />
+      <el-select v-model="params.cardStatus">
+        <el-option v-for="item in cardStatusList" :key="item.id" :value="item.id" :label="item.name" />
       </el-select>
-      <el-button type="primary" class="search-btn">查询</el-button>
+      <el-button type="primary" class="search-btn" @click="search">查询</el-button>
     </div>
     <!-- 新增删除操作区域 -->
     <div class="create-container">
-      <el-button type="primary">添加月卡</el-button>
+      <el-button type="primary" @click="$router.push('/cardAdd')">添加月卡</el-button>
       <el-button>批量删除</el-button>
     </div>
     <!-- 表格区域 -->
@@ -82,11 +82,26 @@ export default {
     return {
       params: {
         page: 1,
-        pageSize: 2
+        pageSize: 5,
+        carNumber: null,
+        personName: null,
+        cardStatus: null
       },
       // 月卡列表
       cardList: [],
-      total: 0
+      total: 0,
+      cardStatusList: [
+        {
+          id: null,
+          name: '全部'
+        }, {
+          id: 0,
+          name: '可用'
+        }, {
+          id: 1,
+          name: '已过期'
+        }
+      ]
     }
   },
   created() {
@@ -97,6 +112,11 @@ export default {
 
   },
   methods: {
+    search() {
+      // 调用接口之前需要把页面参数重置为1
+      this.params.page = 1
+      this.getCardList()
+    },
     pageChange(page) {
       // 把点击的页数赋值给请求参数页数
       this.params.page = page
