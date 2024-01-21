@@ -1,7 +1,7 @@
 <template>
   <div class="add-card">
     <header class="add-header">
-      <el-page-header content="增加月卡" @back="$router.back()" />
+      <el-page-header :content="showTitle" @back="$router.back()" />
     </header>
     <main class="add-main">
       <div class="form-container">
@@ -74,15 +74,38 @@
 </template>
 
 <script>
-import { createCardAPI } from '@/api/card'
+import { createCardAPI, getCardDetailAPI, updateCardAPI } from '@/api/card'
 export default {
   data() {
     return {
+      id: this.$route.query.id || '',
       // 缴费信息表单
       feeForm: {
         payTime: '',
         paymentAmount: '',
         paymentMethod: ''
+      },
+      // 支付方式列表
+      payMethodList: [
+        {
+          id: 'Alipay',
+          name: '支付宝'
+        },
+        {
+          id: 'WeChat',
+          name: '微信'
+        },
+        {
+          id: 'Cash',
+          name: '线下'
+        }
+      ],
+      // 车辆信息表单
+      carInfoForm: {
+        personName: '',
+        phoneNumber: '',
+        carNumber: '',
+        carBrand: ''
       },
       feeFormRules: {
         payTime: [
@@ -108,28 +131,6 @@ export default {
             trigger: 'blur'
           }
         ]
-      },
-      // 支付方式列表
-      payMethodList: [
-        {
-          id: 'Alipay',
-          name: '支付宝'
-        },
-        {
-          id: 'WeChat',
-          name: '微信'
-        },
-        {
-          id: 'Cash',
-          name: '线下'
-        }
-      ],
-      // 车辆信息表单
-      carInfoForm: {
-        personName: '',
-        phoneNumber: '',
-        carNumber: '',
-        carBrand: ''
       },
       carInfoRules: {
         personName: [
@@ -161,7 +162,34 @@ export default {
       }
     }
   },
+  computed: {
+    showTitle() {
+      return this.$route.query.id ? '编辑月卡' : '新增月卡'
+    }
+  },
+  mounted() {
+    if (this.id) {
+      this.getCardDetail(this.id)
+    }
+  },
   methods: {
+    // 获取月卡详情
+    async getCardDetail(id) {
+      const { data } = await getCardDetailAPI(id)
+      console.log('月卡详情', data)
+      // 回填车辆信息表单
+      const { carInfoId, personName, phoneNumber, carNumber, carBrand } = data
+      this.carInfoForm = { carInfoId, personName, phoneNumber, carNumber, carBrand }
+      // 回填缴费信息表单
+      const { rechargeId, cardStartDate, cardEndDate, paymentAmount, paymentMethod } = data
+      this.feeForm = {
+        rechargeId,
+        paymentAmount,
+        paymentMethod,
+        payTime: [cardStartDate, cardEndDate]
+      }
+    },
+    // 重置表单
     resetForm() {
       this.$refs.carInfoForm.resetFields()
       this.$refs.feeForm.resetFields()
@@ -184,7 +212,13 @@ export default {
               }
               // 删除多余字段
               delete formData.payTime
-              await createCardAPI(formData)
+              if (this.id) {
+                // 编辑
+                await updateCardAPI(formData)
+              } else {
+                // 新增
+                await createCardAPI(formData)
+              }
               this.$router.back()
             }
           })

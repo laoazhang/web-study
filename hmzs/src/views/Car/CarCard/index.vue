@@ -15,11 +15,19 @@
     <!-- 新增删除操作区域 -->
     <div class="create-container">
       <el-button type="primary" @click="$router.push('/cardAdd')">添加月卡</el-button>
-      <el-button>批量删除</el-button>
+      <el-button @click="delCartList">批量删除</el-button>
     </div>
     <!-- 表格区域 -->
     <div class="table">
-      <el-table style="width: 100%" :data="cardList">
+      <el-table
+        style="width: 100%"
+        :data="cardList"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column
+          type="selection"
+          width="55"
+        />
         <el-table-column type="index" label="序号" :index="indexMethod" />
         <el-table-column label="车主名称" prop="personName" />
         <el-table-column label="联系方式" prop="phoneNumber" />
@@ -28,11 +36,11 @@
         <el-table-column label="剩余有效天数" prop="totalEffectiveDate" />
         <el-table-column label="状态" prop="cardStatus" :formatter="formatStatus" />
         <el-table-column label="操作" fixed="right" width="180">
-          <template #default="scope">
+          <template #default="{row}">
             <el-button size="mini" type="text">续费</el-button>
             <el-button size="mini" type="text">查看</el-button>
-            <el-button size="mini" type="text" @click="editCard(scope)">编辑</el-button>
-            <el-button size="mini" type="text">删除</el-button>
+            <el-button size="mini" type="text" @click="editCard(row.id)">编辑</el-button>
+            <el-button size="mini" type="text" @click="deleteCard(row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -76,10 +84,12 @@
 </template>
 
 <script>
-import { getCardListAPI } from '@/api/card'
+import { getCardListAPI, deleteCardAPI, deleteCardListAPI } from '@/api/card'
 export default {
   data() {
     return {
+      // 已选择列表
+      selectedCarList: [],
       params: {
         page: 1,
         pageSize: 5,
@@ -107,11 +117,58 @@ export default {
   created() {
     this.getCardList()
   },
-  // 计算属性
-  computes: {
-
-  },
   methods: {
+    // 批量删除
+    delCartList() {
+      this.$confirm('此操作将永久删除选择的月卡, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        const ids = this.selectedCarList.map(item => item.id)
+        // console.log(ids)
+        await deleteCardListAPI(ids)
+        this.getCardList()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    handleSelectionChange(rowList) {
+      console.log(rowList)
+      this.selectedCarList = rowList
+    },
+    // 删除
+    deleteCard(id) {
+      this.$confirm('此操作将永久删除选择的月卡, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        await deleteCardAPI(id)
+        this.getCardList()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    // 编辑
+    editCard(id) {
+      this.$router.push(`/cardAdd?id=${id}`)
+    },
+    // 搜索
     search() {
       // 调用接口之前需要把页面参数重置为1
       this.params.page = 1
