@@ -6,10 +6,13 @@ import request from '@/utils/request'
  * @param {*} data { mobile,password}
  * @return {*} promise
  */
-export function loginAPI(data) {
+export function loginAPI({ username, password }) {
   return request({
     url: '/park/login',
     method: 'POST',
-    data
+    data: {
+      username,
+      password
+    }
   })
 }

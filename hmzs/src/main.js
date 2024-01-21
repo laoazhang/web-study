@@ -16,6 +16,9 @@ import store from './store'
 // 引入Vue-Route
 import router from './router'
 
+// 在router引入之后引入
+import './permission'
+
 // 注册svg
 import '@/icons'
 
