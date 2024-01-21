@@ -66,7 +66,7 @@
     </main>
     <footer class="add-footer">
       <div class="btn-container">
-        <el-button>重置</el-button>
+        <el-button @click="resetForm">重置</el-button>
         <el-button type="primary" @click="confirmAdd">确定</el-button>
       </div>
     </footer>
@@ -81,7 +81,7 @@ export default {
       // 缴费信息表单
       feeForm: {
         payTime: '',
-        paymentAmount: null,
+        paymentAmount: '',
         paymentMethod: ''
       },
       feeFormRules: {
@@ -95,7 +95,11 @@ export default {
             required: true,
             message: '请输入支付金额',
             trigger: 'blur'
-          }
+          },
+          {
+            type: 'number',
+            message: '金额必须为数字值',
+            transform: (value) => Number(value) }
         ],
         paymentMethod: [
           {
@@ -158,6 +162,11 @@ export default {
     }
   },
   methods: {
+    resetForm() {
+      this.$refs.carInfoForm.resetFields()
+      this.$refs.feeForm.resetFields()
+    },
+    // 提交表单
     confirmAdd() {
       this.$refs.carInfoForm.validate(valid => {
         if (valid) {
