@@ -19,15 +19,8 @@
     </div>
     <!-- 表格区域 -->
     <div class="table">
-      <el-table
-        style="width: 100%"
-        :data="cardList"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column
-          type="selection"
-          width="55"
-        />
+      <el-table style="width: 100%" :data="cardList" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" />
         <el-table-column type="index" label="序号" :index="indexMethod" />
         <el-table-column label="车主名称" prop="personName" />
         <el-table-column label="联系方式" prop="phoneNumber" />
@@ -36,7 +29,7 @@
         <el-table-column label="剩余有效天数" prop="totalEffectiveDate" />
         <el-table-column label="状态" prop="cardStatus" :formatter="formatStatus" />
         <el-table-column label="操作" fixed="right" width="180">
-          <template #default="{row}">
+          <template #default="{ row }">
             <el-button size="mini" type="text">续费</el-button>
             <el-button size="mini" type="text">查看</el-button>
             <el-button size="mini" type="text" @click="editCard(row.id)">编辑</el-button>
@@ -46,18 +39,11 @@
       </el-table>
     </div>
     <div class="page-container">
-      <el-pagination
-        layout="total, prev, pager, next"
-        :page-size="params.pageSize"
-        :total="total"
-        @current-change="pageChange"
-      />
+      <el-pagination layout="total, prev, pager, next" :page-size="params.pageSize" :total="total"
+        @current-change="pageChange" />
     </div>
     <!-- 添加楼宇 -->
-    <el-dialog
-      title="添加楼宇"
-      width="580px"
-    >
+    <el-dialog title="添加楼宇" width="580px">
       <!-- 表单接口 -->
       <div class="form-container">
         <!-- <el-form ref="addForm" :model="addForm" :rules="addFormRules">
@@ -124,7 +110,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(async() => {
+      }).then(async () => {
         const ids = this.selectedCarList.map(item => item.id)
         // console.log(ids)
         await deleteCardListAPI(ids)
@@ -150,7 +136,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(async() => {
+      }).then(async () => {
         await deleteCardAPI(id)
         this.getCardList()
         this.$message({
@@ -213,22 +199,27 @@ export default {
   align-items: center;
   border-bottom: 1px solid rgb(237, 237, 237, .9);
   padding-bottom: 20px;
+
   .search-main {
     width: 220px;
     margin-right: 10px;
   }
-  .search-btn{
-    margin-left:20px;
+
+  .search-btn {
+    margin-left: 20px;
   }
 }
-.create-container{
+
+.create-container {
   margin: 10px 0px;
 }
-.page-container{
-  padding:4px 0px;
+
+.page-container {
+  padding: 4px 0px;
   text-align: right;
 }
-.form-container{
-  padding:0px 80px;
+
+.form-container {
+  padding: 0px 80px;
 }
 </style>
