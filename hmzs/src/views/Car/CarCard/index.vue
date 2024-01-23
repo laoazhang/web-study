@@ -39,8 +39,12 @@
       </el-table>
     </div>
     <div class="page-container">
-      <el-pagination layout="total, prev, pager, next" :page-size="params.pageSize" :total="total"
-        @current-change="pageChange" />
+      <el-pagination
+        layout="total, prev, pager, next"
+        :page-size="params.pageSize"
+        :total="total"
+        @current-change="pageChange"
+      />
     </div>
     <!-- 添加楼宇 -->
     <el-dialog title="添加楼宇" width="580px">
@@ -110,7 +114,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(async () => {
+      }).then(async() => {
         const ids = this.selectedCarList.map(item => item.id)
         // console.log(ids)
         await deleteCardListAPI(ids)
@@ -136,9 +140,9 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(async () => {
+      }).then(async() => {
         await deleteCardAPI(id)
-        this.getCardList()
+        this.getCardList(this.params)
         this.$message({
           type: 'success',
           message: '删除成功!'
