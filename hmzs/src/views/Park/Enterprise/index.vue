@@ -143,14 +143,14 @@ export default {
         if (!valid) return
         const { buildingId, contractId, contractUrl, enterpriseId, type } = this.rentForm
         await createRentAPI({
-          buildingId, contractId, contractUrl, enterpriseId, type, startTime: this.rentForm.rentTime[0], endTime: this.rentForm.rentTim[1]
+          buildingId, contractId, contractUrl, enterpriseId, type, startTime: this.rentForm.rentTime[0], endTime: this.rentForm.rentTime[1]
         })
+        // 关闭弹框
+        this.closeDialog()
+        this.$message.success('添加成功')
+        // 更新列表
+        this.getEnterpriseList(this.params)
       })
-      // 关闭弹框
-      this.closeDialog()
-      this.$message.success('添加成功')
-      // 更新列表
-      this.getEnterpriseList(this.params)
     },
     // 上传前校验
     beforeUpload(file) {
