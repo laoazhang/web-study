@@ -40,3 +40,23 @@ export const editEnterpriseAPI = (data) => request({ url: '/park/enterprise', me
  * @returns
  */
 export const deleteEnterpriseAPI = (id) => request({ url: `/park/enterprise/${id}`, method: 'DELETE' })
+
+/**
+ * 获取楼宇列表
+ * @returns
+ */
+export const getRentBuildListAPI = () => request({ url: '/park/rent/building' })
+
+/**
+ * 创建合同
+ * @param {*} data
+ * @returns
+ */
+export const createRentAPI = (data) => request({ url: '/park/enterprise/rent', method: 'POST', data })
+
+/**
+ * 获取合同列表
+ * @param {*} id
+ * @returns
+ */
+export const getRentListAPI = (id) => request({ url: `/park/enterprise/rent/${id}` })
