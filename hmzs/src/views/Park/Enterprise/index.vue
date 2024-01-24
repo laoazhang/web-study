@@ -188,6 +188,14 @@ export default {
     // 关闭弹框
     closeDialog() {
       this.showDialogVisible = false
+      this.rentForm = {
+        buildingId: null, // 楼宇id
+        contractId: null, // 合同id
+        contractUrl: '', // 合同Url
+        enterpriseId: null, // 企业名称
+        type: 0, // 合同类型
+        rentTime: [] // 合同时间
+      }
     },
     // 删除
     async delEnterprise(id) {
@@ -227,15 +235,15 @@ export default {
     // 获取企业列表信息
     async getEnterpriseList(params) {
       const { data } = await getEnterpriseListAPI(params)
+      // console.log('企业列表数据', data.rows)
+      this.enterpriseList = data.rows
+      this.total = data.total
       this.enterpriseList = data.rows.map(item => {
         return {
           ...item,
           rentList: [] // 每一行补充存放合同的列表
         }
       })
-      // console.log('企业列表数据', data.rows)
-      this.enterpriseList = data.rows
-      this.total = data.total
     },
     // 3. 只有展开时获取数据并绑定
     async expandHandle(row, rows) {
