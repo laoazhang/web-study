@@ -31,6 +31,10 @@ export const routes = [
     component: () => import('@/views/Park/Enterprise/addEnterprise')
   },
   {
+    path: '/exterpriseDetail',
+    component: () => import('@/views/Park/Enterprise/EnterpriseDetail')
+  },
+  {
     path: '/park',
     component: Layout,
     permission: 'park',
