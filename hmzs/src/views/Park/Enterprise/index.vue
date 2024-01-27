@@ -13,15 +13,25 @@
     <div class="table">
       <el-table style="width: 100%" :data="enterpriseList" @expand-change="expandHandle">
         <el-table-column type="expand">
-          <template #default="{row}">
+          <template #default="{ row }">
             <el-table :data="row.rentList">
               <el-table-column label="租赁楼宇" width="320" prop="buildingName" />
-              <el-table-column label="租赁起始时间" prop="startTime" />
-              <el-table-column label="合同状态" prop="status" />
+              <el-table-column label="租赁起始时间" prop="startTime">
+                <template #default="rentObj">
+                  {{ rentObj.row.startTime }} 至 {{ rentObj.row.endTime }}
+                </template>
+              </el-table-column>
+              <el-table-column label="合同状态" prop="status">
+                <template #default="scope">
+                  <el-tag :type="formatInfoType(scope.row.status)">
+                    {{ formartStatus(scope.row.status) }}
+                  </el-tag>
+                </template>
+              </el-table-column>
               <el-table-column label="操作" width="180">
                 <template #default="scope">
-                  <el-button size="mini" type="text" @click="test(scope.row.id)">退租</el-button>
-                  <el-button size="mini" type="text">删除</el-button>
+                  <el-button size="mini" type="text" :disabled="scope.row.status === 3" @click="outRent(scope.row.id)">退租</el-button>
+                  <el-button size="mini" type="text" :disabled="scope.row.status !== 3">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -42,26 +52,20 @@
       </el-table>
     </div>
     <div class="page-container">
-      <el-pagination layout="total, prev, pager, next" :page-size="params.pageSize" :total="total" @current-change="pageChange" />
+      <el-pagination
+        layout="total, prev, pager, next"
+        :page-size="params.pageSize"
+        :total="total"
+        @current-change="pageChange"
+      />
     </div>
-    <el-dialog
-      title="添加合同"
-      :close-on-click-modal="false"
-      :visible="showDialogVisible"
-      width="580px"
-      @close="closeDialog"
-    >
+    <el-dialog title="添加合同" :close-on-click-modal="false" :visible="showDialogVisible" width="580px" @close="closeDialog">
       <!-- 表单区域 -->
       <div class="form-container">
         <el-form ref="addForm" :model="rentForm" :rules="rentRules" label-position="top">
           <el-form-item label="租赁楼宇" prop="buildingId">
             <el-select v-model="rentForm.buildingId" placeholder="请选择">
-              <el-option
-                v-for="item in buildList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              />
+              <el-option v-for="item in buildList" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
           <el-form-item label="租赁起止日期" prop="rentTime">
@@ -75,13 +79,11 @@
             />
           </el-form-item>
           <el-form-item label="租赁合同" prop="contractId">
-            <el-upload
-              action="#"
-              :before-upload="beforeUpload"
-              :http-request="uploadRequest"
-            >
+            <el-upload action="#" :before-upload="beforeUpload" :http-request="uploadRequest">
               <el-button size="small" type="primary" plain>上传合同文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持扩展名：.doc .docx .pdf, 文件大小不超过5M</div>
+              <div slot="tip" class="el-upload__tip">
+                支持扩展名：.doc .docx .pdf, 文件大小不超过5M
+              </div>
             </el-upload>
           </el-form-item>
         </el-form>
@@ -91,11 +93,20 @@
         <el-button size="mini" type="primary" @click="confirmAdd">确 定</el-button>
       </template>
     </el-dialog>
-  </div></template>
+  </div>
+</template>
 
 <script>
-import { getEnterpriseListAPI, deleteEnterpriseAPI, getRentBuildListAPI, createRentAPI, getRentListAPI } from '@/api/enterprise'
+import {
+  getEnterpriseListAPI,
+  deleteEnterpriseAPI,
+  getRentBuildListAPI,
+  createRentAPI,
+  getRentListAPI
+} from '@/api/enterprise'
 import { uploadAPI } from '@/api/constant'
+import { outRentAPI } from '@/api/enterprise'
+
 export default {
   name: 'Building',
   data() {
@@ -117,9 +128,7 @@ export default {
         rentTime: [
           { required: true, message: '请选择租赁日期', trigger: 'change' }
         ],
-        contractId: [
-          { required: true, message: '请上传合同文件' }
-        ]
+        contractId: [{ required: true, message: '请上传合同文件' }]
       },
       // 弹框
       showDialogVisible: false,
@@ -137,13 +146,62 @@ export default {
     this.getEnterpriseList(this.params)
   },
   methods: {
+    // 退租租赁合同
+    async outRent(id) {
+      this.$confirm('确认退租吗', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async() => {
+          await outRentAPI(id)
+          this.getEnterpriseList(this.params)
+          this.$message({
+            type: 'success',
+            message: '退租成功!'
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消退租'
+          })
+        })
+    },
+    // 格式化tag类型
+    formatInfoType(status) {
+      const MAP = {
+        0: 'warning',
+        1: 'success',
+        2: 'info',
+        3: 'danger'
+      }
+      return MAP[status]
+    },
+    // 格式化status
+    formartStatus(type) {
+      const TYPEMAP = {
+        0: '待生效',
+        1: '生效中',
+        2: '已到期',
+        3: '已退租'
+      }
+      return TYPEMAP[type]
+    },
     // 添加合同
     confirmAdd() {
-      this.$refs.addForm.validate(async valid => {
+      this.$refs.addForm.validate(async(valid) => {
         if (!valid) return
-        const { buildingId, contractId, contractUrl, enterpriseId, type } = this.rentForm
+        const { buildingId, contractId, contractUrl, enterpriseId, type } =
+          this.rentForm
         await createRentAPI({
-          buildingId, contractId, contractUrl, enterpriseId, type, startTime: this.rentForm.rentTime[0], endTime: this.rentForm.rentTime[1]
+          buildingId,
+          contractId,
+          contractUrl,
+          enterpriseId,
+          type,
+          startTime: this.rentForm.rentTime[0],
+          endTime: this.rentForm.rentTime[1]
         })
         // 关闭弹框
         this.closeDialog()
@@ -155,7 +213,11 @@ export default {
     // 上传前校验
     beforeUpload(file) {
       // console.log(file)
-      const fileType = ['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf'].includes(file.type)
+      const fileType = [
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/pdf'
+      ].includes(file.type)
       const fileSize = file.size / 1024 / 1024 < 5
       if (!fileType) {
         this.$message.error('上传合同文件只能是 DOC/DOCX/PDF 格式!')
@@ -170,7 +232,9 @@ export default {
       const formData = new FormData()
       formData.append('file', file)
       formData.append('type', 'contract')
-      const { data: { id, url }} = await uploadAPI(formData)
+      const {
+        data: { id, url }
+      } = await uploadAPI(formData)
       // console.log(id, url)
       this.rentForm.contractId = id
       this.rentForm.contractUrl = url
@@ -203,19 +267,21 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(async() => {
-        await deleteEnterpriseAPI(id)
-        this.getEnterpriseList(this.params)
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
+        .then(async() => {
+          await deleteEnterpriseAPI(id)
+          this.getEnterpriseList(this.params)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
     // 搜索
     search() {
@@ -238,7 +304,7 @@ export default {
       // console.log('企业列表数据', data.rows)
       this.enterpriseList = data.rows
       this.total = data.total
-      this.enterpriseList = data.rows.map(item => {
+      this.enterpriseList = data.rows.map((item) => {
         return {
           ...item,
           rentList: [] // 每一行补充存放合同的列表
@@ -248,7 +314,7 @@ export default {
     // 3. 只有展开时获取数据并绑定
     async expandHandle(row, rows) {
       console.log('展开或关闭', row, rows)
-      const isExpend = rows.find(item => item.id === row.id)
+      const isExpend = rows.find((item) => item.id === row.id)
       if (isExpend) {
         const { data } = await getRentListAPI(row.id)
         console.log('合同数据', data)

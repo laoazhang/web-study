@@ -60,3 +60,10 @@ export const createRentAPI = (data) => request({ url: '/park/enterprise/rent', m
  * @returns
  */
 export const getRentListAPI = (id) => request({ url: `/park/enterprise/rent/${id}` })
+
+/**
+ * 退租租赁合同
+ * @param {*} id
+ * @returns
+ */
+export const outRentAPI = (id) => request({ url: `/park/enterprise/rent/${id}`, method: 'PUT' })
