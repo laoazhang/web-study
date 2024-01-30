@@ -19,9 +19,9 @@
     </div>
     <!-- 表格区域 -->
     <div class="table">
-      <el-table style="width: 100%" :data="cardList" @selection-change="handleSelectionChange">
+      <el-table v-loading="loading" style="width: 100%" :data="cardList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
-        <el-table-column type="index" label="序号" :index="indexMethod" />
+        <el-table-column label="序号" prop="index" />
         <el-table-column label="车主名称" prop="personName" />
         <el-table-column label="联系方式" prop="phoneNumber" />
         <el-table-column label="车牌号码" prop="carNumber" />
@@ -78,11 +78,12 @@ import { getCardListAPI, deleteCardAPI, deleteCardListAPI } from '@/api/card'
 export default {
   data() {
     return {
+      loading: false,
       // 已选择列表
       selectedCarList: [],
       params: {
         page: 1,
-        pageSize: 5,
+        pageSize: 3,
         carNumber: null,
         personName: null,
         cardStatus: null
@@ -166,6 +167,7 @@ export default {
     },
     pageChange(page) {
       // 把点击的页数赋值给请求参数页数
+      console.log('测试', 1)
       this.params.page = page
       // 重新请求列表数据
       this.getCardList()
@@ -183,10 +185,15 @@ export default {
       return MAP[row.cardStatus]
     },
     async getCardList() {
+      this.loading = true
       const { data } = await getCardListAPI(this.params)
       // console.log('月卡列表信息', data)
       this.cardList = data.rows
+      this.cardList.forEach((item, index) => {
+        item.index = (this.params.page - 1) * this.params.pageSize + index + 1
+      })
       this.total = data.total
+      this.loading = false
     }
   }
 }
