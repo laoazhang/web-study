@@ -98,7 +98,8 @@ export const routes = [
       permission: 'pole:info',
       component: () => import('@/views/Rod/RodManage'),
       meta: { title: '一体杆管理' }
-    }, {
+    },
+    {
       path: 'waring',
       permission: 'pole:warning',
       component: () => import('@/views/Rod/RodWarn'),
@@ -106,21 +107,27 @@ export const routes = [
     }]
   },
   {
+    path: '/roleAdd',
+    component: () => import('@/views/System/Role/AddRole')
+  },
+  {
     path: '/sys',
     component: Layout,
     permission: 'sys',
     meta: { title: '系统管理', icon: 'el-icon-setting' },
-    children: [{
-      path: 'role',
-      permission: 'sys:role',
-      component: () => import('@/views/System/Role/index'),
-      meta: { title: '角色管理' }
-    }, {
-      path: 'user',
-      permission: 'sys:user',
-      component: () => import('@/views/System/Employee/index'),
-      meta: { title: '员工管理' }
-    }]
+    children: [
+      {
+        path: 'role',
+        permission: 'sys:role',
+        component: () => import('@/views/System/Role/index'),
+        meta: { title: '角色管理' }
+      },
+      {
+        path: 'user',
+        permission: 'sys:user',
+        component: () => import('@/views/System/Employee/index'),
+        meta: { title: '员工管理' }
+      }]
   },
   {
     path: '/404',
