@@ -16,3 +16,9 @@ export function loginAPI({ username, password }) {
     }
   })
 }
+
+/**
+ * 获取用户信息
+ * @returns
+ */
+export const getProfileAPI = () => request({ url: '/park/user/profile', method: 'GET' })

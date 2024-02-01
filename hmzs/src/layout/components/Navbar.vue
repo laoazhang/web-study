@@ -30,6 +30,7 @@ export default {
       this.$store.commit('user/clearUserInfo')
       // this.$router.push('/login')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$store.commit('menu/resetRouter')
     }
   }
 }
