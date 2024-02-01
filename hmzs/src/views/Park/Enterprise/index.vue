@@ -37,7 +37,7 @@
             </el-table>
           </template>
         </el-table-column>
-        <el-table-column type="index" label="序号" :index="indexMethod" />
+        <el-table-column label="序号" prop="index" />
         <el-table-column label="企业名称" width="320" prop="name" />
         <el-table-column label="联系人" prop="contact" />
         <el-table-column label="联系电话" prop="contactNumber" />
@@ -304,7 +304,8 @@ export default {
       // console.log('企业列表数据', data.rows)
       this.enterpriseList = data.rows
       this.total = data.total
-      this.enterpriseList = data.rows.map((item) => {
+      this.enterpriseList = data.rows.map((item, index) => {
+        item.index = (this.params.page - 1) * this.params.pageSize + index + 1
         return {
           ...item,
           rentList: [] // 每一行补充存放合同的列表
