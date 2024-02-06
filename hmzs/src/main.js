@@ -22,11 +22,16 @@ import './permission'
 // 注册svg
 import '@/icons'
 
+// 启动微前端配置
+import './registerMicroApp'
+
 // 结果：把element-ui中导出的所有组件，注册成全局组件
 Vue.use(ElementUI)
 
 // 上线之后如果有警告，要不要展示
 Vue.config.productionTip = false
+
+console.log('VUE_APP_BASE_API', process.env.VUE_APP_BASE_API)
 
 // vue实例化
 // 注入 router 和store实例 方便在项目中使用 this.$router this.$store
