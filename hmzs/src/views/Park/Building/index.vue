@@ -22,8 +22,8 @@
         </el-table-column>
         <el-table-column label="操作" prop="demoFlag">
           <template #default="scope">
-            <el-button size="mini" type="text" @click="editPark(scope.rows.id)">编辑</el-button>
-            <el-button size="mini" type="text" @click="delPark(scope.rows.id)">删除</el-button>
+            <el-button size="mini" type="text" @click="editBuilding(scope.row.id)">编辑</el-button>
+            <el-button size="mini" type="text" @click="delBuilding(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { getBuildingListAPI, createBuildingListAPI } from '@/api/building'
+import { getBuildingListAPI, createBuildingListAPI, delBuildingListAPI } from '@/api/building'
 export default {
   name: 'Building',
   data() {
@@ -108,6 +108,25 @@ export default {
     this.getBuildingList()
   },
   methods: {
+    /**
+     * 删除楼宇
+     * @param {*} id
+     */
+    async delBuilding(id) {
+      this.$confirm('确认删除当前楼宇吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        await delBuildingListAPI(id)
+        this.getBuildingList()
+      }).catch(() => {
+
+      })
+    },
+    /**
+     * 添加楼宇
+     */
     confirmAdd() {
       this.$refs.addForm.validate(async(valid) => {
         if (!valid) return

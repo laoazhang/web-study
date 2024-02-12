@@ -13,3 +13,10 @@ export const getBuildingListAPI = (params) => request({ url: '/park/building', p
  * @returns
  */
 export const createBuildingListAPI = (data) => request({ url: '/park/building', method: 'POST', data })
+
+/**
+ * 删除楼宇
+ * @param {*} data
+ * @returns
+ */
+export const delBuildingListAPI = (id) => request({ url: `/park/building/${id}`, method: 'DELETE' })
