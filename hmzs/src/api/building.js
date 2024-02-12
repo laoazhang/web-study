@@ -20,3 +20,17 @@ export const createBuildingListAPI = (data) => request({ url: '/park/building', 
  * @returns
  */
 export const delBuildingListAPI = (id) => request({ url: `/park/building/${id}`, method: 'DELETE' })
+
+/**
+ * 楼宇详情
+ * @param {*} id
+ * @returns
+ */
+export const getBuildingDetailAPI = (id) => request({ url: `/park/building/${id}` })
+
+/**
+ * 编辑楼宇
+ * @param {*} data
+ * @returns
+ */
+export const editBuildingListAPI = (data) => request({ url: '/park/building', method: 'PUT', data })

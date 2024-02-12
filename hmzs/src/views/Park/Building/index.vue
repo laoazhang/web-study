@@ -38,7 +38,7 @@
     </div>
     <!-- 添加楼宇弹框 -->
     <el-dialog
-      title="添加楼宇"
+      :title="showTitle"
       :visible="dialogVisible"
       width="580px"
       @close="closeDialog"
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { getBuildingListAPI, createBuildingListAPI, delBuildingListAPI } from '@/api/building'
+import { getBuildingListAPI, createBuildingListAPI, delBuildingListAPI, getBuildingDetailAPI, editBuildingListAPI } from '@/api/building'
 export default {
   name: 'Building',
   data() {
@@ -104,10 +104,28 @@ export default {
       total: 0
     }
   },
+  computed: {
+    showTitle() {
+      return this.addForm.id ? '编辑楼宇' : '新增楼宇'
+    }
+  },
   mounted() {
     this.getBuildingList()
   },
   methods: {
+    /**
+     * 回显楼宇详情
+     * @param {*} rowId
+     */
+    async editBuilding(rowId) {
+      this.dialogVisible = true
+      const { data } = await getBuildingDetailAPI(rowId)
+      // 2. 解构必要字段
+      const { id, area, floors, name, propertyFeePrice } = data
+      this.addForm = {
+        id, area, floors, name, propertyFeePrice
+      }
+    },
     /**
      * 删除楼宇
      * @param {*} id
@@ -125,14 +143,18 @@ export default {
       })
     },
     /**
-     * 添加楼宇
+     * 表单提交
      */
     confirmAdd() {
       this.$refs.addForm.validate(async(valid) => {
         if (!valid) return
-        await createBuildingListAPI(this.addForm)
-        this.dialogVisible = false
+        if (this.addForm.id) {
+          await editBuildingListAPI(this.addForm)
+        } else {
+          await createBuildingListAPI(this.addForm)
+        }
         this.getBuildingList()
+        this.dialogVisible = false
       })
     },
     addBuilding() {
