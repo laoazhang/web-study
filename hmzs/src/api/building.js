@@ -6,3 +6,10 @@ import request from '@/utils/request'
  * @returns
  */
 export const getBuildingListAPI = (params) => request({ url: '/park/building', params })
+
+/**
+ * 添加楼宇
+ * @param {*} data
+ * @returns
+ */
+export const createBuildingListAPI = (data) => request({ url: '/park/building', method: 'POST', data })
