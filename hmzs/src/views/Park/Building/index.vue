@@ -7,6 +7,7 @@
       <el-button type="primary" @click="doSearch">查询</el-button>
     </div>
     <el-button type="primary" @click="addBuilding">添加楼宇</el-button>
+    <el-button @click="exportToExcel">导出Excel</el-button>
     <!-- 表格区域 -->
     <div class="table">
       <el-table :data="buildingList" style="width: 100%">
@@ -70,6 +71,7 @@
 
 <script>
 import { getBuildingListAPI, createBuildingListAPI, delBuildingListAPI, getBuildingDetailAPI, editBuildingListAPI } from '@/api/building'
+import { utils, writeFileXLSX } from 'xlsx'
 export default {
   name: 'Building',
   data() {
@@ -113,6 +115,32 @@ export default {
     this.getBuildingList()
   },
   methods: {
+    async exportToExcel() {
+      const res = await getBuildingListAPI(this.params)
+      const tableHeader = ['name', 'floors', 'area', 'propertyFeePrice', 'status']
+      // 处理数据保证
+      const sheetData = res.data.rows.map((item) => {
+        const obj = {}
+        // 枚举值转换
+        tableHeader.forEach(key => {
+          if (key === 'status') {
+            obj[key] = this.formatStatus(item[key])
+          } else {
+            obj[key] = item[key]
+          }
+        })
+        return obj
+      })
+      // 创建一个工作表
+      const worksheet = utils.json_to_sheet(sheetData)
+      // 创建一个新的工作簿
+      const workbook = utils.book_new()
+      // 把工作表添加到工作簿
+      utils.book_append_sheet(workbook, worksheet, 'Data')
+      // 改写表头
+      utils.sheet_add_aoa(worksheet, [['楼宇名称', '层数', '在管面积(㎡)', '物业费(㎡)', '状态']], { origin: 'A1' })
+      writeFileXLSX(workbook, 'SheetJSVueAoO.xlsx')
+    },
     /**
      * 回显楼宇详情
      * @param {*} rowId
