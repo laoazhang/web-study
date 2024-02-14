@@ -14,7 +14,7 @@
     </div>
     <!-- 新增删除操作区域 -->
     <div class="create-container">
-      <el-button type="primary" @click="$router.push('/cardAdd')">添加一体杆</el-button>
+      <el-button type="primary" @click="showDialog">添加一体杆</el-button>
       <el-button>批量删除</el-button>
     </div>
     <!-- 表格区域 -->
@@ -26,7 +26,7 @@
         <el-table-column label="一体杆编号" prop="poleNumber" />
         <el-table-column label="一体杆IP" prop="poleIp" />
         <el-table-column label="安装区域" prop="areaName" />
-        <el-table-column label="一体杆类型" prop="areaId" />
+        <el-table-column label="一体杆类型" prop="poleType" :formatter="formatType" />
         <el-table-column label="运行状态" prop="poleStatus" :formatter="formatStatus" />
         <el-table-column label="操作" fixed="right" width="180">
           <template #default="{ row }">
@@ -44,15 +44,110 @@
         @current-change="pageChange"
       />
     </div>
-
+    <!-- 添加一体杆 -->
+    <el-dialog title="添加一体杆" width="580px" :visible="dialogVisible" @close="closeDialog" @open="openDialog">
+      <!-- 表单接口 -->
+      <div class="form-container">
+        <el-form ref="addForm" :model="addForm" :rules="addFormRules">
+          <el-form-item label="一体杆名称" prop="poleName">
+            <el-input v-model="addForm.poleName" placeholder="请输入一体杆名称" />
+          </el-form-item>
+          <el-form-item label="一体杆编号" prop="poleNumber">
+            <el-input v-model="addForm.poleNumber" placeholder="请输入一体杆编号" />
+          </el-form-item>
+          <el-form-item label="一体杆IP" prop="poleIp">
+            <el-input v-model="addForm.poleIp" placeholder="请输入一体杆IP" />
+          </el-form-item>
+          <el-form-item label="关联区域" prop="areaId">
+            <el-select v-model="addForm.areaId" placeholder="请选择关联区域">
+              <el-option
+                v-for="item in areaNameList"
+                :key="item.areaId"
+                :value="item.areaId"
+                :label="item.areaName"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="一体杆类型" prop="poleType">
+            <el-select v-model="addForm.poleType" placeholder="请选择一体杆类型">
+              <el-option
+                v-for="item in poleTypeList"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </div>
+      <template #footer>
+        <el-button size="mini" @click="closeDialog">取 消</el-button>
+        <el-button size="mini" type="primary" @click="confirmAdd">确 定</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getPoleListAPI } from '@/api/pole'
+import { getPoleListAPI, createPoleAPI } from '@/api/pole'
+import { getAreaNameListAPI } from '@/api/parking'
 export default {
   data() {
     return {
+      areaNameList: [],
+      poleTypeList: [
+        {
+          id: 'entrance',
+          name: '入口'
+        },
+        {
+          id: 'export',
+          name: '出口'
+        }
+      ],
+      addFormRules: {
+        poleName: [
+          {
+            required: true, message: '请输入一体杆名称'
+          }
+        ],
+        poleNumber: [
+          {
+            required: true,
+            message: '请输入一体杆编号',
+            trigger: 'blur'
+          }
+        ],
+        poleIp: [
+          {
+            required: true,
+            message: '请输入一体杆IP',
+            trigger: 'blur'
+          }
+        ],
+        areaId: [
+          {
+            required: true,
+            message: '请选择关联区域',
+            trigger: 'blur'
+          }
+        ],
+        poleType: [
+          {
+            required: true,
+            message: '请选择一体杆类型',
+            trigger: 'blur'
+          }
+        ]
+      },
+      dialogVisible: false,
+      addForm: {
+        poleName: '',
+        poleNumber: '',
+        poleIp: '',
+        areaId: '',
+        poleType: ''
+      },
       // 已选择列表
       selectedPoleList: [],
       params: {
@@ -83,6 +178,34 @@ export default {
     this.getPoleList()
   },
   methods: {
+    confirmAdd() {
+      this.$refs.addForm.validate(async valid => {
+        if (!valid) return
+        await createPoleAPI(this.addForm)
+        this.dialogVisible = false
+        this.getPoleList()
+      })
+    },
+    async openDialog() {
+      this.getAreaNameList()
+    },
+    async getAreaNameList() {
+      const { data } = await getAreaNameListAPI()
+      this.areaNameList = data
+    },
+    showDialog() {
+      this.dialogVisible = true
+    },
+    closeDialog() {
+      this.dialogVisible = false
+      this.addForm = {
+        poleNam: '',
+        poleNumber: '',
+        poleIp: '',
+        areaName: '',
+        poleType: ''
+      }
+    },
     /**
      * 搜索
      */
@@ -105,6 +228,14 @@ export default {
         1: '异常'
       }
       return MAP[row.poleStatus]
+    },
+    formatType(row) {
+      // 定义局部变量
+      const MAP = {
+        entrance: '入口',
+        export: '出口'
+      }
+      return MAP[row.poleType]
     },
     /**
      * 查询一体杆列表
