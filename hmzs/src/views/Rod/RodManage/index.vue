@@ -15,7 +15,7 @@
     <!-- 新增删除操作区域 -->
     <div class="create-container">
       <el-button type="primary" @click="showDialog">添加一体杆</el-button>
-      <el-button>批量删除</el-button>
+      <el-button @click="delPoleList">批量删除</el-button>
     </div>
     <!-- 表格区域 -->
     <div class="table">
@@ -30,8 +30,8 @@
         <el-table-column label="运行状态" prop="poleStatus" :formatter="formatStatus" />
         <el-table-column label="操作" fixed="right" width="180">
           <template #default="{ row }">
-            <el-button size="mini" type="text" @click="editCard(row.id)">编辑</el-button>
-            <el-button size="mini" type="text" @click="deleteCard(row.id)">删除</el-button>
+            <el-button size="mini" type="text" @click="editPole(row.id)">编辑</el-button>
+            <el-button size="mini" type="text" @click="deletePole(row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { getPoleListAPI, createPoleAPI } from '@/api/pole'
+import { getPoleListAPI, createPoleAPI, deletePoleAPI, deletePoleListAPI } from '@/api/pole'
 import { getAreaNameListAPI } from '@/api/parking'
 export default {
   data() {
@@ -178,6 +178,51 @@ export default {
     this.getPoleList()
   },
   methods: {
+    // 批量删除
+    delPoleList() {
+      this.$confirm('此操作将永久删除选择的一体杆, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        const ids = this.selectedPoleList.map(item => item.id)
+        // console.log(ids)
+        await deletePoleListAPI(ids)
+        this.getPoleList()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    // 删除
+    deletePole(id) {
+      this.$confirm('此操作将永久删除选择的一体杆, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        await deletePoleAPI(id)
+        this.getPoleList()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    /**
+     * 提交表单
+     */
     confirmAdd() {
       this.$refs.addForm.validate(async valid => {
         if (!valid) return

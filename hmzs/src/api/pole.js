@@ -13,3 +13,17 @@ export const getPoleListAPI = (params) => request({ url: '/pole/info/list', para
  * @returns
  */
 export const createPoleAPI = (data) => request({ url: '/pole/info', method: 'POST', data })
+
+/**
+ * 删除一体杆
+ * @param {*} ids
+ * @returns
+ */
+export const deletePoleAPI = (id) => request({ url: `/pole/info/${id}`, method: 'DELETE' })
+
+/**
+ * 批量删除一体杆信息
+ * @param {*} ids
+ * @returns
+ */
+export const deletePoleListAPI = (ids) => request({ url: `/pole/info/${ids.join(',')}`, method: 'DELETE' })
