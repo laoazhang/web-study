@@ -27,3 +27,10 @@ export const deletePoleAPI = (id) => request({ url: `/pole/info/${id}`, method: 
  * @returns
  */
 export const deletePoleListAPI = (ids) => request({ url: `/pole/info/${ids.join(',')}`, method: 'DELETE' })
+
+/**
+ * 编辑一体杆
+ * @param {*} data
+ * @returns
+ */
+export const editPoleAPI = (data) => request({ url: '/pole/info', method: 'PUT', data })

@@ -30,7 +30,7 @@
         <el-table-column label="运行状态" prop="poleStatus" :formatter="formatStatus" />
         <el-table-column label="操作" fixed="right" width="180">
           <template #default="{ row }">
-            <el-button size="mini" type="text" @click="editPole(row.id)">编辑</el-button>
+            <el-button size="mini" type="text" @click="editPole(row)">编辑</el-button>
             <el-button size="mini" type="text" @click="deletePole(row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -45,7 +45,7 @@
       />
     </div>
     <!-- 添加一体杆 -->
-    <el-dialog title="添加一体杆" width="580px" :visible="dialogVisible" @close="closeDialog" @open="openDialog">
+    <el-dialog :title="showTitle" width="580px" :visible="dialogVisible" @close="closeDialog" @open="openDialog">
       <!-- 表单接口 -->
       <div class="form-container">
         <el-form ref="addForm" :model="addForm" :rules="addFormRules">
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { getPoleListAPI, createPoleAPI, deletePoleAPI, deletePoleListAPI } from '@/api/pole'
+import { getPoleListAPI, createPoleAPI, deletePoleAPI, deletePoleListAPI, editPoleAPI } from '@/api/pole'
 import { getAreaNameListAPI } from '@/api/parking'
 export default {
   data() {
@@ -174,10 +174,20 @@ export default {
       ]
     }
   },
+  computed: {
+    showTitle() {
+      return this.addForm.id ? '编辑一体杆' : '新增一体杆'
+    }
+  },
   mounted() {
     this.getPoleList()
   },
   methods: {
+    async editPole(row) {
+      this.dialogVisible = true
+      const { id, poleName, poleNumber, poleIp, areaId, poleType } = row
+      this.addForm = { id, poleName, poleNumber, poleIp, areaId, poleType }
+    },
     // 批量删除
     delPoleList() {
       this.$confirm('此操作将永久删除选择的一体杆, 是否继续?', '提示', {
@@ -226,7 +236,11 @@ export default {
     confirmAdd() {
       this.$refs.addForm.validate(async valid => {
         if (!valid) return
-        await createPoleAPI(this.addForm)
+        if (this.addForm.id) {
+          await editPoleAPI(this.addForm)
+        } else {
+          await createPoleAPI(this.addForm)
+        }
         this.dialogVisible = false
         this.getPoleList()
       })
