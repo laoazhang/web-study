@@ -56,6 +56,16 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/propety/cost',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/Propety/Cost'),
+        meta: { title: '物业费管理', icon: 'el-icon-refrigerator' }
+      }]
+  },
+  {
     path: '/pole',
     component: Layout,
     permission: 'pole',
