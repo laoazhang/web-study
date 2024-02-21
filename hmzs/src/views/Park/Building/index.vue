@@ -6,6 +6,8 @@
       <el-input v-model="params.name" placeholder="请输入内容" class="search-main" />
       <el-button type="primary" @click="doSearch">查询</el-button>
     </div>
+    <el-button type="primary" @click="addBuilding">添加楼宇</el-button>
+    <el-button @click="exportToExcel">导出Excel</el-button>
     <!-- 表格区域 -->
     <div class="table">
       <el-table :data="buildingList" style="width: 100%">
@@ -21,8 +23,8 @@
         </el-table-column>
         <el-table-column label="操作" prop="demoFlag">
           <template #default="scope">
-            <el-button size="mini" type="text" @click="editPark(scope.rows.id)">编辑</el-button>
-            <el-button size="mini" type="text" @click="delPark(scope.rows.id)">删除</el-button>
+            <el-button size="mini" type="text" @click="editBuilding(scope.row.id)">编辑</el-button>
+            <el-button size="mini" type="text" @click="delBuilding(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -35,15 +37,66 @@
         @current-change="pageChange"
       />
     </div>
+    <!-- 添加楼宇弹框 -->
+    <el-dialog
+      :title="showTitle"
+      :visible="dialogVisible"
+      width="580px"
+      @close="closeDialog"
+    >
+      <!-- 表单接口 -->
+      <div class="form-container">
+        <el-form ref="addForm" :model="addForm" :rules="addFormRules">
+          <el-form-item label="楼宇名称" prop="name">
+            <el-input v-model="addForm.name" />
+          </el-form-item>
+          <el-form-item label="楼宇层数" prop="floors">
+            <el-input v-model="addForm.floors" />
+          </el-form-item>
+          <el-form-item label="在管面积" prop="area">
+            <el-input v-model="addForm.area" />
+          </el-form-item>
+          <el-form-item label="物业费" prop="propertyFeePrice">
+            <el-input v-model="addForm.propertyFeePrice" />
+          </el-form-item>
+        </el-form>
+      </div>
+      <template #footer>
+        <el-button size="mini" @click="closeDialog">取 消</el-button>
+        <el-button size="mini" type="primary" @click="confirmAdd">确 定</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getBuildingListAPI } from '@/api/building'
+import { getBuildingListAPI, createBuildingListAPI, delBuildingListAPI, getBuildingDetailAPI, editBuildingListAPI } from '@/api/building'
+import { utils, writeFileXLSX } from 'xlsx'
 export default {
   name: 'Building',
   data() {
     return {
+      addForm: {
+        name: '',
+        floors: null,
+        area: null,
+        propertyFeePrice: null
+      },
+      addFormRules: {
+        name: [
+          { required: true, message: '请输入楼宇名称', trigger: 'blur' }
+        ],
+        floors: [
+          { required: true, message: '请输入楼宇层数', trigger: 'blur' }
+        ],
+        area: [
+          { required: true, message: '请输入楼宇面积', trigger: 'blur' }
+        ],
+        propertyFeePrice: [
+          { required: true, message: '请输入楼宇物业费', trigger: 'blur' }
+        ]
+      },
+      dialogVisible: false,
       params: {
         page: 1,
         pageSize: 10,
@@ -53,10 +106,97 @@ export default {
       total: 0
     }
   },
+  computed: {
+    showTitle() {
+      return this.addForm.id ? '编辑楼宇' : '新增楼宇'
+    }
+  },
   mounted() {
     this.getBuildingList()
   },
   methods: {
+    async exportToExcel() {
+      const res = await getBuildingListAPI(this.params)
+      const tableHeader = ['name', 'floors', 'area', 'propertyFeePrice', 'status']
+      // 处理数据保证
+      const sheetData = res.data.rows.map((item) => {
+        const obj = {}
+        // 枚举值转换
+        tableHeader.forEach(key => {
+          if (key === 'status') {
+            obj[key] = this.formatStatus(item[key])
+          } else {
+            obj[key] = item[key]
+          }
+        })
+        return obj
+      })
+      // 创建一个工作表
+      const worksheet = utils.json_to_sheet(sheetData)
+      // 创建一个新的工作簿
+      const workbook = utils.book_new()
+      // 把工作表添加到工作簿
+      utils.book_append_sheet(workbook, worksheet, 'Data')
+      // 改写表头
+      utils.sheet_add_aoa(worksheet, [['楼宇名称', '层数', '在管面积(㎡)', '物业费(㎡)', '状态']], { origin: 'A1' })
+      writeFileXLSX(workbook, 'SheetJSVueAoO.xlsx')
+    },
+    /**
+     * 回显楼宇详情
+     * @param {*} rowId
+     */
+    async editBuilding(rowId) {
+      this.dialogVisible = true
+      const { data } = await getBuildingDetailAPI(rowId)
+      // 2. 解构必要字段
+      const { id, area, floors, name, propertyFeePrice } = data
+      this.addForm = {
+        id, area, floors, name, propertyFeePrice
+      }
+    },
+    /**
+     * 删除楼宇
+     * @param {*} id
+     */
+    async delBuilding(id) {
+      this.$confirm('确认删除当前楼宇吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        await delBuildingListAPI(id)
+        this.getBuildingList()
+      }).catch(() => {
+
+      })
+    },
+    /**
+     * 表单提交
+     */
+    confirmAdd() {
+      this.$refs.addForm.validate(async(valid) => {
+        if (!valid) return
+        if (this.addForm.id) {
+          await editBuildingListAPI(this.addForm)
+        } else {
+          await createBuildingListAPI(this.addForm)
+        }
+        this.getBuildingList()
+        this.dialogVisible = false
+      })
+    },
+    addBuilding() {
+      this.dialogVisible = true
+    },
+    closeDialog() {
+      this.dialogVisible = false
+      this.addForm = {
+        name: '',
+        floors: null,
+        area: null,
+        propertyFeePrice: null
+      }
+    },
     /**
      * 条件查询
      */
