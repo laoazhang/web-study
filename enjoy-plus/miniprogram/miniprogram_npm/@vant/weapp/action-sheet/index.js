@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = require("../common/component");
 var button_1 = require("../mixins/button");
 (0, component_1.VantComponent)({
+    classes: ['list-class'],
     mixins: [button_1.button],
     props: {
         show: Boolean,
@@ -36,6 +37,10 @@ var button_1 = require("../mixins/button");
         safeAreaInsetBottom: {
             type: Boolean,
             value: true,
+        },
+        rootPortal: {
+            type: Boolean,
+            value: false,
         },
     },
     methods: {
