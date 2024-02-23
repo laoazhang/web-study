@@ -1,0 +1,2 @@
+<!--components/authorization/index.wxml-->
+<slot wx:if="{{isLogin}}"></slot>

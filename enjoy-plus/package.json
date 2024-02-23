@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@vant/weapp": "^1.10.4",
-    "wechat-http": "^0.0.8"
+    "wechat-http": "^0.0.8",
+    "wechat-validate": "^0.0.3"
   }
 }

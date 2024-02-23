@@ -1,3 +1,5 @@
+<!-- 鉴权组件 -->
+<authorization>
 <block wx:if="{{true}}">
   <scroll-view show-scrollbar="{{false}}" enhanced scroll-y>
     <view class="houses">
@@ -86,3 +88,4 @@
   confirm-button-color="#5591af"
   bind:close="dialogClose"
 />
+</authorization>
