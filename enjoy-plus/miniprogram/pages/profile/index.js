@@ -1,4 +1,5 @@
 // pages/profile/index.ts
+const pageStack = getCurrentPages()
 Page({
 
   /**
@@ -13,6 +14,20 @@ Page({
    */
   onLoad() {
 
+  },
+  // 获取用户昵称
+  getUserNickName(ev) {
+    // 更新昵称
+    this.updateNickName(ev.detail.value)
+  },
+  // 更新用户昵称
+  async updateNickName(nickName) {
+    if (nickName === '') return
+    // 调用接口更新用户昵称
+    const { code } = await wx.http.put('/userInfo', { nickName })
+    if (code !== 10000) return wx.utils.toast('更新昵称失败！')
+    // 借助于页面栈实例来更新 pages/my/index.wxml 中的昵称
+    pageStack[0].setData({ nickName })
   },
 
   /**

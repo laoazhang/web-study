@@ -6,6 +6,6 @@
       <image class="avatar" src="/static/images/avatar_1.jpg"></image>
     </button>
   </van-cell>
-  <van-field center label="昵称" input-align="right" type="nickname" placeholder="请输入昵称" />
+  <van-field center label="昵称" input-align="right" type="nickname" bind:blur="getUserNickName" value="{{nickName}}" placeholder="请输入昵称" />
 </view>
 </authorization>
