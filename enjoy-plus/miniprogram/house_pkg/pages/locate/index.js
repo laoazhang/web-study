@@ -1,66 +1,56 @@
 // house_pkg/pages/locate/index.ts
+import QQMapWX from '../../../libs/qqmap-wx-jssdk'
+
+// 创建QQMap实例
+const qqmapsdk = new QQMapWX({
+  key: 'U5KBZ-RRM6N-P64FI-S5J55-AE72K-KMBQ2',
+});
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    list: [],
+    address: ''
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad() {
-
+  async onLoad() {
+    // 获取当前位置
+    const { latitude, longitude } = await wx.getLocation({ type: 'gcj02' })
+    this.search({ latitude, longitude })
+    this.getPoint({ latitude, longitude })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  // 打开地图选择位置
+  async chooseLocation() {
+    const { name, latitude, longitude } = await wx.chooseLocation()
+    this.setData({
+      address: name
+    })
+    this.search({ latitude, longitude })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
+  // 获取当前位置文本
+  getPoint({ longitude, latitude }) {
+    qqmapsdk.reverseGeocoder({
+      // 位置坐标
+      location: { longitude, latitude },
+      success: (res) => {
+        // console.log('逆地址解析', res);
+        this.setData({
+          address: res.result.address
+        })
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  // 搜索
+  search({ longitude, latitude }) {
+    console.log(longitude, latitude);
+    // 调用搜索API
+    qqmapsdk.search({
+      // 位置坐标
+      location: { longitude, latitude },
+      keyword: '住宅小区',
+      page_size: 5,
+      success: (res) => {
+        console.log(res);
+        this.setData({ list: res.data })
+      }
+    })
   }
 })
