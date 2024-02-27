@@ -5,6 +5,13 @@
     </van-cell>
   </van-cell-group>
   <van-cell-group border="{{false}}" title="附近社区">
-    <van-cell wx:for="{{list}}" wx:key="id" title="{{item.title}}" link-type="navigateTo" url="/house_pkg/pages/building/index" is-link />
+    <van-cell
+      wx:for="{{list}}"
+      wx:key="id"
+      title="{{item.title}}"
+      link-type="navigateTo"
+      url="/house_pkg/pages/building/index?point={{item.title}}"
+      is-link
+    />
   </van-cell-group>
 </view>
