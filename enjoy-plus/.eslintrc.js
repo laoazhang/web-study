@@ -11,7 +11,8 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    ecmaVersion: 2018,
+    // ES2020 版本才支持 ?. 可选链操作符
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
       modules: true,
