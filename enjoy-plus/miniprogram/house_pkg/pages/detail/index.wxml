@@ -26,7 +26,7 @@
   </view>
 </scroll-view>
 
-<view class="toolbar" bind:tap="editHouse">
+<view class="toolbar" mark:id="{{houseDetail.id}}" bind:tap="editHouse">
   <text class="enjoy-icon icon-edit"></text>
   <text class="button-text">修改房屋信息</text>
 </view>

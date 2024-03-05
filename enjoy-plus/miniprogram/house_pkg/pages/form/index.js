@@ -37,8 +37,16 @@ Page({
     const { type } = ev.mark
     this.setData({ [type]: '' })
   },
-  onLoad({ point, building, room }) {
+  onLoad({ point, building, room, id }) {
+    // 根据id 判断是否为修改房屋
+    if (id) return this.getHouseDetail(id)
     this.setData({ point, building, room })
+  },
+  // 获取房屋详情接口
+  async getHouseDetail(id) {
+    const { code, data: houseDetail } = await wx.http.get('/room/' + id)
+    if (code !== 10000) return wx.utils.toast('获取房屋详情失败!')
+    this.setData({ ...houseDetail })
   },
   /**
    * 身份证照片上传
@@ -75,13 +83,17 @@ Page({
   async onSubmit() {
     // 校验所有 rules 中定义的全部数据
     const isAllValid = this.validate()
-    console.log('isAllValid', isAllValid);
     if (!isAllValid) return
     // eslint-disable-next-line no-unused-vars
-    const { _webviewId, id, ...body } = this.data
-    const res = await wx.http.post('/room', body)
-    console.log(res);
+    const { __webviewId__, ...body } = this.data
+    if (this.data.id) {
+      delete body.status
+    } else {
+      delete body.id
+    }
+    const { code } = await wx.http.post('/room', body)
+    if (!code === 10000) return wx.utils.toast('提交失败!')
     // 后退回列表页，后退四级，中间的页面都要销毁
-    wx.navigateBack({ delta: 4 })
+    wx.navigateBack({ delta: this.data.id ? 2 : 4 })
   },
 })

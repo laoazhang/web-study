@@ -13,9 +13,9 @@ Page({
     if (code !== 10000) return wx.utils.toast('获取房屋详情失败!')
     this.setData({ houseDetail })
   },
-  editHouse() {
+  editHouse(ev) {
     wx.navigateTo({
-      url: '/house_pkg/pages/form/index',
+      url: '/house_pkg/pages/form/index?id=' + ev.mark.id,
     })
   },
 })
